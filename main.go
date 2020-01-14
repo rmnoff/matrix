@@ -97,14 +97,75 @@ func countBD(bd string) []int {
   return []int{int(daySum), int(monthSum), int(yearSum)}
 }
 
+func checkGreater(inum int) int {
+  if inum > 22 {
+    oinum := inum
+    inum = 0
+    for _, r := range strings.Split(strconv.Itoa(oinum),"") {
+      num, err := strconv.Atoi(r)
+      if err != nil {
+        log.Print(err)
+      }
+      inum = inum + num
+    }
+  }
+  return inum
+}
+
+func setAllCombos(icombo []int) []int {
+  d  := checkGreater(icombo[0]+icombo[1]+icombo[2])
+  e  := checkGreater(d*2)
+  a1 := checkGreater(icombo[0]+e)
+  a2 := checkGreater(icombo[0]+a1)
+  b1 := checkGreater(icombo[1]+e)
+  b2 := checkGreater(icombo[1]+b1)
+  c1 := checkGreater(icombo[2]+e)
+  c2 := checkGreater(icombo[2]+c1)
+  d1 := checkGreater(d+e)
+  d2 := checkGreater(d+d1)
+  x  := checkGreater(c1+d1)
+  x1 := checkGreater(d1+x)
+  x2 := checkGreater(c1+x)
+  f  := checkGreater(icombo[0]+icombo[1])
+  g  := checkGreater(icombo[1]+icombo[2])
+  y  := checkGreater(icombo[2]+d)
+  k  := checkGreater(icombo[0]+d)
+  e1 := checkGreater(f+g+y+k)
+  e2 := checkGreater(e+e1)
+  o  := checkGreater(f+y)
+  u  := checkGreater(k+g)
+  h  := checkGreater(icombo[1]+d)
+  j  := checkGreater(icombo[0]+icombo[2])
+  m  := checkGreater(h+j)
+  n  := checkGreater(f+y)
+  t  := checkGreater(g+k)
+  z  := checkGreater(n+t)
+  s  := checkGreater(m+z)
+  b3 := checkGreater(b1+e)
+  a3 := checkGreater(a1+e)
+  l  := checkGreater(icombo[0]+icombo[1])
+  l1 := checkGreater(a2+b2)
+  l2 := checkGreater(a1+b1)
+  l3 := checkGreater(a3+b3)
+  l4 := checkGreater(e*2)
+  l5 := checkGreater(d1+c1)
+  l6 := checkGreater(icombo[2]+d)
+  d3 := checkGreater(icombo[0]+a2+a1+a3+e+d1+d)
+  c3 := checkGreater(icombo[1]+b2+b1+b3+e+c1+icombo[2])
+  e3 := checkGreater(l+l1+l2+l3+l4+l5+l6)
+  return []int{d,e,a1,a2,b1,b2,c1,c2,d1,d2,x,x1,x2,f,g,h,y,k,e1,e2,o,u,h,j,m,n,
+    t,z,s,b3,a3,l,l1,l2,l3,l4,l5,l6,d3,c3,e3}
+}
+
 func main() {
   flag.Parse()
 
   handler := requestHandler
 
   combo := countBD("834883200")
+  finalCombos := setAllCombos(combo)
 
-  fmt.Println(combo)
+  fmt.Println(finalCombos)
 
   if err := fasthttp.ListenAndServe(*addr, handler); err != nil {
     log.Fatalf("Error in ListenAndServe: %s", err)
