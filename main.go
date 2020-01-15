@@ -7,16 +7,18 @@ import (
   "time"
   "strconv"
   "strings"
-
   // "database/sql"
 
+  "github.com/qiangxue/fasthttp-routing"
   "github.com/valyala/fasthttp"
   // _ "github.com/jackc/pgx"
   // "github.com/jmoiron/sqlx"
 )
 
 var (
-  addr = flag.String("addr", ":8080", "TCP address to listen to")
+  addr     = flag.String("addr", ":8080", "TCP address to listen to")
+  endpoint = "api"
+  version  = "v1"
 )
 
 var schema = `
@@ -74,20 +76,50 @@ CREATE TABLE IF NOT EXISTS user (
 func main() {
   flag.Parse()
 
-  handler := requestHandler
+  ep := fmt.Sprintf("/%s/%s", endpoint, version)
+
+  router := routing.New()
+
+	router.Get("/healthcheck", func(c *routing.Context) error {
+		fmt.Fprintf(c, `{"ok": true, "error": null}`)
+		return nil
+	})
+
+  router.Get(fmt.Sprintf("%s/doc", ep), func(c *routing.Context) error {
+    fmt.Fprintf(c, `{"ok": true, "error": null}`)
+    return nil
+  })
+
+  router.Get(fmt.Sprintf("%s/auth", ep), func(c *routing.Context) error {
+    fmt.Fprintf(c, `{"ok": true, "error": null, "data": "Future authorisation start"}`)
+    return nil
+  })
+
+  router.Post(fmt.Sprintf("%s/auth", ep), func(c *routing.Context) error {
+    fmt.Fprintf(c, `{"ok": true, "error": null, "data": "Future authorisation end"}`)
+    return nil
+  })
+
+  router.Get(fmt.Sprintf("%s/check/<timestamp>", ep), func(c *routing.Context) error {
+    timestamp := c.Param("timestamp")
+    if timestamp == "" {
+      fmt.Fprintf(c, `{"ok": false, "error": "No timestamp provided"}`)
+      return nil
+    }
+    combo := countBD(timestamp)
+    finalCombos := setAllCombos(combo)
+    fmt.Fprintf(c, `{"ok": true, "error": null, "data": "Future date check endpoint. Currently received: %v. Combo is: %v. All combos are: %v"}`, timestamp, combo, finalCombos)
+    return nil
+  })
 
   combo := countBD("834883200")
   finalCombos := setAllCombos(combo)
 
   fmt.Println(finalCombos)
 
-  if err := fasthttp.ListenAndServe(*addr, handler); err != nil {
+  if err := fasthttp.ListenAndServe(*addr, router.HandleRequest); err != nil {
     log.Fatalf("Error in ListenAndServe: %s", err)
   }
-}
-
-func requestHandler(ctx *fasthttp.RequestCtx) {
-  fmt.Fprintf(ctx, "Hello, world\n\n")
 }
 
 func countBD(bd string) []int {
