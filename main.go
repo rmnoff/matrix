@@ -107,15 +107,35 @@ func main() {
       return nil
     }
     combo := countBD(timestamp)
+    if combo == nil {
+      fmt.Fprintf(c, `{"ok": false, "error": "Timestamp corrupted"}`)
+      return nil
+    }
     finalCombos := setAllCombos(combo)
     fmt.Fprintf(c, `{"ok": true, "error": null, "data": "Future date check endpoint. Currently received: %v. Combo is: %v. All combos are: %v"}`, timestamp, combo, finalCombos)
     return nil
   })
 
-  combo := countBD("834883200")
-  finalCombos := setAllCombos(combo)
+  router.Get(fmt.Sprintf("%s/check/past/<timestamp>", ep), func(c *routing.Context) error {
+    timestamp := c.Param("timestamp")
+    if timestamp == "" {
+      fmt.Fprintf(c, `{"ok": false, "error": "No timestamp provided"}`)
+      return nil
+    }
+    combo := countBD(timestamp)
+    if combo == nil {
+      fmt.Fprintf(c, `{"ok": false, "error": "Timestamp corrupted"}`)
+      return nil
+    }
+    finalCombos := setAllCombos(combo)
+    fmt.Fprintf(c, `{"ok": true, "error": null, "data": "Future date check endpoint. Currently received: %v. Combo is: %v. Past life combo is: [%v %v %v]"}`, timestamp, combo, finalCombos[8], finalCombos[9], finalCombos[0])
+    return nil
+  })
 
-  fmt.Println(finalCombos)
+  // combo := countBD("834883200")
+  // finalCombos := setAllCombos(combo)
+
+  // fmt.Println(finalCombos)
 
   if err := fasthttp.ListenAndServe(*addr, router.HandleRequest); err != nil {
     log.Fatalf("Error in ListenAndServe: %s", err)
@@ -126,45 +146,22 @@ func countBD(bd string) []int {
   i, err := strconv.ParseInt(bd, 10, 64)
   if err != nil {
     log.Print(err)
+    return nil
   }
   tm := time.Unix(i, 0).String()
   UNIXsplit := strings.Split(tm, " ")
   date := UNIXsplit[0]
   dateSplit := strings.Split(date, "-")
-  daySplit, yearSplit := strings.Split(dateSplit[2],""), strings.Split(dateSplit[0],"")
-  parsedDayOne, err := strconv.ParseInt(daySplit[0], 10, 64)
-  if err != nil {
-    log.Print(err)
-  }
-  parsedDayTwo, err := strconv.ParseInt(daySplit[1], 10, 64)
-  if err != nil {
-    log.Print(err)
-  }
-  parsedYearOne, err := strconv.ParseInt(yearSplit[0], 10, 64)
-  if err != nil {
-    log.Print(err)
-  }
-  parsedYearTwo, err := strconv.ParseInt(yearSplit[1], 10, 64)
-  if err != nil {
-    log.Print(err)
-  }
-  parsedYearThree, err := strconv.ParseInt(yearSplit[2], 10, 64)
-  if err != nil {
-    log.Print(err)
-  }
-  parsedYearFour, err := strconv.ParseInt(yearSplit[3], 10, 64)
-  if err != nil {
-    log.Print(err)
-  }
-  var probDay, _ = strconv.ParseInt(dateSplit[2], 10, 64)
-  var probMonth, _ = strconv.ParseInt(dateSplit[1], 10, 64)
-  daySum := probDay
-  if probDay > 22 {
-    daySum = parsedDayOne + parsedDayTwo
-  }
+  yearSplit := strings.Split(dateSplit[0],"")
+  parsedYearOne, _ := strconv.ParseInt(yearSplit[0], 10, 64)
+  parsedYearTwo, _ := strconv.ParseInt(yearSplit[1], 10, 64)
+  parsedYearThree, _ := strconv.ParseInt(yearSplit[2], 10, 64)
+  parsedYearFour, _ := strconv.ParseInt(yearSplit[3], 10, 64)
+  probDay, _ := strconv.ParseInt(dateSplit[2], 10, 64)
+  probMonth, _ := strconv.ParseInt(dateSplit[1], 10, 64)
+  daySum := checkGreater(int(probDay))
   monthSum := probMonth
-  yearSum := parsedYearOne + parsedYearTwo + parsedYearThree + parsedYearFour
-  // combo := fmt.Sprintf("%d-%d-%d", daySum, monthSum, yearSum)
+  yearSum := checkGreater(int(parsedYearOne + parsedYearTwo + parsedYearThree + parsedYearFour))
   return []int{int(daySum), int(monthSum), int(yearSum)}
 }
 
