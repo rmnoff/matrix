@@ -3,7 +3,9 @@ module github.com/rmnoff/matrix
 go 1.13
 
 require (
+	github.com/djimenez/iconv-go v0.0.0-20160305225143-8960e66bd3da // indirect
 	github.com/jackc/pgx v3.6.1+incompatible // indirect
+	github.com/jackwhelpton/fasthttp-routing v1.0.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.3.0
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
