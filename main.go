@@ -7,6 +7,7 @@ import (
   "time"
   "strconv"
   "strings"
+  "encoding/json"
 
   // "database/sql"
   _ "github.com/lib/pq"
@@ -97,6 +98,11 @@ type Prediction struct {
   ImageName string `json:"imageName"`
 }
 
+type ContentByGender struct {
+  Female string `json:"f"`
+  Male string `json:"m"`
+}
+
 type Response struct {
   Ok bool `json:"ok"`
   Error string `json:"error"`
@@ -134,8 +140,12 @@ func main() {
   api.Post("/auth", func(c *routing.Context) error {
 		return c.Write(`{"ok": true, "error": null, "data": "Future authorisation end"}`)
   })
-  api.Get("/check/<timestamp>", func(c *routing.Context) error {
-    timestamp := c.Param("timestamp")
+  api.Get("/check/<input>", func(c *routing.Context) error {
+    input := c.Param("input")
+    timestamp := input[:len(input) - 1]
+    gender := input[len(input) - 1:]
+    fmt.Println(timestamp)
+    fmt.Println(gender)
     if timestamp == "" {
       return c.Write(Response{false, "No timestamp provided", nil})
     }
@@ -149,17 +159,81 @@ func main() {
     // prog3 := fmt.Sprintf("prog3: [%v %v %v]", combo[2], finalCombos[7], finalCombos[6])
     // prog4 := fmt.Sprintf("prog4: [%v %v %v]", finalCombos[13], finalCombos[15], finalCombos[19])
     // prog5 := fmt.Sprintf("prog5: [%v %v %v]", finalCombos[16], finalCombos[14], finalCombos[20])
-    // sex   := fmt.Sprintf("sex: [%v %v %v]", finalCombos[1], finalCombos[17], finalCombos[18])
 
-    pastLifeCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
     pastLifePrediction := Prediction{}
-    err = db.Get(&pastLifePrediction, "SELECT * FROM prediction WHERE id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifeCombo)
+    pastLifePredictionCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
+    err = db.Get(&pastLifePrediction, "SELECT * FROM prediction WHERE type_id=1 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
     if err != nil {
       log.Println(err)
       return c.Write(Response{false, "Can't parse past life prediction", nil})
     }
 
-    return c.Write(Response{true, "", []Prediction{pastLifePrediction}})
+    personalFeaturesPos := Prediction{}
+    personalFeaturesPosCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
+    personalFeaturesNeg := Prediction{}
+    personalFeaturesNegCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
+    personalFeaturesSoc := Prediction{}
+    personalFeaturesSocCombo := fmt.Sprintf("%d", finalCombos[1])
+    fmt.Println(personalFeaturesPosCombo)
+    fmt.Println(personalFeaturesNegCombo)
+    fmt.Println(personalFeaturesSocCombo)
+    err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=2 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo)
+    if err != nil {
+      log.Println(err)
+      return c.Write(Response{false, "Can't parse positive personal features", nil})
+    }
+    err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo)
+    if err != nil {
+      log.Println(err)
+      return c.Write(Response{false, "Can't parse negative personal features", nil})
+    }
+    err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=4 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo)
+    if err != nil {
+      log.Println(err)
+      return c.Write(Response{false, "Can't parse social personal features", nil})
+    }
+
+    relationship := Prediction{}
+    relationshipCombo := fmt.Sprintf("%d-%d-%d", finalCombos[11], finalCombos[8], finalCombos[10])
+    fmt.Println(relationshipCombo)
+    err = db.Get(&relationship, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipCombo)
+    if err != nil {
+      log.Println(err)
+      return c.Write(Response{false, "Can't parse relationship prediction", nil})
+    }
+
+    lifeGuide := Prediction{}
+    lifeGuideCombo := fmt.Sprintf("%d-%d-%d", combo[0], combo[1], finalCombos[1])
+    fmt.Println(lifeGuideCombo)
+    err = db.Get(&lifeGuide, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo)
+    if err != nil {
+      log.Println(err)
+      return c.Write(Response{false, "Can't parse life guide prediction", nil})
+    }
+
+    sex := Prediction{}
+    sexCombo := fmt.Sprintf("%d-%d-%d", finalCombos[1], finalCombos[17], finalCombos[18])
+    fmt.Println(sexCombo)
+    err = db.Get(&sex, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo)
+    if err != nil {
+      log.Println(err)
+      return c.Write(Response{false, "Can't parse life guide prediction", nil})
+    }
+
+    data := []Prediction{pastLifePrediction, personalFeaturesPos, personalFeaturesNeg, personalFeaturesSoc, relationship, lifeGuide, sex}
+    for _, content := range data {
+      contentbygender := ContentByGender{}
+      err := json.Unmarshal([]byte(content.Content), &contentbygender)
+      if err == nil {
+        if gender == "m" {
+          content.Content = contentbygender.Male
+        } else {
+          content.Content = contentbygender.Female
+        }
+      }
+    }
+
+    return c.Write(Response{true, "", data})
   })
 
   fasthttp.ListenAndServe(*addr, router.HandleRequest)
