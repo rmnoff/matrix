@@ -257,7 +257,6 @@ func main() {
     prediction := c.PostForm("prediction")
     currPrediction := Prediction{}
     db.Get(&currPrediction, "SELECT * FROM prediction ORDER BY id DESC LIMIT 1")
-    fmt.Println(currPrediction)
     tx := db.MustBegin()
     tx.MustExec(`INSERT INTO prediction(content,type_id) VALUES($1,$2)`, prediction, ptypeid)
     tx.MustExec(`INSERT INTO predictionRel(prediction_id,combination) VALUES($1,$2)`, currPrediction.Id + 1, combo)
