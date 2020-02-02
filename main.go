@@ -18,6 +18,7 @@ import (
   "github.com/jackwhelpton/fasthttp-routing/fault"
   "github.com/jackwhelpton/fasthttp-routing/slash"
   "github.com/jackwhelpton/fasthttp-routing/access"
+  "github.com/jackwhelpton/fasthttp-routing/file"
   "github.com/erikdubbelboer/fasthttp"
 )
 
@@ -96,6 +97,11 @@ type Prediction struct {
   Type int `db:"type_id"`
   Foreword []ConstantText `db:"foreword"`
   ImageName string `json:"imageName"`
+}
+
+type PredictionType struct {
+  Id int `db:"id"`
+  Name string `db:"name"`
 }
 
 type ContentByGender struct {
@@ -235,6 +241,29 @@ func main() {
 
     return c.Write(Response{true, "", data})
   })
+  api.Get("/show/types", func(c *routing.Context) error {
+    types := []PredictionType{}
+    err = db.Select(&types, "SELECT * FROM predictionType")
+    if err != nil {
+      return c.Write(Response{false, "Can't parse life guide prediction", nil})
+    }
+    return c.Write(types)
+  })
+  api.Post("/add", func(c *routing.Context) error {
+    ptypeid := c.PostForm("ptypeid")
+    combo := c.PostForm("combo")
+    prediction := c.PostForm("prediction")
+    currPrediction := Prediction{}
+    db.Get(&currPrediction, "SELECT * FROM prediction ORDER BY id DESC LIMIT 1")
+    fmt.Println(currPrediction)
+    tx := db.MustBegin()
+    tx.MustExec(`INSERT INTO prediction(content,type_id) VALUES($1,$2)`, prediction, ptypeid)
+    tx.MustExec(`INSERT INTO predictionRel(prediction_id,combination) VALUES($1,$2)`, currPrediction.Id + 1, combo)
+    tx.Commit()
+    return c.Write(`Запись добавлена, нажмите назад, чтобы добавить следующую или закройте страничку.`)
+  })
+
+  router.Get("/", file.Content("ui/index.html"))
 
   fasthttp.ListenAndServe(*addr, router.HandleRequest)
 }
