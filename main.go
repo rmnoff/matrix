@@ -23,7 +23,8 @@ import (
 )
 
 var (
-  addr      = flag.String("addr", ":8080", "TCP address to listen to")
+  port      = os.Getenv("PORT")
+  addr      = flag.String("addr", fmt.Sprintf(":%s", port), "TCP address to listen to")
 
   psqlURL   = "manny.db.elephantsql.com"
   psqlUNAME = "fzspbstv"
