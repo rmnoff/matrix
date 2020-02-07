@@ -38,15 +38,16 @@ func parsePsqlElements(url string) (string, string, string, string, string) {
 }
 
 var (
-  port      = os.Getenv("PORT")
+  // port      = os.Getenv("PORT")
+  port      = "8080"
   addr      = flag.String("addr", fmt.Sprintf(":%s", port), "TCP address to listen to")
   psqlURL   = os.Getenv("DATABASE_URL")
-  dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
-  // psqlURL   = "manny.db.elephantsql.com"
-  // psqlUNAME = "fzspbstv"
-  // psqlDNAME = "fzspbstv"
-  // psqlPWD   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
-  // psqlPORT  = 5432
+  // dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
+  dblink   = "manny.db.elephantsql.com"
+  dbuname = "fzspbstv"
+  dbname = "fzspbstv"
+  dbpwd   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
+  dbport  = "5432"
   psqlInfo  = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s" +
     " sslmode=disable", dblink, dbport, dbuname, dbpwd, dbname)
 )
@@ -100,22 +101,8 @@ CREATE TABLE IF NOT EXISTS userProfile (
   password TEXT,
   birthdate TEXT,
   gender BOOLEAN
-);
+);`
 
-INSERT INTO predictionType(name) VALUES($1) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($2) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($3) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($4) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($5) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($6) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($7) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($8) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($9) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($10) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($11) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($12) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($13) ON CONFLICT DO NOTHING;
-INSERT INTO predictionType(name) VALUES($14) ON CONFLICT DO NOTHING;`
 
 type ConstantText struct {
   Header string `json:"header"`
@@ -157,7 +144,22 @@ func main() {
     log.Panic(err)
   }
   defer db.Close()
-  db.MustExec(schema, "personal features positive", "personal features negative", "personal features social", "money", "relationship", "parents", "kids", "destiny", "past life", "programms", "life guide", "health", "sexuality", "year's prediction")
+  db.MustExec(schema)
+  tx := db.MustBegin()
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($1) ON CONFLICT DO NOTHING;`, "personal features positive")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($2) ON CONFLICT DO NOTHING;`, "personal features negative")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($3) ON CONFLICT DO NOTHING;`, "personal features social")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($4) ON CONFLICT DO NOTHING;`, "money")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($6) ON CONFLICT DO NOTHING;`, "relationship")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($7) ON CONFLICT DO NOTHING;`, "parents")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($8) ON CONFLICT DO NOTHING;`, "kids")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($9) ON CONFLICT DO NOTHING;`, "destiny")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($10) ON CONFLICT DO NOTHING;`, "past life")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($11) ON CONFLICT DO NOTHING;`, "programms")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($12) ON CONFLICT DO NOTHING;`, "life guide")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($13) ON CONFLICT DO NOTHING;`, "health")
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES($14) ON CONFLICT DO NOTHING;`, "year's prediction")
+  tx.Commit()
 
   router := routing.New()
   router.Use(
