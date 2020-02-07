@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS predictionRel (
 
 CREATE TABLE IF NOT EXISTS predictionType (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255)
+  name VARCHAR(255) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS constantText (
@@ -102,21 +102,20 @@ CREATE TABLE IF NOT EXISTS userProfile (
   gender BOOLEAN
 );
 
-INSERT INTO predictionType(name) VALUES($1);
-INSERT INTO predictionType(name) VALUES($2);
-INSERT INTO predictionType(name) VALUES($3);
-INSERT INTO predictionType(name) VALUES($4);
-INSERT INTO predictionType(name) VALUES($5);
-INSERT INTO predictionType(name) VALUES($6);
-INSERT INTO predictionType(name) VALUES($7);
-INSERT INTO predictionType(name) VALUES($8);
-INSERT INTO predictionType(name) VALUES($9);
-INSERT INTO predictionType(name) VALUES($10);
-INSERT INTO predictionType(name) VALUES($11);
-INSERT INTO predictionType(name) VALUES($12);
-INSERT INTO predictionType(name) VALUES($13);
-INSERT INTO predictionType(name) VALUES($14);
-`
+INSERT INTO predictionType(name) VALUES($1) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($2) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($3) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($4) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($5) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($6) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($7) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($8) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($9) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($10) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($11) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($12) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($13) ON CONFLICT DO NOTHING;
+INSERT INTO predictionType(name) VALUES($14) ON CONFLICT DO NOTHING;`
 
 type ConstantText struct {
   Header string `json:"header"`
