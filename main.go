@@ -1,7 +1,7 @@
 package main
 
 import (
-  "os"
+  // "os"
   "flag"
   "log"
   "fmt"
@@ -23,16 +23,32 @@ import (
   "github.com/erikdubbelboer/fasthttp"
 )
 
+func parsePsqlElements(url string) (string, string, string, string, string) {
+  split := strings.Split(url, "@")
+  unamepwdsplit := strings.Split(split[0], "//")
+  unamepwd := strings.Split(unamepwdsplit[1], ":")
+  uname := unamepwd[0]
+  pwd := unamepwd[1]
+  urlportdbname := strings.Split(split[1], ":")
+  link := urlportdbname[0]
+  portdbname := strings.Split(urlportdbname[1], "/")
+  port := portdbname[0]
+  dbname := portdbname[1]
+  return uname, pwd, link, port, dbname
+}
+
 var (
   port      = os.Getenv("PORT")
   addr      = flag.String("addr", fmt.Sprintf(":%s", port), "TCP address to listen to")
-
-  psqlURL   = "manny.db.elephantsql.com"
-  psqlUNAME = "fzspbstv"
-  psqlDNAME = "fzspbstv"
-  psqlPWD   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
-  psqlInfo  = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s" +
-    " sslmode=disable", psqlURL, 5432, psqlUNAME, psqlPWD, psqlDNAME)
+  psqlURL   = os.Getenv("DATABASE_URL")
+  dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
+  // psqlURL   = "manny.db.elephantsql.com"
+  // psqlUNAME = "fzspbstv"
+  // psqlDNAME = "fzspbstv"
+  // psqlPWD   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
+  // psqlPORT  = 5432
+  psqlInfo  = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s" +
+    " sslmode=disable", dblink, dbport, dbuname, dbpwd, dbname)
 )
 
 var schema = `
