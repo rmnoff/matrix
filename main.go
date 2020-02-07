@@ -100,7 +100,23 @@ CREATE TABLE IF NOT EXISTS userProfile (
   password TEXT,
   birthdate TEXT,
   gender BOOLEAN
-)`
+);
+
+INSERT INTO predictionType(name) VALUES($1);
+INSERT INTO predictionType(name) VALUES($2);
+INSERT INTO predictionType(name) VALUES($3);
+INSERT INTO predictionType(name) VALUES($4);
+INSERT INTO predictionType(name) VALUES($5);
+INSERT INTO predictionType(name) VALUES($6);
+INSERT INTO predictionType(name) VALUES($7);
+INSERT INTO predictionType(name) VALUES($8);
+INSERT INTO predictionType(name) VALUES($9);
+INSERT INTO predictionType(name) VALUES($10);
+INSERT INTO predictionType(name) VALUES($11);
+INSERT INTO predictionType(name) VALUES($12);
+INSERT INTO predictionType(name) VALUES($13);
+INSERT INTO predictionType(name) VALUES($14);
+`
 
 type ConstantText struct {
   Header string `json:"header"`
@@ -142,7 +158,7 @@ func main() {
     log.Panic(err)
   }
   defer db.Close()
-  db.MustExec(schema)
+  db.MustExec(schema, "personal features positive", "personal features negative", "personal features social", "money", "relationship", "parents", "kids", "destiny", "past life", "programms", "life guide", "health", "sexuality", "year's prediction")
 
   router := routing.New()
   router.Use(
