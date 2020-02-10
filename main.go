@@ -309,7 +309,7 @@ func main() {
     currPrediction := Prediction{}
     db.Get(&currPrediction, "SELECT * FROM prediction ORDER BY id DESC LIMIT 1")
     tx := db.MustBegin()
-    tx.MustExec(`INSERT INTO prediction(content,type_id,personal,language) VALUES($1,$2,$3,$4)`, prediction, ptypeid, personal, language)
+    tx.MustExec(`INSERT INTO prediction(content,type_id,personal,lang_id) VALUES($1,$2,$3,$4)`, prediction, ptypeid, personal, language)
     tx.MustExec(`INSERT INTO predictionRel(prediction_id,combination) VALUES($1,$2)`, currPrediction.Id + 1, combo)
     tx.Commit()
     return c.Write(`Запись добавлена, нажмите назад, чтобы добавить следующую или закройте страничку.`)
