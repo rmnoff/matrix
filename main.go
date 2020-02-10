@@ -10,7 +10,7 @@ import (
   "strings"
   "encoding/json"
 
-  "database/sql"
+  // "database/sql"
   _ "github.com/lib/pq"
   "github.com/jmoiron/sqlx"
 
