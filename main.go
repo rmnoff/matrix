@@ -38,16 +38,16 @@ func parsePsqlElements(url string) (string, string, string, string, string) {
 }
 
 var (
-  port      = os.Getenv("PORT")
-  // port      = "8080"
+  // port      = os.Getenv("PORT")
+  port      = "8080"
   addr      = flag.String("addr", fmt.Sprintf(":%s", port), "TCP address to listen to")
   psqlURL   = os.Getenv("DATABASE_URL")
-  dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
-  // dblink   = "manny.db.elephantsql.com"
-  // dbuname = "fzspbstv"
-  // dbname = "fzspbstv"
-  // dbpwd   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
-  // dbport  = "5432"
+  // dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
+  dblink   = "manny.db.elephantsql.com"
+  dbuname = "fzspbstv"
+  dbname = "fzspbstv"
+  dbpwd   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
+  dbport  = "5432"
   psqlInfo  = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s" +
     " sslmode=disable", dblink, dbport, dbuname, dbpwd, dbname)
 )
@@ -58,7 +58,9 @@ CREATE TABLE IF NOT EXISTS prediction (
   content TEXT,
   edited TEXT,
   created TEXT,
-  type_id INT
+  type_id INT,
+  lang_id INT,
+  personal BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS additionalDate (
@@ -76,6 +78,11 @@ CREATE TABLE IF NOT EXISTS predictionRel (
 );
 
 CREATE TABLE IF NOT EXISTS predictionType (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS predictionLang (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE
 );
@@ -115,6 +122,8 @@ type Prediction struct {
   Created string `db:"created"`
   Edited string `db:"edited"`
   Type int `db:"type_id"`
+  Lang int `db:"lang_id"`
+  Personal bool `db:"personal"`
   Foreword []ConstantText `db:"foreword"`
   ImageName string `json:"imageName"`
 }
@@ -159,6 +168,8 @@ func main() {
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('life guide') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('health') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('year prediction') ON CONFLICT DO NOTHING;`)
+  tx.MustExec(`INSERT INTO predictionLang(name) VALUES('russian') ON CONFLICT DO NOTHING;`)
+  tx.MustExec(`INSERT INTO predictionLang(name) VALUES('english') ON CONFLICT DO NOTHING;`)
   tx.Commit()
 
   router := routing.New()
@@ -278,20 +289,27 @@ func main() {
   })
   api.Get("/show/types", func(c *routing.Context) error {
     types := []PredictionType{}
+    langs := []PredictionType{}
     err = db.Select(&types, "SELECT * FROM predictionType")
     if err != nil {
-      return c.Write(Response{false, "Can't parse life guide prediction", nil})
+      return c.Write(Response{false, "Can't parse types", nil})
     }
-    return c.Write(types)
+    err = db.Select(&langs, "SELECT * FROM predictionLang")
+    if err != nil {
+      return c.Write(Response{false, "Can't parse languages", nil})
+    }
+    return c.Write([][]PredictionType{types, langs})
   })
   api.Post("/add", func(c *routing.Context) error {
     ptypeid := c.PostForm("ptypeid")
     combo := c.PostForm("combo")
     prediction := c.PostForm("prediction")
+    personal := c.PostForm("personal")
+    language := c.PostForm("language")
     currPrediction := Prediction{}
     db.Get(&currPrediction, "SELECT * FROM prediction ORDER BY id DESC LIMIT 1")
     tx := db.MustBegin()
-    tx.MustExec(`INSERT INTO prediction(content,type_id) VALUES($1,$2)`, prediction, ptypeid)
+    tx.MustExec(`INSERT INTO prediction(content,type_id,personal,language) VALUES($1,$2,$3,$4)`, prediction, ptypeid, personal, language)
     tx.MustExec(`INSERT INTO predictionRel(prediction_id,combination) VALUES($1,$2)`, currPrediction.Id + 1, combo)
     tx.Commit()
     return c.Write(`Запись добавлена, нажмите назад, чтобы добавить следующую или закройте страничку.`)
