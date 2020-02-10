@@ -10,7 +10,7 @@ import (
   "strings"
   "encoding/json"
 
-  // "database/sql"
+  "database/sql"
   _ "github.com/lib/pq"
   "github.com/jmoiron/sqlx"
 
@@ -119,13 +119,13 @@ type ConstantText struct {
 type Prediction struct {
   Id int `db:"id"`
   Content string `db:"content"`
-  Created string `db:"created"`
-  Edited string `db:"edited"`
+  // Created sql.NullString `db:"created"`
+  // Edited sql.NullString `db:"edited"`
   Type int `db:"type_id"`
   Lang int `db:"lang_id"`
   Personal bool `db:"personal"`
-  Foreword []ConstantText `db:"foreword"`
-  ImageName string `json:"imageName"`
+  // Foreword []ConstantText `db:"foreword"`
+  // ImageName sql.NullString `json:"imageName"`
 }
 
 type PredictionType struct {
