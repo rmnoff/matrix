@@ -305,6 +305,7 @@ func main() {
     err = db.Select(&predictions, "SELECT * FROM prediction")
     if err != nil {
       fmt.Println(err)
+      fmt.Println(predictions)
       return c.Write(Response{false, "Can't parse predictions", nil})
     }
     return c.Write(predictions)
