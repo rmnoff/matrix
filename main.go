@@ -300,6 +300,14 @@ func main() {
     }
     return c.Write([][]PredictionType{types, langs})
   })
+  api.Get("/show/predictions", func(c *routing.Context) error {
+    predictions := []Prediction{}
+    err = db.Select(&predictions, "SELECT * FROM prediction")
+    if err != nil {
+      return c.Write(Response{false, "Can't parse predictions", nil})
+    }
+    return c.Write(predictions)
+  })
   api.Post("/add", func(c *routing.Context) error {
     ptypeid := c.PostForm("ptypeid")
     combo := c.PostForm("combo")

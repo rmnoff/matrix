@@ -1,0 +1,256 @@
+CREATE USER flats;
+CREATE USER flats WITH password '123456';
+DELETE USER flats;
+DROP USER flats;
+CREATE USER flats WITH password '123456';
+CREATE DATABASE flats;
+GRANT ALL ON DATABASE flats TO flats;
+GRANT USAGE ON SCHEMA public TO flats;
+\c flats
+CREATE EXTENSION citext;
+SHOW TABLES
+;
+SHOW TABLES;
+\dt
+SELECT * FROM users
+;
+SELECT * FROM users
+;
+SELECT * FROM users;
+UPDATE users SET password = '$2a$10$oo99B.qU/nnIiKva9W/EAuVORr2MCreRuSF7Xpc7QMBi4c0ZVUS7.' WHERE username = 'artem';
+cleaar
+clear
+;
+clear;
+UPDATE users SET password = '$2a$10$clAmt0WtYmuPJIpUk.wUsOmDAtQkA4NxeTxWcAIThjZaLhF7WOMqG' WHERE username = 'artem';
+\dt
+uit
+quit
+\q
+\dy
+\dt
+\d
+\l
+\l postgres
+\dt postgres
+\d postgres
+clear
+quit
+clear
+quit
+quit.
+\q
+\dt
+SELECT coin_id FROM cc_coins WHERE coin_id=186277;
+SELECT * FROM cc_coins WHERE coin_id=186277;
+\q
+\dt
+ALTER TABLE cc_coins ADD COLUMN dtra_active bool;
+SELECT * FROM cc_coins
+;
+SELECT * FROM cc_coins LIMIT 10 ORDER BY RANDOM();
+SELECT * FROM cc_coins LIMIT 10;
+UPDATE cc_coins SET dtra_active=false;
+UPDATE TOP(100) cc_coins SET dtra_active=true;
+UPDATE TOP (100) cc_coins SET dtra_active=true;
+UPDATE TOP 100 cc_coins SET dtra_active=true;
+UPDATE (SELECT * FROM cc_coins LIMIT 50) SET dtra_active=true;
+UPDATE cc_coins SET dtra_active=true WHERE coin_id in (SELECT coin_id FROM cc_coins LIMIT 100);
+\quit
+\dt
+\quit
+\d
+show_dbs
+db
+\db
+\?
+\l
+\dt
+\q
+\dt
+CREATE TABLE IF NOT EXISTS cc_groups (  id serial,  group_name text,  group_description text,  PRIMARY KEY( id ) );
+CREATE TABLE IF NOT EXISTS group_coins (  id serial,  coin_id numeric(9,2),  PRIMARY KEY( id ) );
+\quit
+ALTER TABLE cc_coins ADD COLUMN dtra_candidate bool;
+UPDATE cc_coins SET dtra_candidate=false;
+\quit
+\quit
+ALTER TABLE cc_groups RENAME TO dtra_assets_pub_groups_mvp;
+ALTER TABLE group_coins RENAME TO group_assets_mvp;
+\d dtra_assets_pub_groups_mvp
+\quit
+INSERT INTO dtra_assets_pub_groups_mvp(group_name) VALUES ("LOL");
+INSERT INTO dtra_assets_pub_groups_mvp (group_name) VALUES ("LOL");
+\quit
+ALTER TABLE cc_coins RENAME COLUMN dtra_candidate TO dtra_verified;
+CREATE TABLE dtra_assests_candidates (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+asset_id INT NOT NULL,
+historical_exists BOOL DEFAULT false,
+realtime_exists BOOL DEFAULT false,
+timestamp INT NOT NULL
+)
+;
+clear
+CREATE TABLE dtra_assests_candidates (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, asset_id INT NOT NULL, historical_exists BOOL DEFAULT false, realtime_exists BOOL DEFAULT false, timestamp INT NOT NULL);
+CREATE TABLE dtra_assests_candidates (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, asset_id INT NOT NULL, historical_exists BOOL DEFAULT false, realtime_exists BOOL DEFAULT false, timestamp INT NOT NULL);
+clear
+CREATE TABLE dtra_assests_candidates (id SERIAL, asset_id INT NOT NULL, historical_exists BOOL DEFAULT false, realtime_exists BOOL DEFAULT false, timestamp INT NOT NULL);
+clear
+CREATE TABLE dtra_assests_candidates (id SERIAL, asset_id INT NOT NULL, historical_exists BOOL DEFAULT false, realtime_exists BOOL DEFAULT false, timestamp INT NOT NULL);
+CREATE TABLE dtra_assests_candidates (id SERIAL, asset_id INT NOT NULL, historical_exists BOOL DEFAULT false, realtime_exists BOOL DEFAULT false, timestamp INT NOT NULL);
+\quit
+\quit
+SELECT asset_id FROM dtra_assests_candidates
+;
+SELECT coin_id, coin_title, coin_symbol, full_name, img_url, dtra_active, dtra_verified FROM cc_coins WHERE coin_id IN (SELECT asset_id FROM dtra_assests_candidates);
+\quit
+SELECT * FROM subscribers_daily_report;
+CREATE TABLE IF NOT EXISTS subscribers_daily_report(id serial, username text, subs_daily_report_signal bool, subs_daily_report_email bool, mobile_number text);
+SELECT * FROM subscribers_daily_report
+;
+SELECT * FROM subscribers_daily_report
+;
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com'
+;
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+DELETE * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com'
+;
+DROP TABLE subscribers_daily_report
+;
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+CREATE TABLE IF NOT EXISTS subscribers_daily_report(id serial, username text, subs_daily_report_signal bool, subs_daily_report_email bool, mobile_number text);
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+SELECT * FROM subscribers_daily_report WHERE username='jsmit2cv@example.com';
+SELECT * FROM cc_coins WHERE dtra_active=true
+;
+\quit
+SELECT * FROM subscribers_daily_report;
+DELETE FROM subscribers_daily_report WHERE id = 1;
+SELECT * FROM subscribers_daily_report;
+SELECT * FROM subscribers_daily_report;
+SELECT * FROM subscribers_daily_report;
+SELECT * FROM subscribers_daily_report;
+\quit
+\dt
+SELECT * FROM dtra_assests_candidates;
+DELETE FROM dtra_assests_candidates WHERE id = 5;
+SELECT * FROM dtra_assests_candidates;
+CREATE TABLE IF NOT EXISTS broadcast_messages (id SERIAL, title TEXT, content TEXT, timestamp BIGINT);
+SELECT * FROM broadcast_messages;
+CREATE TABLE IF NOT EXISTS broadcast_status (id SERIAL, user_id INT, message_id INT);
+DELETE FROM broadcast_messages WHERE id = 1
+;
+SELECT * FROM broadcast_messages;
+DELETE FROM broadcast_messages WHERE id = 2;
+DROP TABLE broadcast_status;
+CREATE TABLE IF NOT EXISTS broadcast_status (id SERIAL, user_id TEXT, message_id INT);
+CREATE TABLE posts (id serial, title text, content text, author_id integer);
+SELECT * FROM posts
+;
+CREATE TABLE authors (id serial, fullname text, username text);
+ALTER TABLE posts ADD COLUMN timestamp integer;
+SELECT * FROM posts;
+CREATE TABLE comments (id serial, content text, author_id integer, timestamp integer);
+INSERT INTO posts VALUES('hello', 'test content', 1);
+INSERT INTO posts(title, content, author_id) VALUES('hello', 'test content', 1);
+SELECT * FROM posts;
+INSERT INTO authors(fullname, username) VALUES ('Alexandr Romanov', 'rmnff');
+INSERT INTO comments(content, author_id) VALUES('test comment', 1);
+SELECT * FROM posts p LEFT JOIN authors ON p.author_id = authors.id LEFT JOIN comments ON authors.id = comments.author_id
+;
+INSERT INTO posts(title, content, author_id) VALUES('hello #2', 'test content #2', 2);
+SELECT * FROM posts p LEFT JOIN authors ON p.author_id = authors.id LEFT JOIN comments ON authors.id = comments.author_id
+;
+SELECT * FROM posts p LEFT JOIN authors ON p.author_id = authors.id LEFT JOIN comments ON authors.id = comments.author_id WHERE author_id = 1;
+SELECT * FROM posts p LEFT JOIN authors ON p.author_id = authors.id LEFT JOIN comments ON authors.id = comments.author_id WHERE p.author_id = 1;
+SELECT * FROM posts p LEFT JOIN authors ON p.author_id = authors.id LEFT JOIN comments ON authors.id = comments.author_id WHERE p.author_id = (SELECT id FROM authors WHERE username = 'rmnff');
+SELECT * FROM posts;
+SELECT * FROM posts p LEFT JOIN authors ON p.author_id = authors.id LEFT JOIN comments ON authors.id = comments.author_id WHERE p.author_id = (SELECT id FROM authors WHERE username = 'rmnff');
+\quit
+SELECT * FROM cc_coins;
+SELECT * FROM cc_coins LIMIT 1;;
+CREATE TABLE IF NOT EXISTS cc_images (id serial, asset_id integer, image_data text);
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+SELECT * FROM cc_images;
+\q
+SELECT * FROM cc_images;
+\q
+\dt
+SELECT * FROM cc_images;
+SELECT * FROM cc_images LIMIT 1;
+SELECT * FROM cc_images LIMIT 10;
+SELECT * FROM cc_images;
+\dt
+SELECT * FROM cc_images_local;
+SELECT * FROM cc_images_local;
+SELECT * FROM cc_images_local;
+SELECT * FROM cc_images_local LIMIT 1;
+SELECT * FROM cc_images_local LIMIT 1;
+\dt
+SELECT * FROM cc_images_local LIMIT 1;
+\quit
+\q
+\q
+\dt
+\q
+\d+
+\q
+\d+ parties
+\d+ parties
+\q
+\d+ parties
+SELECT * FROM parties;
+\q
+\d+ parties
+SELECT * FROM parties;
+ALTER TABLE parties ADD COLUMN suspended BOOLEAN;
+ALTER TABLE parties ADD COLUMN is_suspended BOOLEAN;
+ALTER TABLE parties DROP COLUMN suspended;;
+\q
+\d+ users
+CREATE TABLE friends(user_id INT, friend_id INT);
+\q
+CREATE TABLE user_rating (user_id INT, reviewer_id INT, rating INT);
+ALTER TABLE users DROP COLUMN rating;
+\q
+\d+ users;
+\d+ users;
+\d+ party_guests
+\q
+\dy
+\dt
+\dt
+\q
+\dt
+\q
+\dt
+CREATE TABLE party_guests_pending(party_id INT, guest_id INT);
+\q
+\q
+CREATE DATABASE triprun;
+\q
+\q
+\dt
+\q
+\dt
+\q
+\q
+show dbs;
+show db
+\d
+\s prediction
