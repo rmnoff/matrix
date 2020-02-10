@@ -10,7 +10,7 @@ import (
   "strings"
   "encoding/json"
 
-  // "database/sql"
+  "database/sql"
   _ "github.com/lib/pq"
   "github.com/jmoiron/sqlx"
 
@@ -119,8 +119,8 @@ type ConstantText struct {
 type Prediction struct {
   Id int `db:"id"`
   Content string `db:"content"`
-  // Created sql.NullString `db:"created"`
-  // Edited sql.NullString `db:"edited"`
+  Created sql.NullString `db:"created"`
+  Edited sql.NullString `db:"edited"`
   Type int `db:"type_id"`
   Lang int `db:"lang_id"`
   Personal bool `db:"personal"`
@@ -304,8 +304,6 @@ func main() {
     predictions := []Prediction{}
     err = db.Select(&predictions, "SELECT * FROM prediction")
     if err != nil {
-      fmt.Println(err)
-      fmt.Println(predictions)
       return c.Write(Response{false, "Can't parse predictions", nil})
     }
     return c.Write(predictions)
