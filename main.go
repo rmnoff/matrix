@@ -1,7 +1,7 @@
 package main
 
 import (
-  // "os"
+  "os"
   "flag"
   "log"
   "fmt"
@@ -38,16 +38,16 @@ func parsePsqlElements(url string) (string, string, string, string, string) {
 }
 
 var (
-  // port      = os.Getenv("PORT")
+  port      = os.Getenv("PORT")
   port      = "8080"
   addr      = flag.String("addr", fmt.Sprintf(":%s", port), "TCP address to listen to")
-  // psqlURL   = os.Getenv("DATABASE_URL")
-  // dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
-  dblink   = "manny.db.elephantsql.com"
-  dbuname = "fzspbstv"
-  dbname = "fzspbstv"
-  dbpwd   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
-  dbport  = "5432"
+  psqlURL   = os.Getenv("DATABASE_URL")
+  dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
+  // dblink   = "manny.db.elephantsql.com"
+  // dbuname = "fzspbstv"
+  // dbname = "fzspbstv"
+  // dbpwd   = "ImSLvDaU_NNF1IvdEViKTqezbPwmnXMx"
+  // dbport  = "5432"
   psqlInfo  = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s" +
     " sslmode=disable", dblink, dbport, dbuname, dbpwd, dbname)
 )

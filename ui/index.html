@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script> -->
     <title>Административная панель</title>
     <style>
       html, body {
@@ -18,9 +20,20 @@
         align-items: center;
         font-family: 'Open Sans', sans-serif;
       }
+      #notifications {
+        cursor: pointer;
+        position: fixed;
+        right: 0px;
+        z-index: 9999;
+        bottom: 0px;
+        margin-bottom: 22px;
+        margin-right: 15px;
+        max-width: 300px;
+      }
     </style>
   </head>
   <body>
+    <div id="notifications"></div>
     <h1>Добавить запись в Базу Данных Matrix</h1>
     <form action="#">
       <p><b>Заполните все поля и нажмите кнопку внизу формы</b></p>
@@ -34,6 +47,51 @@
     </form>
     <p style="width: 100%; text-align: center;"><input type="submit" id="enter" value="Отправить"></p>
     <script>
+      const Notify = function(text, callback, close_callback, style) {
+
+      	var time = '10000';
+      	var $container = $('#notifications');
+      	var icon = '<i class="fa fa-info-circle "></i>';
+
+      	if (typeof style == 'undefined' ) style = 'warning'
+
+      	var html = $('<div class="alert alert-' + style + '  hide">' + icon +  " " + text + '</div>');
+
+      	// $('<a>',{
+      	// 	text: 'x',
+      	// 	class: 'button close',
+      	// 	style: 'padding-left: 10px;',
+      	// 	href: '#',
+      	// 	click: function(e){
+      	// 		e.preventDefault()
+      	// 		close_callback && close_callback()
+      	// 		remove_notice()
+      	// 	}
+      	// }).prependTo(html)
+
+      	$container.prepend(html)
+      	html.removeClass('hide').hide().fadeIn('slow')
+
+      	function remove_notice() {
+      		html.stop().fadeOut('slow').remove()
+      	}
+
+      	var timer =  setInterval(remove_notice, time);
+
+      	$(html).hover(function(){
+      		clearInterval(timer);
+      	}, function(){
+      		timer = setInterval(remove_notice, time);
+      	});
+
+      	html.on('click', function () {
+      		clearInterval(timer)
+      		callback && callback()
+      		remove_notice()
+      	});
+
+
+      }
       document.getElementById('enter').onclick = () => {
         fetch("https://upwork-matrix-test.herokuapp.com/api/v1/add", {
           method: "POST",
@@ -48,8 +106,8 @@
             language: document.getElementById("pred_lang").value
           })
         }).then(response => response.json()).then(data => {
-          if(data == 0) $('#enter').notify('Запись не добавлена, повторите попытку');
-          else $('#enter').notify(`Запись добавлена, можно переходить к следующей. ID записи - ${data}`);
+          if(data == 0) Notify('Запись не добавлена, повторите попытку');
+          else Notify(`Запись добавлена, можно переходить к следующей. ID записи - ${data}`, null, null, 'success');
         });
       };
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/types").then(response => response.json()).then(data => {
