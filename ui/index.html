@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
     <title>Административная панель</title>
     <style>
       html, body {
@@ -20,18 +22,36 @@
   </head>
   <body>
     <h1>Добавить запись в Базу Данных Matrix</h1>
-    <form action="/api/v1/add" method="POST">
+    <form action="#">
       <p><b>Заполните все поля и нажмите кнопку внизу формы</b></p>
       <p><b>Тип ответа: </b><select name="ptypeid" id="pred_types"></select></p>
       <p><b>Язык: </b><select name="language" id="pred_lang"></select></p>
       <p><b>Обращение: </b><select name="personal" id="pred_pers"></select></p>
       <p style="font-size: 12pt; color: red; font-weight: bold"><small>комбинация заполняется по типу: 11-01-20 (дефис разделяет числа)</small></p>
-      <p><b>Комбинация: </b><input name="combo" type="text" size="20"></p>
+      <p><b>Комбинация: </b><input name="combo" id="combination" type="text" size="20"></p>
       <p>Ответ <br />
-      <textarea name="prediction" name="comment" cols="70" rows="9"></textarea></p>
-      <p style="width: 100%; text-align: center;"><input type="submit" value="Отправить"></p>
+      <textarea name="prediction" id="pred" cols="70" rows="9"></textarea></p>
     </form>
+    <p style="width: 100%; text-align: center;"><input type="submit" id="enter" value="Отправить"></p>
     <script>
+      document.getElementById('enter').onclick = () => {
+        fetch("https://upwork-matrix-test.herokuapp.com/api/v1/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "appliction/json"
+          },
+          body: JSON.stringify({
+            ptypeid: document.getElementById("pred_types").value,
+            combo: document.getElementById("combination").value,
+            prediction: document.getElementById("pred").value,
+            personal: document.getElementById("pred_pers").value,
+            language: document.getElementById("pred_lang").value
+          })
+        }).then(response => response.json()).then(data => {
+          if(data == 0) $('#enter').notify('Запись не добавлена, повторите попытку');
+          else $('#enter').notify(`Запись добавлена, можно переходить к следующей. ID записи - ${data}`);
+        });
+      };
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/types").then(response => response.json()).then(data => {
         const tps = document.getElementById("pred_types");
         const lgs = document.getElementById("pred_lang");
