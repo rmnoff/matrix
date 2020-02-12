@@ -39,7 +39,7 @@ func parsePsqlElements(url string) (string, string, string, string, string) {
 
 var (
   port      = os.Getenv("PORT")
-  port      = "8080"
+  // port      = "8080"
   addr      = flag.String("addr", fmt.Sprintf(":%s", port), "TCP address to listen to")
   psqlURL   = os.Getenv("DATABASE_URL")
   dbuname, dbpwd, dblink, dbport, dbname = parsePsqlElements(psqlURL)
