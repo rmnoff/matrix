@@ -152,6 +152,11 @@ type ResponseTemplate struct {
   Data string `json:"data"`
 }
 
+type ResponseType struct {
+  Ok bool `json:"ok"`
+  Error string `json:"error"`
+  Data [][]PredictionType `json:"data"`
+}
 
 func main() {
   flag.Parse()
@@ -565,7 +570,7 @@ func main() {
     if err != nil {
       return c.Write(Response{false, "Can't parse languages", nil})
     }
-    return c.Write([][]PredictionType{types, langs})
+    return c.Write(ResponseType{true, "", [][]PredictionType{types, langs}})
   })
   api.Get("/show/predictions", func(c *routing.Context) error {
     predictions := []Prediction{}

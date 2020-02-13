@@ -114,14 +114,14 @@
         const tps = document.getElementById("pred_types");
         const lgs = document.getElementById("pred_lang");
         const prs = document.getElementById("pred_pers");
-        data[0].map((e) => {
+        data.data[0].map((e) => {
           const opt = document.createElement("option");
           opt.setAttribute("value", e.Id);
           const t = document.createTextNode(e.Name);
           opt.appendChild(t);
           tps.appendChild(opt);
         });
-        data[1].map((e) => {
+        data.data[1].map((e) => {
           const opt = document.createElement("option");
           opt.setAttribute("value", e.Id);
           const t = document.createTextNode(e.Name);
