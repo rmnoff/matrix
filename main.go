@@ -606,6 +606,7 @@ func main() {
     prediction := c.PostForm("prediction")
     personal := c.PostForm("personal")
     language := c.PostForm("language")
+    fmt.Println(ptypeid, combo, prediction, personal, language)
     currPrediction := Prediction{}
     db.Get(&currPrediction, "SELECT * FROM prediction ORDER BY id DESC LIMIT 1")
     tx := db.MustBegin()
