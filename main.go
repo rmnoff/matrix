@@ -242,11 +242,13 @@ func main() {
     fmt.Println(timestamp)
     fmt.Println(gender)
     if timestamp == "" {
-      return c.Write(Response{false, "No timestamp provided", nil})
+      marshalled, _ := json.Marshal(Response{false, "No timestamp provided", nil})
+      return c.Write(marshalled)
     }
     combo := countBD(timestamp)
     if combo == nil {
-      return c.Write(Response{false, "Timestamp corrupted", nil})
+      marshalled, _ := json.Marshal(Response{false, "Timestamp corrupted", nil})
+      return c.Write(marshalled)
     }
     finalCombos := setAllCombos(combo)
     // prog1 := fmt.Sprintf("prog1: [%v %v %v]", combo[0], finalCombos[3], finalCombos[2])
@@ -260,7 +262,8 @@ func main() {
     err = db.Get(&pastLifePrediction, "SELECT * FROM prediction WHERE type_id=1 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
     if err != nil {
       log.Println(err)
-      return c.Write(Response{false, "Can't parse past life prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse past life prediction", nil})
+      return c.Write(marshalled)
     }
 
     personalFeaturesPos := Prediction{}
@@ -275,17 +278,20 @@ func main() {
     err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=2 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo)
     if err != nil {
       log.Println(err)
-      return c.Write(Response{false, "Can't parse positive personal features", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features", nil})
+      return c.Write(marshalled)
     }
     err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo)
     if err != nil {
       log.Println(err)
-      return c.Write(Response{false, "Can't parse negative personal features", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features", nil})
+      return c.Write(marshalled)
     }
     err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=4 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo)
     if err != nil {
       log.Println(err)
-      return c.Write(Response{false, "Can't parse social personal features", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse social personal features", nil})
+      return c.Write(marshalled)
     }
 
     relationship := Prediction{}
@@ -294,7 +300,8 @@ func main() {
     err = db.Get(&relationship, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipCombo)
     if err != nil {
       log.Println(err)
-      return c.Write(Response{false, "Can't parse relationship prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse relationship prediction", nil})
+      return c.Write(marshalled)
     }
 
     lifeGuide := Prediction{}
@@ -303,7 +310,8 @@ func main() {
     err = db.Get(&lifeGuide, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo)
     if err != nil {
       log.Println(err)
-      return c.Write(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      return c.Write(marshalled)
     }
 
     sex := Prediction{}
@@ -312,7 +320,8 @@ func main() {
     err = db.Get(&sex, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo)
     if err != nil {
       log.Println(err)
-      return c.Write(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      return c.Write(marshalled)
     }
 
     data := []Prediction{pastLifePrediction, personalFeaturesPos, personalFeaturesNeg, personalFeaturesSoc, relationship, lifeGuide, sex}
@@ -327,8 +336,8 @@ func main() {
         }
       }
     }
-
-    return c.Write(Response{true, "", data})
+    marshalled, _ := json.Marshal(Response{true, "", data})
+    return c.Write(marshalled)
   })
 
   api.Get("/check/template/<input>", func(c *routing.Context) error {
@@ -564,22 +573,28 @@ func main() {
     langs := []PredictionType{}
     err = db.Select(&types, "SELECT * FROM predictionType")
     if err != nil {
-      return c.Write(Response{false, "Can't parse types", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse types", nil})
+      return c.Write(marshalled)
     }
     err = db.Select(&langs, "SELECT * FROM predictionLang")
     if err != nil {
-      return c.Write(Response{false, "Can't parse languages", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse languages", nil})
+      return c.Write(marshalled)
     }
-    return c.Write(ResponseType{true, "", [][]PredictionType{types, langs}})
+    marshalled, _ := json.Marshal(ResponseType{true, "", [][]PredictionType{types, langs}})
+    return c.Write(marshalled)
   })
+
   api.Get("/show/predictions", func(c *routing.Context) error {
     predictions := []Prediction{}
     err = db.Select(&predictions, "SELECT * FROM prediction")
     if err != nil {
-      return c.Write(Response{false, "Can't parse predictions", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse predictions", nil})
+      return c.Write(marshalled)
     }
     return c.Write(predictions)
   })
+
   api.Post("/add", func(c *routing.Context) error {
     ptypeid := c.PostForm("ptypeid")
     combo := c.PostForm("combo")
