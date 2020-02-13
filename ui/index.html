@@ -98,13 +98,13 @@
           headers: {
             "Content-Type": "appliction/json"
           },
-          body: JSON.stringify({
+          body: {
             ptypeid: document.getElementById("pred_types").value,
             combo: document.getElementById("combination").value,
             prediction: document.getElementById("pred").value,
             personal: document.getElementById("pred_pers").value,
             language: document.getElementById("pred_lang").value
-          })
+          }
         }).then(response => {
           console.log(response);
           return response.json();
