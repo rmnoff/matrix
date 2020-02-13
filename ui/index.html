@@ -104,10 +104,10 @@
             "Accept": "*/*",
             "Cache-Control": "no-cache",
             "Postman-Token": "805f6d8d-097c-4e6a-b648-65804fd41338,df58662f-d097-4756-b5c3-d3b29ebc95aa",
-            "Host": "upwork-matrix-test.herokuapp.com",
-            "Accept-Encoding": "gzip, deflate",
-            "Content-Length": "62",
-            "Connection": "keep-alive",
+            // "Host": "upwork-matrix-test.herokuapp.com",
+            // "Accept-Encoding": "gzip, deflate",
+            // "Content-Length": "62",
+            // "Connection": "keep-alive",
             "cache-control": "no-cache"
           },
           "data": {
@@ -119,8 +119,9 @@
           }
         }
         $.ajax(settings).done(function (response) {
-          if(JSON.parse(response).id == 0) Notify('Запись не добавлена, повторите попытку');
-          else Notify(`Запись добавлена, можно переходить к следующей. ID записи - ${JSON.parse(response).id}`, null, null, 'success');
+          console.log(response);
+          if(response.id == 0) Notify('Запись не добавлена, повторите попытку');
+          else Notify(`Запись добавлена, можно переходить к следующей. ID записи - ${response.id}`, null, null, 'success');
         });
         // fetch("https://upwork-matrix-test.herokuapp.com/api/v1/add", {
         //   method: "POST",
