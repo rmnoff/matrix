@@ -50,6 +50,7 @@ var (
   // dbport  = "5432"
   psqlInfo  = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s" +
     " sslmode=disable", dblink, dbport, dbuname, dbpwd, dbname)
+  birthdate = "834883200"
 )
 
 var schema = `
@@ -142,6 +143,12 @@ type Response struct {
   Ok bool `json:"ok"`
   Error string `json:"error"`
   Data []Prediction `json:"data"`
+}
+
+type ResponseTemplate struct {
+  Ok bool `json:"ok"`
+  Error string `json:"error"`
+  Data string `json:"data"`
 }
 
 
@@ -302,6 +309,235 @@ func main() {
 
     return c.Write(Response{true, "", data})
   })
+
+  api.Get("/check/template/<input>", func(c *routing.Context) error {
+
+    return c.Write(ResponseTemplate{true, "", `{
+      "ok": true,
+      "data": [
+        {
+          "imageName": "personal_features",
+          "title": "Personal feautures",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "expandable",
+              "title": "В позитивном состоянии",
+              "text": "Текст про позитивное состояние человека и небольшой ответ.",
+              "tintColor": null
+            },
+            {
+              "type": "expandable",
+              "title": "В негативном состоянии",
+              "text": "Большой и объемный ответ, где раскрываются особенности человека в негативном состоянии. Чего стоит избегать, а что стоит в таком состоянии делать - все рассказывается в этом пункте раздела персональных особенностей.",
+              "tintColor": null
+            },
+            {
+              "type": "expandable",
+              "title": "Общение",
+              "text": "Каков человек в общении? Расскажет этот раздел, как только база данных будет заполнена.",
+              "tintColor": null
+            }
+          ]
+        },
+        {
+          "imageName": "destiny",
+          "title": "Destiny",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общая информация",
+              "text": "Здесь рассказывается о предназначении человека непосредственно в той жизни, которой он сейчас живет",
+              "tintColor": null
+            },
+            {
+              "type": "expandable",
+              "title": "Важно",
+              "text": "Отдельный пункт \"важно\", где рассказывается о какой-то особенности человека",
+              "tintColor": null
+            }
+          ]
+        },
+        {
+          "imageName": "children",
+          "title": "Children",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "expandable",
+              "title": "Важно",
+              "text": "Здесь иногда бывает текст, но нечасто, потому что не у всех есть",
+              "tintColor": null
+            },
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела дети",
+              "tintColor": null
+            }
+          ]
+        },
+        {
+          "imageName": "life_guidance",
+          "title": "Life Guidance",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела уроки жизни",
+              "tintColor": null
+            }
+          ]
+        },
+        {
+          "imageName": "money",
+          "title": "Money",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела деньги",
+              "tintColor": null
+            },
+            {
+              "type": "info",
+              "title": "Для достижения успеха",
+              "text": "Общая информация раздела деньги, подраздел для достижения успеха",
+              "tintColor": null
+            },
+            {
+              "type": "expandable",
+              "title": "Важно",
+              "text": "Общая информация раздела деньги, подраздел важно",
+              "tintColor": null
+            }
+          ]
+        },
+        {
+          "imageName": "parents",
+          "title": "Parents",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела родители",
+              "tintColor": null
+            },
+            {
+              "type": "info",
+              "title": "Обиды на родителей",
+              "text": "Общая информация раздела родители, подраздел обиды на родителей",
+              "tintColor": null
+            },
+            {
+              "type": "expandable",
+              "title": "Важно",
+              "text": "Общая информация раздела родители, подраздел важно",
+              "tintColor": null
+            },
+            {
+              "type": "expandable",
+              "title": "Важно",
+              "text": "Общая информация раздела родители, подраздел программы",
+              "tintColor": null
+            }
+          ]
+        },
+        {
+          "imageName": "previous_life",
+          "title": "Previous Life",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела прошлая жизнь. Если в этот раздел нужно добавить еще категории - напишите Саше.",
+              "tintColor": null
+
+            }
+          ]
+        },
+        {
+          "imageName": "programs",
+          "title": "Programs",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Программа 1",
+              "text": "Общая информация по разделу программы",
+              "tintColor": null
+            },
+            {
+              "type": "info",
+              "title": "Программа 2",
+              "text": "Общая информация по разделу программы",
+              "tintColor": null
+            },
+            {
+              "type": "info",
+              "title": "Программа 3",
+              "text": "Общая информация по разделу программы",
+              "tintColor": null
+            },
+            {
+              "type": "info",
+              "title": "Программа 4",
+              "text": "Общая информация по разделу программы",
+              "tintColor": null
+            }
+          ]
+        },
+        {
+          "imageName": "relationships",
+          "title": "Relationships",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела отношения. Если в этот раздел нужно добавить еще категории - напишите Саше.",
+              "tintColor": null
+
+            }
+          ]
+        },
+        {
+          "imageName": "sexiness",
+          "title": "Sexiness",
+          "blockType": "default",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела сексуальность. Если в этот раздел нужно добавить еще категории - напишите Саше.",
+              "tintColor": null
+
+            }
+          ]
+        },
+        {
+          "imageName": "health",
+          "title": "Health",
+          "blockType": "health",
+          "blocks": [
+            {
+              "type": "info",
+              "title": "Общее",
+              "text": "Общая информация раздела здоровье. Если в этот раздел нужно добавить еще категории - напишите Саше.",
+              "tintColor": null
+            }
+          ]
+        }
+      ]
+    }
+`})
+  })
+
   api.Get("/show/types", func(c *routing.Context) error {
     types := []PredictionType{}
     langs := []PredictionType{}
