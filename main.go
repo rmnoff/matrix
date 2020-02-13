@@ -202,7 +202,7 @@ func main() {
 		fault.Recovery(log.Printf),
 	)
   router.Use(func(req *routing.Context) error {
-		origin := string(req.Request.Header.Peek("Origin"))
+		// origin := string(req.Request.Header.Peek("Origin"))
 		req.Response.Header.Set("Content-Type", "application/json; charset=UTF-8")
 		if err := req.Next(); err != nil {
 			if httpError, ok := err.(routing.HTTPError); ok {
