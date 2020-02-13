@@ -93,26 +93,54 @@
 
       }
       document.getElementById('enter').onclick = () => {
-        fetch("https://upwork-matrix-test.herokuapp.com/api/v1/add", {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            "Content-Type": "appliction/json"
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "https://upwork-matrix-test.herokuapp.com/api/v1/add",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "PostmanRuntime/7.20.1",
+            "Accept": "*/*",
+            "Cache-Control": "no-cache",
+            "Postman-Token": "805f6d8d-097c-4e6a-b648-65804fd41338,df58662f-d097-4756-b5c3-d3b29ebc95aa",
+            "Host": "upwork-matrix-test.herokuapp.com",
+            "Accept-Encoding": "gzip, deflate",
+            "Content-Length": "62",
+            "Connection": "keep-alive",
+            "cache-control": "no-cache"
           },
-          body: JSON.stringify({
-            ptypeid: document.getElementById("pred_types").value,
-            combo: document.getElementById("combination").value,
-            prediction: document.getElementById("pred").value,
-            personal: document.getElementById("pred_pers").value,
-            language: document.getElementById("pred_lang").value
-          })
-        }).then(response => {
-          console.log(response);
-          return response.json();
-        }).then(data => {
-          if(data == 0) Notify('Запись не добавлена, повторите попытку');
-          else Notify(`Запись добавлена, можно переходить к следующей. ID записи - ${data}`, null, null, 'success');
+          "data": {
+            "ptypeid": document.getElementById("pred_types").value,
+            "combo": document.getElementById("combination").value,
+            "prediction": document.getElementById("pred").value,
+            "personal": document.getElementById("pred_pers").value,
+            "language": document.getElementById("pred_lang").value
+          }
+        }
+        $.ajax(settings).done(function (response) {
+          if(JSON.parse(response).id == 0) Notify('Запись не добавлена, повторите попытку');
+          else Notify(`Запись добавлена, можно переходить к следующей. ID записи - ${JSON.parse(response).id}`, null, null, 'success');
         });
+        // fetch("https://upwork-matrix-test.herokuapp.com/api/v1/add", {
+        //   method: "POST",
+        //   headers: {
+        //     'Accept': 'application/json',
+        //     "Content-Type": "appliction/json"
+        //   },
+        //   body: JSON.stringify({
+        //     ptypeid: ,
+        //     combo: ,
+        //     prediction: ,
+        //     personal: ,
+        //     language:
+        //   })
+        // }).then(response => {
+        //   console.log(response);
+        //   return response.json();
+        // }).then(data => {
+        //
+        // });
       };
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/types").then(response => response.json()).then(data => {
         const tps = document.getElementById("pred_types");
