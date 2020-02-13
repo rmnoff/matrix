@@ -204,16 +204,6 @@ func main() {
   router.Use(func(req *routing.Context) error {
 		origin := string(req.Request.Header.Peek("Origin"))
 		req.Response.Header.Set("Content-Type", "application/json; charset=UTF-8")
-		req.Response.Header.Set("Vary", "Origin")
-		req.Response.Header.Set("Vary", "Access-Control-Request-Method")
-		req.Response.Header.Set("Vary", "Access-Control-Request-Headers")
-		req.Response.Header.Set("Access-Control-Allow-Origin", origin)
-		req.Response.Header.Set("Access-Control-Allow-Credentials", "true")
-		req.Response.Header.Set("Access-Control-Allow-Methods", "GET,HEAD,PUT,POST,DELETE")
-		req.Response.Header.Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-		if string(req.Method()) == "OPTIONS" {
-			req.Abort()
-		}
 		if err := req.Next(); err != nil {
 			if httpError, ok := err.(routing.HTTPError); ok {
 				req.Response.SetStatusCode(httpError.StatusCode())
