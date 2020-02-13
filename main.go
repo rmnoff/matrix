@@ -8,6 +8,7 @@ import (
   "time"
   "strconv"
   "strings"
+  "net/http"
   "encoding/json"
 
   "database/sql"
@@ -15,7 +16,7 @@ import (
   "github.com/jmoiron/sqlx"
 
   "github.com/jackwhelpton/fasthttp-routing"
-  "github.com/jackwhelpton/fasthttp-routing/content"
+  // "github.com/jackwhelpton/fasthttp-routing/content"
   "github.com/jackwhelpton/fasthttp-routing/fault"
   "github.com/jackwhelpton/fasthttp-routing/slash"
   "github.com/jackwhelpton/fasthttp-routing/access"
@@ -200,8 +201,33 @@ func main() {
 		slash.Remover(fasthttp.StatusMovedPermanently),
 		fault.Recovery(log.Printf),
 	)
+  router.Use(func(req *routing.Context) error {
+		origin := string(req.Request.Header.Peek("Origin"))
+		req.Response.Header.Set("Content-Type", "application/json; charset=UTF-8")
+		req.Response.Header.Set("Vary", "Origin")
+		req.Response.Header.Set("Vary", "Access-Control-Request-Method")
+		req.Response.Header.Set("Vary", "Access-Control-Request-Headers")
+		req.Response.Header.Set("Access-Control-Allow-Origin", origin)
+		req.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+		req.Response.Header.Set("Access-Control-Allow-Methods", "GET,HEAD,PUT,POST,DELETE")
+		req.Response.Header.Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		if string(req.Method()) == "OPTIONS" {
+			req.Abort()
+		}
+		if err := req.Next(); err != nil {
+			if httpError, ok := err.(routing.HTTPError); ok {
+				req.Response.SetStatusCode(httpError.StatusCode())
+			} else {
+				req.Response.SetStatusCode(http.StatusInternalServerError)
+			}
+			req.SetContentType("application/json; charset=UTF-8")
+			req.SetBody([]byte("lol"))
+		}
+		return nil
+	})
+
   api := router.Group("/api/v1")
-  api.Use(content.TypeNegotiator(content.JSON))
+  // api.Use(content.TypeNegotiator(content.JSON))
 	api.Get("/healthcheck", func(c *routing.Context) error {
 		return c.Write(`{"ok": true, "error": null}`)
 	})
@@ -311,7 +337,7 @@ func main() {
   })
 
   api.Get("/check/template/<input>", func(c *routing.Context) error {
-
+    c.SetContentType("application/json; charset=utf8")
     return c.Write(ResponseTemplate{true, "", `{
       "ok": true,
       "data": [
