@@ -338,7 +338,7 @@ func main() {
 
   api.Get("/check/template/<input>", func(c *routing.Context) error {
     c.SetContentType("application/json; charset=utf8")
-    return c.Write(ResponseTemplate{true, "", `{
+    return c.Write(`{
       "ok": true,
       "data": [
         {
@@ -561,7 +561,7 @@ func main() {
         }
       ]
     }
-`})
+    `)
   })
 
   api.Get("/show/types", func(c *routing.Context) error {
