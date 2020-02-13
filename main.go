@@ -158,6 +158,10 @@ type ResponseType struct {
   Data [][]PredictionType `json:"data"`
 }
 
+type ResponseAdd struct {
+  Id int `json:"id"`
+}
+
 func main() {
   flag.Parse()
 
@@ -592,7 +596,8 @@ func main() {
       marshalled, _ := json.Marshal(Response{false, "Can't parse predictions", nil})
       return c.Write(marshalled)
     }
-    return c.Write(predictions)
+    marshalled, _ := json.Marshal(Response{true, "", predictions})
+    return c.Write(marshalled)
   })
 
   api.Post("/add", func(c *routing.Context) error {
@@ -607,7 +612,8 @@ func main() {
     tx.MustExec(`INSERT INTO prediction(content,type_id,personal,lang_id) VALUES($1,$2,$3,$4)`, prediction, ptypeid, personal, language)
     tx.MustExec(`INSERT INTO predictionRel(prediction_id,combination) VALUES($1,$2)`, currPrediction.Id + 1, combo)
     tx.Commit()
-    return c.Write(currPrediction.Id + 1)
+    marshalled, _ := json.Marshal(ResponseAdd{currPrediction.Id + 1})
+    return c.Write(marshalled)
   })
 
   router.Get("/", file.Content("ui/index.html"))
