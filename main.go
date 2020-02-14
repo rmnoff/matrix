@@ -170,6 +170,12 @@ type ResponseAdd struct {
   Id int `json:"id"`
 }
 
+type Language struct {
+  Id int `db:"id"`
+  Name string `db:"name"`
+  Short string `db:"short"`
+}
+
 func main() {
   flag.Parse()
 
@@ -260,9 +266,11 @@ func main() {
 
   api.Get("/check/<input>", func(c *routing.Context) error {
     input := c.Param("input")
-    timestamp := input[:len(input) - 1]
-    gender := input[len(input) - 1:]
-    fmt.Println(timestamp, gender)
+    timestamp := input[:len(input) - 4]
+    gender := input[len(input) - 4:]
+    personal := input[len(input) - 3:]
+    languageShort := input[len(input) - 1:]
+    fmt.Println(timestamp, gender, personal, languageShort)
     if timestamp == "" {
       marshalled, _ := json.Marshal(Response{false, "No timestamp provided", nil})
       return c.Write(marshalled)
@@ -279,13 +287,24 @@ func main() {
     // prog4 := fmt.Sprintf("prog4: [%v %v %v]", finalCombos[13], finalCombos[15], finalCombos[19])
     // prog5 := fmt.Sprintf("prog5: [%v %v %v]", finalCombos[16], finalCombos[14], finalCombos[20])
 
+    isPersonal := false
+    if personal == "p" {
+      isPersonal = true
+    }
+
+    language := Language{}
+    err = db.Get(&language, "SELECT * FROM predictionlang WHERE short = $1", languageShort)
+    if err != nil {
+      language.Id = 1
+    }
+
     pastLife := Prediction{}
     pastLifeBlock := Block{}
     pastLifeBlock.Type = "info"
     pastLifeBlock.Title = "Previous Life Common"
     pastLifePredictionCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
     fmt.Println(pastLifePredictionCombo)
-    err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=9 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
+    err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=9 AND personal=$2 AND language=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse past life prediction", nil})
@@ -294,6 +313,7 @@ func main() {
     pastLife.Title = "Previous Life"
     pastLife.Blocks = []Block{pastLifeBlock}
     pastLife.BlockType = "default"
+    fmt.Println(pastLife)
 
     personalFeatures := Prediction{}
     personalFeaturesPos := Block{}
