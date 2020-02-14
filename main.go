@@ -119,15 +119,23 @@ type ConstantText struct {
 }
 
 type Prediction struct {
+  ImageName string `json:"ImageName"`
+  Title string `json:"Title"`
+  BlockType string `json:"BlockType"`
+  Blocks []Block `json:"Blocks"`
+}
+
+type Block struct {
   Id int `db:"id"`
   Content string `db:"content"`
   Created sql.NullString `db:"created"`
   Edited sql.NullString `db:"edited"`
-  Type int `db:"type_id"`
+  PredType int `db:"type_id"`
   Lang int `db:"lang_id"`
   Personal bool `db:"personal"`
-  // Foreword []ConstantText `db:"foreword"`
-  // ImageName sql.NullString `json:"imageName"`
+  Type string `json:Type`
+  Title string `json:Title`
+  TintColor *string `json:TintColor`
 }
 
 type PredictionType struct {
@@ -239,12 +247,22 @@ func main() {
   api.Post("/auth", func(c *routing.Context) error {
 		return c.Write(`{"ok": true, "error": null, "data": "Future authorisation end"}`)
   })
+
+
+
+
+
+
+
+
+
+
+
   api.Get("/check/<input>", func(c *routing.Context) error {
     input := c.Param("input")
     timestamp := input[:len(input) - 1]
     gender := input[len(input) - 1:]
-    fmt.Println(timestamp)
-    fmt.Println(gender)
+    fmt.Println(timestamp, gender)
     if timestamp == "" {
       marshalled, _ := json.Marshal(Response{false, "No timestamp provided", nil})
       return c.Write(marshalled)
@@ -261,24 +279,34 @@ func main() {
     // prog4 := fmt.Sprintf("prog4: [%v %v %v]", finalCombos[13], finalCombos[15], finalCombos[19])
     // prog5 := fmt.Sprintf("prog5: [%v %v %v]", finalCombos[16], finalCombos[14], finalCombos[20])
 
-    pastLifePrediction := Prediction{}
+    pastLife := Prediction{}
+    pastLifeBlock := Block{}
+    pastLifeBlock.Type = "info"
+    pastLifeBlock.Title = "Previous Life Common"
     pastLifePredictionCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
-    err = db.Get(&pastLifePrediction, "SELECT * FROM prediction WHERE type_id=1 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
+    err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=1 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse past life prediction", nil})
       return c.Write(marshalled)
     }
+    pastLife.Title = "Previous Life"
+    pastLife.Blocks = []Block{pastLifeBlock}
+    pastLife.BlockType = "default"
 
-    personalFeaturesPos := Prediction{}
+    personalFeatures := Prediction{}
+    personalFeaturesPos := Block{}
+    personalFeaturesPos.Type = "info"
+    personalFeaturesPos.Title = "Personal Features Positive"
     personalFeaturesPosCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
-    personalFeaturesNeg := Prediction{}
+    personalFeaturesNeg := Block{}
+    personalFeaturesNeg.Type = "info"
+    personalFeaturesNeg.Title = "Personal Features Negative"
     personalFeaturesNegCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
-    personalFeaturesSoc := Prediction{}
+    personalFeaturesSoc := Block{}
+    personalFeaturesSoc.Type = "info"
+    personalFeaturesSoc.Title = "Personal Features Social"
     personalFeaturesSocCombo := fmt.Sprintf("%d", finalCombos[1])
-    fmt.Println(personalFeaturesPosCombo)
-    fmt.Println(personalFeaturesNegCombo)
-    fmt.Println(personalFeaturesSocCombo)
     err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=2 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo)
     if err != nil {
       log.Println(err)
@@ -297,52 +325,85 @@ func main() {
       marshalled, _ := json.Marshal(Response{false, "Can't parse social personal features", nil})
       return c.Write(marshalled)
     }
+    personalFeatures.Title = "Personal Features"
+    personalFeatures.Blocks = []Block{personalFeaturesPos,personalFeaturesNeg,personalFeaturesSoc}
+    personalFeatures.BlockType = "default"
 
     relationship := Prediction{}
+    relationshipBlock := Block{}
+    relationshipBlock.Type = "info"
+    relationshipBlock.Title = "Relationship Common"
     relationshipCombo := fmt.Sprintf("%d-%d-%d", finalCombos[11], finalCombos[8], finalCombos[10])
     fmt.Println(relationshipCombo)
-    err = db.Get(&relationship, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipCombo)
+    err = db.Get(&relationshipBlock, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse relationship prediction", nil})
       return c.Write(marshalled)
     }
+    relationship.Title = "Relationship"
+    relationship.Blocks = []Block{relationshipBlock}
+    relationship.BlockType = "default"
 
     lifeGuide := Prediction{}
+    lifeGuideBlock := Block{}
+    lifeGuideBlock.Type = "info"
+    lifeGuideBlock.Title = "Life Guide Common"
     lifeGuideCombo := fmt.Sprintf("%d-%d-%d", combo[0], combo[1], finalCombos[1])
     fmt.Println(lifeGuideCombo)
-    err = db.Get(&lifeGuide, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo)
+    err = db.Get(&lifeGuideBlock, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
       return c.Write(marshalled)
     }
+    lifeGuide.Title = "Life Guide"
+    lifeGuide.Blocks = []Block{lifeGuideBlock}
+    lifeGuide.BlockType = "default"
 
     sex := Prediction{}
+    sexBlock := Block{}
+    sexBlock.Type = "info"
+    sexBlock.Title = "Sexiness Common"
     sexCombo := fmt.Sprintf("%d-%d-%d", finalCombos[1], finalCombos[17], finalCombos[18])
     fmt.Println(sexCombo)
-    err = db.Get(&sex, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo)
+    err = db.Get(&sexBlock, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
       return c.Write(marshalled)
     }
+    sex.Title = "Sexiness"
+    sex.Blocks = []Block{sexBlock}
+    sex.BlockType = "default"
 
-    data := []Prediction{pastLifePrediction, personalFeaturesPos, personalFeaturesNeg, personalFeaturesSoc, relationship, lifeGuide, sex}
-    for _, content := range data {
-      contentbygender := ContentByGender{}
-      err := json.Unmarshal([]byte(content.Content), &contentbygender)
-      if err == nil {
-        if gender == "m" {
-          content.Content = contentbygender.Male
-        } else {
-          content.Content = contentbygender.Female
-        }
-      }
-    }
+    data := []Prediction{pastLife, personalFeatures, relationship, lifeGuide, sex}
+    // for _, content := range data {
+    //   contentbygender := ContentByGender{}
+    //   err := json.Unmarshal([]byte(content.Content), &contentbygender)
+    //   if err == nil {
+    //     if gender == "m" {
+    //       content.Content = contentbygender.Male
+    //     } else {
+    //       content.Content = contentbygender.Female
+    //     }
+    //   }
+    // }
     marshalled, _ := json.Marshal(Response{true, "", data})
     return c.Write(marshalled)
   })
+
+
+
+
+
+
+
+
+
+
+
+
 
   api.Get("/check/template/<input>", func(c *routing.Context) error {
     c.SetContentType("application/json; charset=utf8")
@@ -607,7 +668,7 @@ func main() {
     personal := c.PostForm("personal")
     language := c.PostForm("language")
     fmt.Println(ptypeid, combo, prediction, personal, language)
-    currPrediction := Prediction{}
+    currPrediction := Block{}
     db.Get(&currPrediction, "SELECT * FROM prediction ORDER BY id DESC LIMIT 1")
     tx := db.MustBegin()
     tx.MustExec(`INSERT INTO prediction(content,type_id,personal,lang_id) VALUES($1,$2,$3,$4)`, prediction, ptypeid, personal, language)
