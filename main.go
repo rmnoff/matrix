@@ -304,7 +304,6 @@ func main() {
     pastLifeBlock.Title = "Previous Life Common"
     pastLifePredictionCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
     fmt.Println(pastLifePredictionCombo)
-    fmt.Println(fmt.Sprintf("SELECT * FROM prediction WHERE type_id=9 AND personal=%v AND lang_id=%d AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=%s)", isPersonal, language.Id, pastLifePredictionCombo))
     err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=9 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
@@ -314,7 +313,6 @@ func main() {
     pastLife.Title = "Previous Life"
     pastLife.Blocks = []Block{pastLifeBlock}
     pastLife.BlockType = "default"
-    fmt.Println(pastLife)
 
     personalFeatures := Prediction{}
     personalFeaturesPos := Block{}
@@ -329,19 +327,19 @@ func main() {
     personalFeaturesSoc.Type = "info"
     personalFeaturesSoc.Title = "Personal Features Social"
     personalFeaturesSocCombo := fmt.Sprintf("%d", finalCombos[1])
-    err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=1 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo)
+    err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=1 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features", nil})
       return c.Write(marshalled)
     }
-    err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=2 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo)
+    err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=2 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features", nil})
       return c.Write(marshalled)
     }
-    err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo)
+    err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=3 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse social personal features", nil})
