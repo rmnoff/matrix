@@ -284,7 +284,7 @@ func main() {
     pastLifeBlock.Type = "info"
     pastLifeBlock.Title = "Previous Life Common"
     pastLifePredictionCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
-    err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=1 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
+    err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=9 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse past life prediction", nil})
@@ -307,19 +307,19 @@ func main() {
     personalFeaturesSoc.Type = "info"
     personalFeaturesSoc.Title = "Personal Features Social"
     personalFeaturesSocCombo := fmt.Sprintf("%d", finalCombos[1])
-    err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=2 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo)
+    err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=1 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features", nil})
       return c.Write(marshalled)
     }
-    err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo)
+    err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=2 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features", nil})
       return c.Write(marshalled)
     }
-    err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=4 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo)
+    err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse social personal features", nil})
@@ -351,7 +351,7 @@ func main() {
     lifeGuideBlock.Title = "Life Guide Common"
     lifeGuideCombo := fmt.Sprintf("%d-%d-%d", combo[0], combo[1], finalCombos[1])
     fmt.Println(lifeGuideCombo)
-    err = db.Get(&lifeGuideBlock, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo)
+    err = db.Get(&lifeGuideBlock, "SELECT * FROM prediction WHERE type_id=11 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
@@ -367,7 +367,7 @@ func main() {
     sexBlock.Title = "Sexiness Common"
     sexCombo := fmt.Sprintf("%d-%d-%d", finalCombos[1], finalCombos[17], finalCombos[18])
     fmt.Println(sexCombo)
-    err = db.Get(&sexBlock, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo)
+    err = db.Get(&sexBlock, "SELECT * FROM prediction WHERE type_id=228 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
