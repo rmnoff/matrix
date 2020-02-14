@@ -304,7 +304,7 @@ func main() {
     pastLifeBlock.Title = "Previous Life Common"
     pastLifePredictionCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
     fmt.Println(pastLifePredictionCombo)
-    err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=9 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo, isPersonal, language.Id)
+    err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=9 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse past life prediction", nil})
