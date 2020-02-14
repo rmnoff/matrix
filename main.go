@@ -284,6 +284,7 @@ func main() {
     pastLifeBlock.Type = "info"
     pastLifeBlock.Title = "Previous Life Common"
     pastLifePredictionCombo := fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0])
+    fmt.Println(pastLifePredictionCombo)
     err = db.Get(&pastLifeBlock, "SELECT * FROM prediction WHERE type_id=9 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", pastLifePredictionCombo)
     if err != nil {
       log.Println(err)
