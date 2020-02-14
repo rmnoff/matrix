@@ -267,8 +267,8 @@ func main() {
   api.Get("/check/<input>", func(c *routing.Context) error {
     input := c.Param("input")
     timestamp := input[:len(input) - 4]
-    gender := input[(len(input) - 3) - 4:]
-    personal := input[(len(input) - 2) - 3:]
+    gender := string(input[len(input) - 4])
+    personal := string(input[len(input) - 3])
     languageShort := input[len(input) - 2:]
     fmt.Println(timestamp, gender, personal, languageShort)
     if timestamp == "" {
