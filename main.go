@@ -355,7 +355,7 @@ func main() {
     relationshipBlock.Title = "Relationship Common"
     relationshipCombo := fmt.Sprintf("%d-%d-%d", finalCombos[11], finalCombos[8], finalCombos[10])
     fmt.Println(relationshipCombo)
-    err = db.Get(&relationshipBlock, "SELECT * FROM prediction WHERE type_id=5 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipCombo)
+    err = db.Get(&relationshipBlock, "SELECT * FROM prediction WHERE type_id=5 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse relationship prediction", nil})
@@ -371,7 +371,7 @@ func main() {
     lifeGuideBlock.Title = "Life Guide Common"
     lifeGuideCombo := fmt.Sprintf("%d-%d-%d", combo[0], combo[1], finalCombos[1])
     fmt.Println(lifeGuideCombo)
-    err = db.Get(&lifeGuideBlock, "SELECT * FROM prediction WHERE type_id=11 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo)
+    err = db.Get(&lifeGuideBlock, "SELECT * FROM prediction WHERE type_id=11 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
@@ -387,7 +387,7 @@ func main() {
     sexBlock.Title = "Sexiness Common"
     sexCombo := fmt.Sprintf("%d-%d-%d", finalCombos[1], finalCombos[17], finalCombos[18])
     fmt.Println(sexCombo)
-    err = db.Get(&sexBlock, "SELECT * FROM prediction WHERE type_id=228 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo)
+    err = db.Get(&sexBlock, "SELECT * FROM prediction WHERE type_id=228 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
