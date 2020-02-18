@@ -387,9 +387,13 @@ func main() {
 
     relationship := Prediction{}
     relationshipBlock := Block{}
+    relationshipBlockSecond := Block{}
+    relationshipBlockThird := Block{}
     relationshipBlock.Type = "info"
     relationshipBlock.Title = "Relationship Common"
-    relationshipCombo := fmt.Sprintf("%d-%d-%d", finalCombos[11], finalCombos[8], finalCombos[10])
+    relationshipCombo := fmt.Sprintf("%d", finalCombos[11])
+    relationshipComboSecond := fmt.Sprintf("%d", finalCombos[8])
+    relationshipComboThird := fmt.Sprintf("%d", finalCombos[10])
     fmt.Println(relationshipCombo)
     err = db.Get(&relationshipBlock, "SELECT * FROM prediction WHERE type_id=5 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipCombo, isPersonal, language.Id)
     if err != nil {
@@ -397,15 +401,32 @@ func main() {
       marshalled, _ := json.Marshal(Response{false, "Can't parse relationship prediction", nil})
       return c.Write(marshalled)
     }
+    err = db.Get(&relationshipBlockSecond, "SELECT * FROM prediction WHERE type_id=5 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipComboSecond, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse relationship prediction", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&relationshipBlockThird, "SELECT * FROM prediction WHERE type_id=5 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", relationshipComboThird, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse relationship prediction", nil})
+      return c.Write(marshalled)
+    }
+    relationshipBlock.Content = fmt.Sprintf("%s %s %s", relationshipBlock.Content, relationshipBlockSecond.Content, relationshipBlockThird.Content)
     relationship.Title = "Relationship"
     relationship.Blocks = []Block{relationshipBlock}
     relationship.BlockType = "default"
 
     lifeGuide := Prediction{}
     lifeGuideBlock := Block{}
+    lifeGuideBlockSecond := Block{}
+    lifeGuideBlockThird := Block{}
     lifeGuideBlock.Type = "info"
     lifeGuideBlock.Title = "Life Guide Common"
-    lifeGuideCombo := fmt.Sprintf("%d-%d-%d", combo[0], combo[1], finalCombos[1])
+    lifeGuideCombo := fmt.Sprintf("%d", combo[0])
+    lifeGuideSecondCombo := fmt.Sprintf("%d", combo[1])
+    lifeGuideThirdCombo := fmt.Sprintf("%d", finalCombos[1])
     fmt.Println(lifeGuideCombo)
     err = db.Get(&lifeGuideBlock, "SELECT * FROM prediction WHERE type_id=11 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo, isPersonal, language.Id)
     if err != nil {
@@ -413,6 +434,19 @@ func main() {
       marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
       return c.Write(marshalled)
     }
+    err = db.Get(&lifeGuideBlockSecond, "SELECT * FROM prediction WHERE type_id=11 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideSecondCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&lifeGuideBlockThird, "SELECT * FROM prediction WHERE type_id=11 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideThirdCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      return c.Write(marshalled)
+    }
+    lifeGuideBlock.Content = fmt.Sprintf("%s %s %s", lifeGuideBlock.Content, lifeGuideBlockSecond.Content, lifeGuideBlockThird.Content)
     lifeGuide.Title = "Life Guide"
     lifeGuide.Blocks = []Block{lifeGuideBlock}
     lifeGuide.BlockType = "default"
