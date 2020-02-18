@@ -298,24 +298,6 @@ func main() {
       language.Id = 1
     }
 
-    // ooh, all combos in one place!
-    fmt.Println("Past life")
-    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0]))
-    fmt.Println("Personal features positive")
-    fmt.Println(fmt.Sprintf("%d-%d", combo[0], combo[1]))
-    fmt.Println("Personal features negative")
-    fmt.Println(fmt.Sprintf("%d-%d", combo[0], combo[1]))
-    fmt.Println("Personal features social")
-    fmt.Println(fmt.Sprintf("%d", finalCombos[1]))
-    fmt.Println("Relationship")
-    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[11], finalCombos[8], finalCombos[10]))
-    fmt.Println("Life Guide")
-    fmt.Println(fmt.Sprintf("%d-%d-%d", combo[0], combo[1], finalCombos[1]))
-    fmt.Println("Sexiness")
-    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[1], finalCombos[17], finalCombos[18]))
-    fmt.Println("Destiny")
-    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[21], finalCombos[22], finalCombos[23]))
-
     pastLife := Prediction{}
     pastLifeBlock := Block{}
     pastLifeBlock.Type = "info"
@@ -352,26 +334,26 @@ func main() {
     err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=1 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features 1", nil})
       return c.Write(marshalled)
     }
     err = db.Get(&personalFeaturesPosSecond, "SELECT * FROM prediction WHERE type_id=1 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosSecondCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features 2", nil})
       return c.Write(marshalled)
     }
     personalFeaturesPos.Content = fmt.Sprintf("%s %s", personalFeaturesPos.Content, personalFeaturesPosSecond.Content)
     err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=2 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features 1", nil})
       return c.Write(marshalled)
     }
     err = db.Get(&personalFeaturesNegSecond, "SELECT * FROM prediction WHERE type_id=2 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegSecondCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features 2", nil})
       return c.Write(marshalled)
     }
     personalFeaturesNeg.Content = fmt.Sprintf("%s %s", personalFeaturesNeg.Content, personalFeaturesNegSecond.Content)
