@@ -457,7 +457,7 @@ func main() {
         }
       }
     }
-    marshalled, _ := json.Marshal(Response{true, "", data})
+    marshalled, _ := json.Marshal(Response{true, "", predictions})
     return c.Write(marshalled)
   })
 
