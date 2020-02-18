@@ -406,6 +406,7 @@ func main() {
     lifeGuideBlockThird := Block{}
     lifeGuideBlock.Type = "info"
     lifeGuideBlock.Title = "Life Guide Common"
+    fmt.Println(combo[0], combo[1], finalCombos[1])
     lifeGuideCombo := fmt.Sprintf("%d", combo[0])
     lifeGuideSecondCombo := fmt.Sprintf("%d", combo[1])
     lifeGuideThirdCombo := fmt.Sprintf("%d", finalCombos[1])
