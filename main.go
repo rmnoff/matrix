@@ -441,7 +441,7 @@ func main() {
     err = db.Get(&sexBlock, "SELECT * FROM prediction WHERE type_id=228 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", sexCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse sexiness prediction", nil})
       return c.Write(marshalled)
     }
     sex.Title = "Sexiness"
@@ -450,29 +450,46 @@ func main() {
 
     destiny := Prediction{}
     destinyBlock := Block{}
+    destinyBlockSecond := Block{}
+    destinyBlockThird := Block{}
     destinyBlock.Type = "info"
     destinyBlock.Title = "Destiny Common"
-    destinyCombo := fmt.Sprintf("%d-%d-%d", finalCombos[21], finalCombos[22], finalCombos[23])
-    fmt.Println(destinyCombo)
-    err = db.Get(&destinyBlock, "SELECT * FROM prediction WHERE type_id=228 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinyCombo, isPersonal, language.Id)
+    destinyCombo := fmt.Sprintf("%d", finalCombos[21])
+    destinySecondCombo := fmt.Sprintf("%d", finalCombos[22])
+    destinyThirdCombo := fmt.Sprintf("%d", finalCombos[23])
+    err = db.Get(&destinyBlock, "SELECT * FROM prediction WHERE type_id=8 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinyCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse destiny prediction", nil})
       return c.Write(marshalled)
     }
-    destinyCommonBlock := Block{}
-    destinyCommonBlock.Type = "info"
-    destinyCommonBlock.Title = "Destiny Common"
-    destinyCommonCombo := fmt.Sprintf("%d-%d-%d", finalCombos[21], finalCombos[22], finalCombos[23])
-    fmt.Println(destinyCommonCombo)
-    err = db.Get(&destinyCommonBlock, "SELECT * FROM prediction WHERE type_id=228 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinyCommonCombo, isPersonal, language.Id)
+    err = db.Get(&destinyBlockSecond, "SELECT * FROM prediction WHERE type_id=8 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinySecondCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse destiny prediction", nil})
       return c.Write(marshalled)
     }
+    err = db.Get(&destinyBlockThird, "SELECT * FROM prediction WHERE type_id=8 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinyThirdCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse destiny prediction", nil})
+      return c.Write(marshalled)
+    }
+    destinyBlock.Content = fmt.Sprintf("%s %s %s", destinyBlock.Content, destinyBlockSecond.Content, destinyBlockThird.Content)
+    // destinyCommonBlock := Block{}
+    // destinyCommonBlock.Type = "info"
+    // destinyCommonBlock.Title = "Destiny Common"
+    // destinyCommonCombo := fmt.Sprintf("%d-%d-%d", finalCombos[21], finalCombos[22], finalCombos[23])
+    // fmt.Println(destinyCommonCombo)
+    // err = db.Get(&destinyCommonBlock, "SELECT * FROM prediction WHERE type_id=220 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinyCommonCombo, isPersonal, language.Id)
+    // if err != nil {
+    //   log.Println(err)
+    //   marshalled, _ := json.Marshal(Response{false, "Can't parse destiny common prediction", nil})
+    //   return c.Write(marshalled)
+    // }
     destiny.Title = "Destiny"
-    destiny.Blocks = []Block{destinyBlock, destinyCommonBlock}
+    // destiny.Blocks = []Block{destinyBlock, destinyCommonBlock}
+    destiny.Blocks = []Block{destinyBlock}
     destiny.BlockType = "default"
 
     predictions := []Prediction{pastLife, personalFeatures, relationship, lifeGuide, sex, destiny}
