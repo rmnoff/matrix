@@ -492,7 +492,57 @@ func main() {
     destiny.Blocks = []Block{destinyBlock}
     destiny.BlockType = "default"
 
-    predictions := []Prediction{pastLife, personalFeatures, relationship, lifeGuide, sex, destiny}
+    money := Prediction{}
+    moneyBlock := Block{}
+    moneyBlock.Type = "info"
+    moneyBlock.Title = "Money"
+    moneySuccessBlock := Block{}
+    moneySuccessBlock.Type = "info"
+    moneySuccessBlock.Title = "To become successful"
+    moneySuccessSecondBlock := Block{}
+    moneySuccessThirdBlock := Block{}
+    moneySuccessFourthBlock := Block{}
+    moneyBlockCombo := fmt.Sprintf("%d", finalCombos[12])
+    moneySuccessBlockCombo := fmt.Sprintf("%d", finalCombos[10])
+    moneySuccessSecondBlockCombo := fmt.Sprintf("%d", combo[2])
+    moneySuccessThirdBlockCombo := fmt.Sprintf("%d", finalCombos[6])
+    moneySuccessFourthBlockCombo := fmt.Sprintf("%d", finalCombos[7])
+    err = db.Get(&moneyBlock, "SELECT * FROM prediction WHERE type_id=4 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", moneyBlockCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse money prediction", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&moneySuccessBlock, "SELECT * FROM prediction WHERE type_id=214 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", moneySuccessBlockCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse success prediction 1", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&moneySuccessSecondBlock, "SELECT * FROM prediction WHERE type_id=214 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", moneySuccessSecondBlockCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse success prediction 2", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&moneySuccessThirdBlock, "SELECT * FROM prediction WHERE type_id=214 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", moneySuccessThirdBlockCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse success prediction 3", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&moneySuccessFourthBlock, "SELECT * FROM prediction WHERE type_id=214 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", moneySuccessFourthBlockCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse success prediction 4", nil})
+      return c.Write(marshalled)
+    }
+    moneySuccessBlock.Content = fmt.Sprintf("%s %s %s %s", moneySuccessBlock.Content, moneySuccessSecondBlock.Content, moneySuccessThirdBlock.Content, moneySuccessFourthBlock.Content)
+    money.Title = "Money"
+    money.Blocks = []Block{moneyBlock, moneySuccessBlock, moneySuccessSecondBlock, moneySuccessThirdBlock, moneySuccessFourthBlock}
+    money.BlockType = "default"
+
+    predictions := []Prediction{pastLife, personalFeatures, relationship, lifeGuide, sex, destiny, money}
 
     for _, pred := range predictions {
       for _, content := range pred.Blocks {
