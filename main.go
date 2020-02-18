@@ -298,6 +298,24 @@ func main() {
       language.Id = 1
     }
 
+    // ooh, all combos in one place!
+    fmt.Println("Past life")
+    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[8], finalCombos[9], finalCombos[0]))
+    fmt.Println("Personal features positive")
+    fmt.Println(fmt.Sprintf("%d-%d", combo[0], combo[1]))
+    fmt.Println("Personal features negative")
+    fmt.Println(fmt.Sprintf("%d-%d", combo[0], combo[1]))
+    fmt.Println("Personal features social")
+    fmt.Println(fmt.Sprintf("%d", finalCombos[1]))
+    fmt.Println("Relationship")
+    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[11], finalCombos[8], finalCombos[10]))
+    fmt.Println("Life Guide")
+    fmt.Println(fmt.Sprintf("%d-%d-%d", combo[0], combo[1], finalCombos[1]))
+    fmt.Println("Sexiness")
+    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[1], finalCombos[17], finalCombos[18]))
+    fmt.Println("Destiny")
+    fmt.Println(fmt.Sprintf("%d-%d-%d", finalCombos[21], finalCombos[22], finalCombos[23]))
+
     pastLife := Prediction{}
     pastLifeBlock := Block{}
     pastLifeBlock.Type = "info"
@@ -314,40 +332,40 @@ func main() {
     pastLife.Blocks = []Block{pastLifeBlock}
     pastLife.BlockType = "default"
 
-    // personalFeatures := Prediction{}
-    // personalFeaturesPos := Block{}
-    // personalFeaturesPos.Type = "info"
-    // personalFeaturesPos.Title = "Personal Features Positive"
-    // personalFeaturesPosCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
-    // personalFeaturesNeg := Block{}
-    // personalFeaturesNeg.Type = "info"
-    // personalFeaturesNeg.Title = "Personal Features Negative"
-    // personalFeaturesNegCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
-    // personalFeaturesSoc := Block{}
-    // personalFeaturesSoc.Type = "info"
-    // personalFeaturesSoc.Title = "Personal Features Social"
-    // personalFeaturesSocCombo := fmt.Sprintf("%d", finalCombos[1])
-    // err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=1 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo, isPersonal, language.Id)
-    // if err != nil {
-    //   log.Println(err)
-    //   marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features", nil})
-    //   return c.Write(marshalled)
-    // }
-    // err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=2 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo, isPersonal, language.Id)
-    // if err != nil {
-    //   log.Println(err)
-    //   marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features", nil})
-    //   return c.Write(marshalled)
-    // }
-    // err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=3 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo, isPersonal, language.Id)
-    // if err != nil {
-    //   log.Println(err)
-    //   marshalled, _ := json.Marshal(Response{false, "Can't parse social personal features", nil})
-    //   return c.Write(marshalled)
-    // }
-    // personalFeatures.Title = "Personal Features"
-    // personalFeatures.Blocks = []Block{personalFeaturesPos,personalFeaturesNeg,personalFeaturesSoc}
-    // personalFeatures.BlockType = "default"
+    personalFeatures := Prediction{}
+    personalFeaturesPos := Block{}
+    personalFeaturesPos.Type = "info"
+    personalFeaturesPos.Title = "Personal Features Positive"
+    personalFeaturesPosCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
+    personalFeaturesNeg := Block{}
+    personalFeaturesNeg.Type = "info"
+    personalFeaturesNeg.Title = "Personal Features Negative"
+    personalFeaturesNegCombo := fmt.Sprintf("%d-%d", combo[0], combo[1])
+    personalFeaturesSoc := Block{}
+    personalFeaturesSoc.Type = "info"
+    personalFeaturesSoc.Title = "Personal Features Social"
+    personalFeaturesSocCombo := fmt.Sprintf("%d", finalCombos[1])
+    err = db.Get(&personalFeaturesPos, "SELECT * FROM prediction WHERE type_id=1 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesPosCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse positive personal features", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&personalFeaturesNeg, "SELECT * FROM prediction WHERE type_id=2 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesNegCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse negative personal features", nil})
+      return c.Write(marshalled)
+    }
+    err = db.Get(&personalFeaturesSoc, "SELECT * FROM prediction WHERE type_id=3 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", personalFeaturesSocCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse social personal features", nil})
+      return c.Write(marshalled)
+    }
+    personalFeatures.Title = "Personal Features"
+    personalFeatures.Blocks = []Block{personalFeaturesPos,personalFeaturesNeg,personalFeaturesSoc}
+    personalFeatures.BlockType = "default"
 
     relationship := Prediction{}
     relationshipBlock := Block{}
@@ -397,21 +415,48 @@ func main() {
     sex.Blocks = []Block{sexBlock}
     sex.BlockType = "default"
 
-    // data := []Prediction{pastLife, personalFeatures, relationship, lifeGuide, sex}
-    data := []Prediction{pastLife, relationship, lifeGuide, sex}
+    destiny := Prediction{}
+    destinyBlock := Block{}
+    destinyBlock.Type = "info"
+    destinyBlock.Title = "Destiny Common"
+    destinyCombo := fmt.Sprintf("%d-%d-%d", finalCombos[21], finalCombos[22], finalCombos[23])
+    fmt.Println(destinyCombo)
+    err = db.Get(&destinyBlock, "SELECT * FROM prediction WHERE type_id=228 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinyCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      return c.Write(marshalled)
+    }
+    destinyCommonBlock := Block{}
+    destinyCommonBlock.Type = "info"
+    destinyCommonBlock.Title = "Destiny Common"
+    destinyCommonCombo := fmt.Sprintf("%d-%d-%d", finalCombos[21], finalCombos[22], finalCombos[23])
+    fmt.Println(destinyCommonCombo)
+    err = db.Get(&destinyCommonBlock, "SELECT * FROM prediction WHERE type_id=228 AND personal=$2 AND lang_id=$3 AND id=(SELECT prediction_id FROM predictionrel WHERE combination=$1)", destinyCommonCombo, isPersonal, language.Id)
+    if err != nil {
+      log.Println(err)
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      return c.Write(marshalled)
+    }
+    destiny.Title = "Destiny"
+    destiny.Blocks = []Block{destinyBlock, destinyCommonBlock}
+    destiny.BlockType = "default"
 
+    predictions := []Prediction{pastLife, personalFeatures, relationship, lifeGuide, sex, destiny}
 
-    // for _, content := range data {
-    //   contentbygender := ContentByGender{}
-    //   err := json.Unmarshal([]byte(content.Content), &contentbygender)
-    //   if err == nil {
-    //     if gender == "m" {
-    //       content.Content = contentbygender.Male
-    //     } else {
-    //       content.Content = contentbygender.Female
-    //     }
-    //   }
-    // }
+    for _, pred := range predictions {
+      for _, content := range pred.Blocks {
+        contentbygender := ContentByGender{}
+        err := json.Unmarshal([]byte(content.Content), &contentbygender)
+        if err == nil {
+          if gender == "m" {
+            content.Content = contentbygender.Male
+          } else {
+            content.Content = contentbygender.Female
+          }
+        }
+      }
+    }
     marshalled, _ := json.Marshal(Response{true, "", data})
     return c.Write(marshalled)
   })
