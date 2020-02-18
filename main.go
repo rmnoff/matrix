@@ -406,27 +406,25 @@ func main() {
     lifeGuideBlockThird := Block{}
     lifeGuideBlock.Type = "info"
     lifeGuideBlock.Title = "Life Guide Common"
-    fmt.Println(combo[0], combo[1], finalCombos[1])
     lifeGuideCombo := fmt.Sprintf("%d", combo[0])
     lifeGuideSecondCombo := fmt.Sprintf("%d", combo[1])
     lifeGuideThirdCombo := fmt.Sprintf("%d", finalCombos[1])
-    fmt.Println(lifeGuideCombo)
     err = db.Get(&lifeGuideBlock, "SELECT * FROM prediction WHERE type_id=11 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction 1", nil})
       return c.Write(marshalled)
     }
     err = db.Get(&lifeGuideBlockSecond, "SELECT * FROM prediction WHERE type_id=11 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideSecondCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction 2", nil})
       return c.Write(marshalled)
     }
     err = db.Get(&lifeGuideBlockThird, "SELECT * FROM prediction WHERE type_id=11 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$1)", lifeGuideThirdCombo, isPersonal, language.Id)
     if err != nil {
       log.Println(err)
-      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction", nil})
+      marshalled, _ := json.Marshal(Response{false, "Can't parse life guide prediction 3", nil})
       return c.Write(marshalled)
     }
     lifeGuideBlock.Content = fmt.Sprintf("%s %s %s", lifeGuideBlock.Content, lifeGuideBlockSecond.Content, lifeGuideBlockThird.Content)
