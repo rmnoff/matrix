@@ -1180,6 +1180,7 @@ func getAnswerFromTable(db *sqlx.DB, id string, tableNumber int, lang string, se
     // table := fmt.Sprintf("answers%d", tableNumber)
     query := fmt.Sprintf("SELECT * FROM prediction WHERE type_id=$1 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$4)", tableNumber, personal_bool, language.Id, id)
     // query := fmt.Sprintf("SELECT %s FROM %s WHERE id=%s", table, field, id)
+    fmt.Println(query)
     block := Block{}
     err = db.Get(&block, query)
     if err != nil {
