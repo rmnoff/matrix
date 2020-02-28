@@ -676,6 +676,7 @@ func main() {
     }
     if(checkAnswers(toCheck, []int{17,5,6}, true)) {
       blocks = append(blocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
     }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 1, languageShort, gender, personal))
     if fc.A == fc.B {
@@ -960,6 +961,7 @@ func main() {
     }
     err = db.Select(&langs, "SELECT * FROM predictionLang")
     if err != nil {
+      fmt.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse languages", nil})
       return c.Write(marshalled)
     }
