@@ -142,6 +142,7 @@ type Block struct {
 type PredictionType struct {
   Id int `db:"id"`
   Name string `db:"name"`
+  Short sql.NullString `db:"short"` 
 }
 
 type ContentByGender struct {
