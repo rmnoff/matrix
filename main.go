@@ -113,6 +113,16 @@ CREATE TABLE IF NOT EXISTS userProfile (
   gender BOOLEAN
 );`
 
+type User struct {
+  Id int `db:"id"`
+  Email sql.NullString `db:"email"`
+  Firstname sql.NullString `db:"firstname"`
+  Lastname sql.NullString `db:"lastname"`
+  Password sql.NullString `db:"password"`
+  Birthdate sql.NullString `db:"birthdate"`
+  Gender bool `db:"gender"`
+}
+
 
 type ConstantText struct {
   Header string `json:"header"`
@@ -142,7 +152,7 @@ type Block struct {
 type PredictionType struct {
   Id int `db:"id"`
   Name string `db:"name"`
-  Short sql.NullString `db:"short"` 
+  Short sql.NullString `db:"short"`
 }
 
 type ContentByGender struct {
@@ -246,10 +256,10 @@ func main() {
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('money') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('money important') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('to become successful') ON CONFLICT DO NOTHING;`)
-  tx.MustExec(`INSERT INTO predictionType(name) VALUES('relationship') ON CONFLICT DO NOTHING;`)
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES('relationships') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('parents') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('parents IMPORTANT') ON CONFLICT DO NOTHING;`)
-  tx.MustExec(`INSERT INTO predictionType(name) VALUES('kids') ON CONFLICT DO NOTHING;`)
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES('children') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('destiny') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('destiny common') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('past life') ON CONFLICT DO NOTHING;`)
@@ -257,9 +267,9 @@ func main() {
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('life guide') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('health') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('health recommendation') ON CONFLICT DO NOTHING;`)
-  tx.MustExec(`INSERT INTO predictionType(name) VALUES('year prediction') ON CONFLICT DO NOTHING;`)
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES('year forecast') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('19-7') ON CONFLICT DO NOTHING;`)
-  tx.MustExec(`INSERT INTO predictionType(name) VALUES('sexuality') ON CONFLICT DO NOTHING;`)
+  tx.MustExec(`INSERT INTO predictionType(name) VALUES('sexiness') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('lessons from children') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('children IMPORTANT') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('exception 22-7') ON CONFLICT DO NOTHING;`)
@@ -305,7 +315,40 @@ func main() {
 		return c.Write(`{"ok": true, "error": null, "data": "Future authorisation start"}`)
   })
   api.Post("/auth", func(c *routing.Context) error {
-		return c.Write(`{"ok": true, "error": null, "data": "Future authorisation end"}`)
+    email := c.PostForm("email")
+    password := c.PostForm("password")
+    user := User{}
+    err := db.Get(&user, "SELECT * FROM userProfile WHERE email = $1", email)
+    if err != nil {
+      return c.Write(`{"ok": false, "error": "Can't parse users table", "data": null}`)
+    }
+    if user.Id <= 0 {
+      return c.Write(`{"ok": false, "error": "User not found", "data": null}`)
+    }
+    if user.Password.String != password {
+      return c.Write(`{"ok": false, "error": "E-mail or password incorrect", "data": null}`)
+    }
+    return c.Write(fmt.Sprintf(`{"ok": true, "error": null, "data": {"email": "%s", "firstname": "%s", "lastname": "%s", "birthdate": "%s"}}`, user.Email, user.Firstname, user.Lastname, user.Birthdate))
+  })
+  api.Post("/register", func(c *routing.Context) error {
+    email := c.PostForm("email")
+    password := c.PostForm("password")
+    firstname := c.PostForm("firstname")
+    lastname := c.PostForm("lastname")
+    birthdate := c.PostForm("birthdate")
+    gender := c.PostForm("gender")
+    userExists := User{}
+    err := db.Get(&userExists, "SELECT * FROM userProfile WHERE email = $1", email)
+    if err != nil {
+      return c.Write(`{"ok": false, "error": "Can't parse users table", "data": null}`)
+    }
+    if userExists.Id > 0 {
+      return c.Write(`{"ok": false, "error": "User already exists", "data": null}`)
+    }
+    tx := db.MustBegin()
+    tx.MustExec(`INSERT INTO userProfile(email,password,firstname,lastname,birthdate,gender) VALUES($1,$2,$3,$4,$5,$6)`, email, password, firstname, lastname, birthdate, gender)
+    tx.Commit()
+    return c.Write(`{"ok": true, "error": null, "data": "User registered"}`)
   })
 
   // api.Get("/check/<input>", func(c *routing.Context) error {
