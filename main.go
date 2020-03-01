@@ -257,7 +257,7 @@ func main() {
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('money important') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('to become successful') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('relationships') ON CONFLICT DO NOTHING;`)
-  tx.MustExec(`INSERT INTO predictionType(name) VALUES('parents') ON CONFLICT DO NOTHING;`)
+  // tx.MustExec(`INSERT INTO predictionType(name) VALUES('parents') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('parents IMPORTANT') ON CONFLICT DO NOTHING;`)
   // tx.MustExec(`INSERT INTO predictionType(name) VALUES('children') ON CONFLICT DO NOTHING;`)
   tx.MustExec(`INSERT INTO predictionType(name) VALUES('destiny') ON CONFLICT DO NOTHING;`)
