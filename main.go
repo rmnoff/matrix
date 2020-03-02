@@ -1202,6 +1202,8 @@ func checkAnswers(input [][]int, answer []int, random_opt ...bool) bool {
       sort.Ints(item)
       sort.Ints(answer)
     }
+    fmt.Println(item)
+    fmt.Println(answer)
     if testEq(item, answer) {
       return true
     }
