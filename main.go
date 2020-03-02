@@ -723,9 +723,6 @@ func main() {
     if fc.A != fc.B {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 1, languageShort, gender, personal))
     }
-    if fc.A != fc.B {
-      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 2, languageShort, gender, personal))
-    }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 2, languageShort, gender, personal))
     if fc.A != fc.B {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 2, languageShort, gender, personal))
@@ -745,7 +742,7 @@ func main() {
     if fc.Z != fc.N && fc.Z != fc.T {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z), 8, languageShort, gender, personal))
     }
-    blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.S), 8, languageShort, gender, personal))
+    blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.S), 220, languageShort, gender, personal))
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X2), 4, languageShort, gender, personal))
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X), 214, languageShort, gender, personal))
     if fc.X != fc.C {
