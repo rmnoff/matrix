@@ -1235,6 +1235,7 @@ func getAnswerFromTable(db *sqlx.DB, id string, tableNumber int, lang string, se
     }
     contentbygender := ContentByGender{}
     err = json.Unmarshal([]byte(block.Content), &contentbygender)
+    fmt.Println(err)
     if err == nil {
       if sex == "m" {
         block.Content = contentbygender.Male
