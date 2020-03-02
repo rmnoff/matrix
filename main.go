@@ -328,7 +328,7 @@ func main() {
     if user.Password.String != password {
       return c.Write(`{"ok": false, "error": "E-mail or password incorrect", "data": null}`)
     }
-    return c.Write(fmt.Sprintf(`{"ok": true, "error": null, "data": {"email": "%s", "firstname": "%s", "lastname": "%s", "birthdate": "%s"}}`, user.Email, user.Firstname, user.Lastname, user.Birthdate))
+    return c.Write(fmt.Sprintf(`{"ok": true, "error": null, "data": {"email": "%s", "firstname": "%s", "lastname": "%s", "birthdate": "%s"}}`, user.Email.String, user.Firstname.String, user.Lastname.String, user.Birthdate.String))
   })
   api.Post("/register", func(c *routing.Context) error {
     email := c.PostForm("email")
@@ -337,7 +337,6 @@ func main() {
     lastname := c.PostForm("lastname")
     birthdate := c.PostForm("birthdate")
     gender := c.PostForm("gender")
-    fmt.Println(email)
     userExists := User{}
     err := db.Get(&userExists, "SELECT * FROM userProfile WHERE email = $1", email)
     if err == nil || userExists.Id > 0 {
