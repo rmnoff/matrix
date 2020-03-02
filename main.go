@@ -340,10 +340,7 @@ func main() {
     fmt.Println(email)
     userExists := User{}
     err := db.Get(&userExists, "SELECT * FROM userProfile WHERE email = $1", email)
-    // if err != nil {
-    //   return c.Write(`{"ok": false, "error": "Can't parse users table", "data": null}`)
-    // }
-    if userExists.Id > 0 {
+    if err == nil || userExists.Id > 0 {
       return c.Write(`{"ok": false, "error": "User already exists", "data": null}`)
     }
     tx := db.MustBegin()
