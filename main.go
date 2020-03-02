@@ -720,6 +720,9 @@ func main() {
       blocks = append(blocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
     }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 1, languageShort, gender, personal))
+    if fc.A != fc.B {
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 1, languageShort, gender, personal))
+    }
     if fc.A == fc.B {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 2, languageShort, gender, personal))
     }
@@ -1227,6 +1230,7 @@ func getAnswerFromTable(db *sqlx.DB, id string, tableNumber int, lang string, se
     block := Block{}
     err = db.Get(&block, "SELECT * FROM prediction WHERE type_id=$1 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$4)", tableNumber, personal_bool, language.Id, id)
     if err != nil {
+      fmt.Println(err)
       return Block{}
     }
     contentbygender := ContentByGender{}
