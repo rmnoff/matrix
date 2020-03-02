@@ -337,6 +337,7 @@ func main() {
     lastname := c.PostForm("lastname")
     birthdate := c.PostForm("birthdate")
     gender := c.PostForm("gender")
+    fmt.Println(email)
     userExists := User{}
     err := db.Get(&userExists, "SELECT * FROM userProfile WHERE email = $1", email)
     if err != nil {
