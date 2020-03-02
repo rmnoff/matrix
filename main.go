@@ -696,29 +696,28 @@ func main() {
       return c.Write(marshalled)
     }
     fc := setAllCombosNew(combo)
-    toCheck := [][]int{
-      {fc.A, fc.A2, fc.A1},
-      {fc.B, fc.B2, fc.B1},
-      {fc.F, fc.Y, fc.O},
-      {fc.K, fc.G, fc.U},
-      {fc.E, fc.E1, fc.E2},
-      {fc.D1, fc.X1, fc.X},
-      {fc.X, fc.X2, fc.C1},
-      {fc.H, fc.J, fc.M},
-      {fc.N, fc.T, fc.Z},
-      {fc.A, fc.B, fc.L},
-      {fc.A2, fc.B2, fc.L1},
-      {fc.A1, fc.B1, fc.L2},
-      {fc.A3, fc.B3, fc.L3},
-      {fc.E, fc.E, fc.L4},
-      {fc.D1, fc.C1, fc.L5},
-      {fc.D, fc.C, fc.L6},
-      {fc.D3, fc.C3, fc.E3},
-    }
-    if(checkAnswers(toCheck, []int{17,5,6}, true)) {
-      blocks = append(blocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
-      blocks = append(blocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
-    }
+    // toCheck := [][]int{
+    //   {fc.A, fc.A2, fc.A1},
+    //   {fc.B, fc.B2, fc.B1},
+    //   {fc.F, fc.Y, fc.O},
+    //   {fc.K, fc.G, fc.U},
+    //   {fc.E, fc.E1, fc.E2},
+    //   {fc.D1, fc.X1, fc.X},
+    //   {fc.X, fc.X2, fc.C1},
+    //   {fc.H, fc.J, fc.M},
+    //   {fc.N, fc.T, fc.Z},
+    //   {fc.A, fc.B, fc.L},
+    //   {fc.A2, fc.B2, fc.L1},
+    //   {fc.A1, fc.B1, fc.L2},
+    //   {fc.A3, fc.B3, fc.L3},
+    //   {fc.E, fc.E, fc.L4},
+    //   {fc.D1, fc.C1, fc.L5},
+    //   {fc.D, fc.C, fc.L6},
+    //   {fc.D3, fc.C3, fc.E3},
+    // }
+    // if(checkAnswers(toCheck, []int{17,5,6}, true)) {
+    //   blocks = append(blocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
+    // }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 1, languageShort, gender, personal))
     if fc.A != fc.B {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 1, languageShort, gender, personal))
@@ -754,7 +753,7 @@ func main() {
     if fc.X != fc.C2 && fc.C != fc.C2 && fc.C1 != fc.C2 {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C2), 214, languageShort, gender, personal))
     }
-    toCheck = [][]int{
+    toCheck := [][]int{
       {fc.C, fc.C1},
       {fc.C1, fc.X},
       {fc.X, fc.X2},
