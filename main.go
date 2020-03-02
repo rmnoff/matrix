@@ -723,19 +723,19 @@ func main() {
     if fc.A != fc.B {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 1, languageShort, gender, personal))
     }
-    if fc.A == fc.B {
+    if fc.A != fc.B {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 2, languageShort, gender, personal))
     }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 2, languageShort, gender, personal))
-    if fc.A == fc.B {
+    if fc.A != fc.B {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 2, languageShort, gender, personal))
     }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E), 3, languageShort, gender, personal))
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 8, languageShort, gender, personal))
-    if fc.H == fc.J {
+    if fc.H != fc.J {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 8, languageShort, gender, personal))
     }
-    if fc.H == fc.M || fc.J == fc.M {
+    if fc.H != fc.M && fc.J != fc.M {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.M), 8, languageShort, gender, personal))
     }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N), 8, languageShort, gender, personal))
@@ -748,13 +748,13 @@ func main() {
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.S), 8, languageShort, gender, personal))
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X2), 4, languageShort, gender, personal))
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X), 214, languageShort, gender, personal))
-    if (fc.X == fc.C) {
+    if fc.X != fc.C {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C), 214, languageShort, gender, personal))
     }
-    if (fc.X != fc.C1 && fc.C != fc.C1) {
+    if fc.X != fc.C1 && fc.C != fc.C1 {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C1), 214, languageShort, gender, personal))
     }
-    if (fc.X != fc.C2 && fc.C != fc.C2 && fc.C1 != fc.C2) {
+    if fc.X != fc.C2 && fc.C != fc.C2 && fc.C1 != fc.C2 {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C2), 214, languageShort, gender, personal))
     }
     toCheck = [][]int{
@@ -1201,8 +1201,6 @@ func checkAnswers(input [][]int, answer []int, random_opt ...bool) bool {
     if random {
       sort.Ints(item)
       sort.Ints(answer)
-      fmt.Println(item)
-      fmt.Println(answer)
     }
     if testEq(item, answer) {
       return true
