@@ -825,7 +825,7 @@ func main() {
       blocks = append(blocks, getAnswerFromTable(db, "'5-14-19'", 101, languageShort, gender, personal))
     }
     sexual := fmt.Sprintf("'%d-%d-%d'", fc.E, fc.E1, fc.E2)
-    blocks = append(blocks, getAnswerFromTable(db, sexual, 228, languageShort, gender, personal))
+    blocks = append(blocks, getAnswerFromTable(db, sexual, 76, languageShort, gender, personal))
     lessons := 0
     toCheck = [][]int{{fc.C, fc.C2, fc.C1}}
     if checkAnswers(toCheck, []int{17,5,6}, true) {
@@ -872,14 +872,14 @@ func main() {
     mainLesson := fmt.Sprintf("'%d-%d-%d'", fc.D1, fc.D2, fc.D)
     blocks = append(blocks, getAnswerFromTable(db, mainLesson, 9, languageShort, gender, personal))
     if fc.D1 == 21 {
-      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", 1), 6, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", 1), 232, languageShort, gender, personal))
     }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 229, languageShort, gender, personal))
     if fc.A != fc.A2 {
-      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A2), 229, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A2), 66, languageShort, gender, personal))
     }
     if fc.A != fc.A1 && fc.A2 != fc.A1 {
-      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A1), 229, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A1), 66, languageShort, gender, personal))
     }
     if gender == "m" {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
