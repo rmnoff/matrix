@@ -1224,7 +1224,7 @@ func getAnswerFromTable(db *sqlx.DB, id string, tableNumber int, lang string, se
     }
     // field := fmt.Sprintf("%s_%s", personal, lang)
     // table := fmt.Sprintf("answers%d", tableNumber)
-    _, err := strconv.Atoi(id)
+    _, err = strconv.Atoi(id)
     if err == nil {
       id = fmt.Sprintf("'%s'", id)
     }
