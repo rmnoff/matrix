@@ -880,23 +880,37 @@ func main() {
     if fc.A != fc.A1 && fc.A2 != fc.A1 {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A1), 66, languageShort, gender, personal))
     }
-    if gender == "m" {
-      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
-      if fc.F != fc.Y {
-        blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 234, languageShort, gender, personal))
-      }
-      if fc.F != fc.O && fc.Y != fc.O {
-        blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O), 234, languageShort, gender, personal))
-      }
-    } else {
-      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 234, languageShort, gender, personal))
-      if fc.G != fc.K {
-        blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 234, languageShort, gender, personal))
-      }
-      if fc.G != fc.U && fc.K != fc.U {
-        blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.U), 234, languageShort, gender, personal))
-      }
+    blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
+    if fc.F != fc.Y {
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 234, languageShort, gender, personal))
     }
+    if fc.F != fc.O && fc.Y != fc.O {
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O), 234, languageShort, gender, personal))
+    }
+    blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 234, languageShort, gender, personal))
+    if fc.G != fc.K {
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 234, languageShort, gender, personal))
+    }
+    if fc.G != fc.U && fc.K != fc.U {
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.U), 234, languageShort, gender, personal))
+    }
+    // if gender == "m" {
+    //   blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
+    //   if fc.F != fc.Y {
+    //     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 234, languageShort, gender, personal))
+    //   }
+    //   if fc.F != fc.O && fc.Y != fc.O {
+    //     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O), 234, languageShort, gender, personal))
+    //   }
+    // } else {
+    //   blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 234, languageShort, gender, personal))
+    //   if fc.G != fc.K {
+    //     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 234, languageShort, gender, personal))
+    //   }
+    //   if fc.G != fc.U && fc.K != fc.U {
+    //     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.U), 234, languageShort, gender, personal))
+    //   }
+    // }
     toCheck = [][]int{
       {fc.A, fc.A1, fc.A2},
       {fc.A1, fc.A, fc.A2},
