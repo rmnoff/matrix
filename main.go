@@ -875,9 +875,9 @@ func main() {
     mainLesson := fmt.Sprintf("'%d-%d-%d'", fc.D1, fc.D2, fc.D)
     blocks = append(blocks, getAnswerFromTable(db, mainLesson, 9, languageShort, gender, personal))
     if fc.D1 == 21 {
-      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", 1), 232, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", 1), 217, languageShort, gender, personal))
     }
-    blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 229, languageShort, gender, personal))
+    blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 66, languageShort, gender, personal))
     if fc.A != fc.A2 {
       blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A2), 66, languageShort, gender, personal))
     }
@@ -906,19 +906,19 @@ func main() {
       {fc.A1, fc.A, fc.A2},
     }
     if checkAnswers(toCheck, []int{6,17,5}) {
-      blocks = append(blocks, getAnswerFromTable(db, "'6-17-5'", 217, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, "'6-17-5'", 232, languageShort, gender, personal))
     }
     if checkAnswers(toCheck, []int{7,15,22}) {
-      blocks = append(blocks, getAnswerFromTable(db, "'7-15-22'", 217, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, "'7-15-22'", 232, languageShort, gender, personal))
     }
     if checkAnswers(toCheck, []int{8,9,17}) {
-      blocks = append(blocks, getAnswerFromTable(db, "'8-9-17'", 217, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, "'8-9-17'", 232, languageShort, gender, personal))
     }
     if checkAnswers(toCheck, []int{8,13,21}) {
-      blocks = append(blocks, getAnswerFromTable(db, "'8-13-21'", 217, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, "'8-13-21'", 232, languageShort, gender, personal))
     }
     if checkAnswers(toCheck, []int{6,12,18}) {
-      blocks = append(blocks, getAnswerFromTable(db, "'6-12-18'", 217, languageShort, gender, personal))
+      blocks = append(blocks, getAnswerFromTable(db, "'6-12-18'", 232, languageShort, gender, personal))
     }
     blocks = append(blocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X1), 5, languageShort, gender, personal))
     if fc.X1 != fc.D1 {
@@ -1228,7 +1228,7 @@ func getAnswerFromTable(db *sqlx.DB, id string, tableNumber int, lang string, se
     // query := fmt.Sprintf("SELECT %s FROM %s WHERE id=%s", table, field, id)
     fmt.Println(query)
     block := Block{}
-    err = db.Get(&block, "SELECT * FROM prediction WHERE type_id=$1 AND personal=$2 AND lang_id=$3 AND id IN(SELECT prediction_id FROM predictionrel WHERE combination=$4)", tableNumber, personal_bool, language.Id, id)
+    err = db.Get(&block, query)
     if err != nil {
       fmt.Println(err)
       return Block{}
