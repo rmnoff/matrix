@@ -151,16 +151,16 @@ type Block struct {
 }
 
 type BlockJSON struct {
-  Id int `json:id`
-  Content string `json:content`
-  Created sql.NullString `json:created`
-  Edited sql.NullString `json:edited`
-  PredType int `json:type_id`
-  Lang int `json:lang_id`
-  Personal bool `json:personal`
-  Type string `json:type`
-  Title string `json:title`
-  TintColor *string `json:tintColor`
+  Id int `json:"id"`
+  Content string `json:"content"`
+  Created sql.NullString `json:"created"`
+  Edited sql.NullString `json:"edited"`
+  PredType int `json:"type_id"`
+  Lang int `json:"lang_id"`
+  Personal bool `json:"personal"`
+  Type string `json:"type"`
+  Title string `json:"title"`
+  TintColor *string `json:"tintColor"`
 }
 
 type PredictionType struct {
