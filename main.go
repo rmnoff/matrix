@@ -1098,13 +1098,13 @@ func main() {
     // counter := 0
     // ------ YEAR FORECAST END --------
     predictions := []Prediction{personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide}
-    for _, prediction := range predictions {
+    for i, prediction := range predictions {
       for _, block := range prediction.Blocks {
         marshalled, _ := json.Marshal(block)
-        fmt.Println(marshalled)
         prediction.BlocksJSON = append(prediction.BlocksJSON, marshalled...)
       }
       prediction.Blocks = []Block{}
+      predictions[i] = prediction
     }
     marshalled, _ := json.Marshal(Response{true, "", predictions})
     return c.Write(marshalled)
