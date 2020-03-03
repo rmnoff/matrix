@@ -886,10 +886,10 @@ func main() {
       {22,22,8},{18,8,8},{15,21,6},
       {14,22,8},{10,15,5},{10,5,22},{18,5,5},
     }
-    for i, lesson := range toCompare {
+    for _, lesson := range toCompare {
       if checkAnswers(toCheck, lesson, true) {
         fmt.Println(lesson)
-        answer := fmt.Sprintf("'%d-%d-%d'", toCompare[i][0], toCompare[i][1], toCompare[i][2])
+        answer := fmt.Sprintf("'%d-%d-%d'", lesson[0], lesson[1], lesson[2])
         lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, answer, 10, languageShort, gender, personal))
       }
     }
