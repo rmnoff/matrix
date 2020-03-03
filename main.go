@@ -1114,6 +1114,7 @@ func main() {
     for i, prediction := range predictions {
       for _, block := range prediction.Blocks {
         nblock := BlockJSON{ block.Id, block.Content, block.Created, block.Edited, block.PredType, block.Lang, block.Personal, block.Type, block.Title, block.TintColor }
+        nblock.Type = "info"
         prediction.BlocksJSON = append(prediction.BlocksJSON, nblock)
       }
       prediction.Blocks = []Block{}
