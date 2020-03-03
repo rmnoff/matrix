@@ -130,10 +130,10 @@ type ConstantText struct {
 }
 
 type Prediction struct {
-  ImageName string `json:"ImageName"`
-  Title string `json:"Title"`
-  BlockType string `json:"BlockType"`
-  Blocks []Block `json:"Blocks"`
+  ImageName string `json:"imageName"`
+  Title string `json:"title"`
+  BlockType string `json:"blockType"`
+  Blocks []Block `json:"blocks"`
 }
 
 type Block struct {
@@ -144,9 +144,9 @@ type Block struct {
   PredType int `db:"type_id"`
   Lang int `db:"lang_id"`
   Personal bool `db:"personal"`
-  Type string `json:Type`
-  Title string `json:Title`
-  TintColor *string `json:TintColor`
+  Type string `json:type`
+  Title string `json:title`
+  TintColor *string `json:tintColor`
 }
 
 type PredictionType struct {
