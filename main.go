@@ -851,7 +851,6 @@ func main() {
       programsBlocks = append(programsBlocks, getAnswerFromTable(db, "'5-14-19'", 101, languageShort, gender, personal))
     }
     lessonsBlocks := []Block{}
-    lessonsCount := 0
     toCheck = [][]int{{fc.C, fc.C2, fc.C1}}
     if checkAnswers(toCheck, []int{17,5,6}, true) {
       lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
@@ -876,9 +875,6 @@ func main() {
       {fc.D, fc.C, fc.L6},
       {fc.D3, fc.C3, fc.E3},
     }
-    for xxx, zzz := range toCheck {
-      fmt.Println(fmt.Sprintf("%d - [%d, %d, %d]", xxx, zzz[0], zzz[1], zzz[2]))
-    }
     toCompare := [][]int{
       {13,6,19},{9,20,11},{5,17,12},{10,11,19},
       {9,14,5},{10,8,16},{15,22,7},{11,16,22},
@@ -890,10 +886,10 @@ func main() {
       {22,22,8},{18,8,8},{15,21,6},
       {14,22,8},{10,15,5},{10,5,22},{18,5,5},
     }
-    for _, lesson := range toCompare {
+    for i, lesson := range toCompare {
       if checkAnswers(toCheck, lesson, true) {
-        lessonsCount = lessonsCount + 1
-        answer := fmt.Sprintf("'%d-%d-%d'", toCompare[lessonsCount][0], toCompare[lessonsCount][1], toCompare[lessonsCount][2])
+        fmt.Println(lesson)
+        answer := fmt.Sprintf("'%d-%d-%d'", toCompare[i][0], toCompare[i][1], toCompare[i][2])
         lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, answer, 10, languageShort, gender, personal))
       }
     }
