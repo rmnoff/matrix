@@ -137,13 +137,13 @@ type Prediction struct {
 }
 
 type Block struct {
-  Id int `db:"id"`
-  Content string `db:"content"`
-  Created sql.NullString `db:"created"`
-  Edited sql.NullString `db:"edited"`
-  PredType int `db:"type_id"`
-  Lang int `db:"lang_id"`
-  Personal bool `db:"personal"`
+  Id int `db:"id",json:"id"`
+  Content string `db:"content",json:"content"`
+  Created sql.NullString `db:"created",json:"created"`
+  Edited sql.NullString `db:"edited",json:"edited"`
+  PredType int `db:"type_id",json:"type_id"`
+  Lang int `db:"lang_id",json:"lang_id"`
+  Personal bool `db:"personal",json:"personal"`
   Type string `json:type`
   Title string `json:title`
   TintColor *string `json:tintColor`
