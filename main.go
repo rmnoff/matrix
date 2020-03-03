@@ -1101,6 +1101,7 @@ func main() {
     for _, prediction := range predictions {
       for _, block := range prediction.Blocks {
         marshalled, _ := json.Marshal(block)
+        fmt.Println(marshalled)
         prediction.BlocksJSON = append(prediction.BlocksJSON, marshalled...)
       }
       prediction.Blocks = []Block{}
