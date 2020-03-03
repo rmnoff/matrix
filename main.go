@@ -134,7 +134,7 @@ type Prediction struct {
   Title string `json:"title"`
   BlockType string `json:"blockType"`
   Blocks []Block `json:"blocksOrig"`
-  BlocksJSON string`json:"blocks"`
+  BlocksJSON []BlockJSON `json:"blocks"`
 }
 
 type Block struct {
@@ -1114,8 +1114,7 @@ func main() {
     for i, prediction := range predictions {
       for _, block := range prediction.Blocks {
         nblock := BlockJSON{ block.Id, block.Content, block.Created, block.Edited, block.PredType, block.Lang, block.Personal, block.Type, block.Title, block.TintColor }
-        marshalled, _ := json.Marshal(nblock)
-        prediction.BlocksJSON = fmt.Sprintf("%s %s", prediction.BlocksJSON, string(marshalled))
+        prediction.BlocksJSON = append(prediction.BlocksJSON, nblock)
       }
       prediction.Blocks = []Block{}
       predictions[i] = prediction
