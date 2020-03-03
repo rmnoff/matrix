@@ -877,7 +877,7 @@ func main() {
       {fc.D3, fc.C3, fc.E3},
     }
     for xxx, zzz := range toCheck {
-      fmt.Println("%d - [%d, %d, %d]", xxx, zzz[0], zzz[1], zzz[2])
+      fmt.Println(fmt.Sprintf("%d - [%d, %d, %d]", xxx, zzz[0], zzz[1], zzz[2]))
     }
     toCompare := [][]int{
       {13,6,19},{9,20,11},{5,17,12},{10,11,19},
