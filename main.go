@@ -152,7 +152,7 @@ type Block struct {
 
 type BlockJSON struct {
   Id int `json:"id"`
-  Content string `json:"content"`
+  Content string `json:"text"`
   Created sql.NullString `json:"created"`
   Edited sql.NullString `json:"edited"`
   PredType int `json:"type_id"`
