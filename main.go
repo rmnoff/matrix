@@ -150,6 +150,19 @@ type Block struct {
   TintColor *string `json:tintColor`
 }
 
+type BlockJSON struct {
+  Id int `json:id`
+  Content string `json:content`
+  Created sql.NullString `json:created`
+  Edited sql.NullString `json:edited`
+  PredType int `json:type_id`
+  Lang int `json:lang_id`
+  Personal bool `json:personal`
+  Type string `json:type`
+  Title string `json:title`
+  TintColor *string `json:tintColor`
+}
+
 type PredictionType struct {
   Id int `db:"id"`
   Name string `db:"name"`
@@ -1100,8 +1113,9 @@ func main() {
     predictions := []Prediction{personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide}
     for i, prediction := range predictions {
       for _, block := range prediction.Blocks {
-        marshalled, _ := json.Marshal(block)
-        prediction.BlocksJSON = fmt.Sprintf("%s %s", prediction.BlocksJSON, strings.Replace(string(marshalled), "\\", "", -1))
+        nblock := BlockJSON{ block.Id, block.Content, block.Created, block.Edited, block.PredType, block.Lang, block.Personal, block.Type, block.Title, block.TintColor }
+        marshalled, _ := json.Marshal(nblock)
+        prediction.BlocksJSON = fmt.Sprintf("%s %s", prediction.BlocksJSON, string(marshalled))
       }
       prediction.Blocks = []Block{}
       predictions[i] = prediction
