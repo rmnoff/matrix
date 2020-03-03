@@ -1103,6 +1103,7 @@ func main() {
         marshalled, _ := json.Marshal(block)
         prediction.BlocksJSON = append(prediction.BlocksJSON, marshalled...)
       }
+      prediction.Blocks = []Block{}
     }
     marshalled, _ := json.Marshal(Response{true, "", predictions})
     return c.Write(marshalled)
