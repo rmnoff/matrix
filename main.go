@@ -1101,7 +1101,7 @@ func main() {
     for i, prediction := range predictions {
       for _, block := range prediction.Blocks {
         marshalled, _ := json.Marshal(block)
-        prediction.BlocksJSON = fmt.Sprintf("%s %s", prediction.BlocksJSON, string(marshalled))
+        prediction.BlocksJSON = fmt.Sprintf("%s %s", prediction.BlocksJSON, strings.Replace(string(marshalled), "\\", "", -1))
       }
       prediction.Blocks = []Block{}
       predictions[i] = prediction
