@@ -133,7 +133,8 @@ type Prediction struct {
   ImageName string `json:"imageName"`
   Title string `json:"title"`
   BlockType string `json:"blockType"`
-  Blocks []Block `json:"blocks"`
+  Blocks []Block `json:"blocksOrig"`
+  BlocksJSON [][]byte `json:"blocks"`
 }
 
 type Block struct {
@@ -1097,6 +1098,12 @@ func main() {
     // counter := 0
     // ------ YEAR FORECAST END --------
     predictions := []Prediction{personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide}
+    for _, prediction := range predictions {
+      for i, block := range prediction.Blocks {
+        marshalled, _ := json.Marshal(block)
+        prediction.BlocksJSON[i] = marshalled
+      }
+    }
     marshalled, _ := json.Marshal(Response{true, "", predictions})
     return c.Write(marshalled)
     // return c.Write(ResponseNew{true, "", blocks})
