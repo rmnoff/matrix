@@ -1107,60 +1107,68 @@ func main() {
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "1", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "The brain, hair, upper part of the skull."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
-    healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 225, languageShort, gender, personal))
-    healthBlocks = append(healthBlocks, getAnswerFromTable(db, "1", 12, languageShort, gender, personal))
+    // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 225, languageShort, gender, personal))
+    // healthBlocks = append(healthBlocks, getAnswerFromTable(db, "1", 12, languageShort, gender, personal))
     health1 := prepareArray([]int{fc.A, fc.B, fc.L})
     for _, item := range health1 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "2", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "Occipital and temporal lobes of the brain, eyes, ears, nose, face, upper jaw, upper jaw teeth, optic nerve, cerebral cortex."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health2 := prepareArray([]int{fc.A2, fc.B2, fc.L1})
     for _, item := range health2 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "3", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "Thyroid gland, trachea, bronchi, throat, vocal cords, shoulders, arms, seventh cervical vertebra, all cervical vertebrae, lower jaw, lower jaw teeth."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health3 := prepareArray([]int{fc.A1, fc.B1, fc.L2})
     for _, item := range health3 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "4", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "Heart, circulatory system, respiratory system, lungs, bronchi, thoracic spine, ribs, shoulder scapular area, chest."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health4 := prepareArray([]int{fc.A3, fc.B3, fc.L3})
     for _, item := range health4 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 12, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 12, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "5", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "Gastrointestinal tract, abdominal organs, pancreas, spleen, liver, gallbladder, small intestine, central part of the spine."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health5 := prepareArray([]int{fc.E, fc.L4})
     for _, item := range health5 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "6", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "drenal glands, uterus and ovaries, kidneys, intestines, prostate gland in men, lumbar spinal column."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health6 := prepareArray([]int{fc.D1, fc.C1, fc.L5})
     for _, item := range health6 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "7", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "Urogenital system, lower limbs, large intestine, tailbone, sacrum, legs."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health7 := prepareArray([]int{fc.D, fc.C, fc.L6})
     for _, item := range health7 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "8", 12, languageShort, gender, personal))
     healthBlocks[len(healthBlocks) - 1].Title = "Circulatory system, nervous system, lymphatic system, immune system, those organs that are found throughout the body, general failure of the body."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health8 := prepareArray([]int{fc.D3, fc.C3, fc.E3})
     for _, item := range health8 {
-      healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal))
+      healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s %s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     health := Prediction{}
     health.Title = "Health"
