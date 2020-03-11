@@ -1377,8 +1377,8 @@ func setAllCombos(icombo []int) []int {
 }
 
 func setAllCombosNew(icombo []int) Combos {
-  d  := checkGreater(icombo[0]+checkGreater(icombo[1]+icombo[2]))
-  e  := checkGreater(icombo[0]+checkGreater(icombo[1]+checkGreater(icombo[2]+d)))
+  d  := checkGreater(icombo[0]+icombo[1]+icombo[2])
+  e  := checkGreater(icombo[0]+icombo[1]+icombo[2]+d)
   a1 := checkGreater(icombo[0]+e)
   a2 := checkGreater(icombo[0]+a1)
   b1 := checkGreater(icombo[1]+e)
@@ -1394,7 +1394,7 @@ func setAllCombosNew(icombo []int) Combos {
   g  := checkGreater(icombo[1]+icombo[2])
   y  := checkGreater(icombo[2]+d)
   k  := checkGreater(icombo[0]+d)
-  e1 := checkGreater(f+checkGreater(g+checkGreater(y+k)))
+  e1 := checkGreater(f+g+y+k)
   e2 := checkGreater(e+e1)
   o  := checkGreater(f+y)
   u  := checkGreater(k+g)
@@ -1411,12 +1411,12 @@ func setAllCombosNew(icombo []int) Combos {
   l1 := checkGreater(a2+b2)
   l2 := checkGreater(a1+b1)
   l3 := checkGreater(a3+b3)
-  l4 := checkGreater(icombo[0]+checkGreater(icombo[1]+checkGreater(icombo[2]+checkGreater(d+e))))
+  l4 := checkGreater(e+e)
   l5 := checkGreater(d1+c1)
   l6 := checkGreater(icombo[2]+d)
-  d3 := checkGreater(icombo[0]+checkGreater(a2+checkGreater(a1+checkGreater(a3+checkGreater(e+checkGreater(d1+d))))))
-  c3 := checkGreater(icombo[1]+checkGreater(b2+checkGreater(b1+checkGreater(b3+checkGreater(e+checkGreater(c1+icombo[2]))))))
-  e3 := checkGreater(l+checkGreater(l1+checkGreater(l2+checkGreater(l3+checkGreater(l4+checkGreater(l5+l6))))))
+  d3 := checkGreater(icombo[0]+a2+a1+a3+e+d1+d)
+  c3 := checkGreater(icombo[1]+b2+b1+b3+e+c1+icombo[2])
+  e3 := checkGreater(l+l1+l2+l3+l4+l5+l6)
   return Combos{icombo[0],icombo[1],icombo[2],d,e,a1,a2,b1,b2,c1,c2,d1,d2,x,x1,x2,f,g,y,k,e1,e2,o,u,h,j,m,n,t,z,s,b3,a3,l,l1,l2,l3,l4,l5,l6,d3,c3,e3}
 }
 
