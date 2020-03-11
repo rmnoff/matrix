@@ -1414,7 +1414,7 @@ func setAllCombosNew(icombo []int) Combos {
   l4 := checkGreater(e+e)
   l5 := checkGreater(d1+c1)
   l6 := checkGreater(icombo[2]+d)
-  d3 := checkGreater(icombo[0]+a2+a1+a3+e+с1+icombo[2])
+  d3 := checkGreater(icombo[0]+a2+a1+a3+e+c1+icombo[2])
   c3 := checkGreater(icombo[1]+b2+b1+b3+e+d1+d)
   e3 := checkGreater(l+l1+l2+l3+l4+l5+l6)
   fmt.Println(icombo[0])
