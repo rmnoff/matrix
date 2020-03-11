@@ -941,6 +941,7 @@ func main() {
         fmt.Println(lesson)
         sort.Ints(lesson)
         answer := fmt.Sprintf("'%d-%d-%d'", lesson[0], lesson[1], lesson[2])
+        fmt.Println(answer)
         lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, answer, 10, languageShort, gender, personal))
         lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("program %d", lessonsCount)
         lessonsBlocks[len(lessonsBlocks) - 1].Type = "expandable"
