@@ -939,6 +939,7 @@ func main() {
     for _, lesson := range toCompare {
       if checkAnswers(toCheck, lesson, true) {
         fmt.Println(lesson)
+        sort.Ints(lesson)
         answer := fmt.Sprintf("'%d-%d-%d'", lesson[0], lesson[1], lesson[2])
         lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, answer, 10, languageShort, gender, personal))
         lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("program %d", lessonsCount)
