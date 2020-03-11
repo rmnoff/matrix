@@ -900,7 +900,7 @@ func main() {
     lessonsBlocks := []Block{}
     toCheck = [][]int{{fc.C, fc.C2, fc.C1}}
     if checkAnswers(toCheck, []int{17,5,6}, true) {
-      lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, "'17-5-6'", 10, languageShort, gender, personal))
+      lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, "'5-6-17'", 10, languageShort, gender, personal))
       lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("program %d", lessonsCount)
       lessonsBlocks[len(lessonsBlocks) - 1].Type = "expandable"
       lessonsCount = lessonsCount + 1
@@ -933,7 +933,7 @@ func main() {
       {17,3,20},{20,3,10},{17,22,5},{9,8,17},
       {13,21,8},{9,10,19},{20,11,4},{18,10,10},
       {18,6,12},{18,7,7},{22,4,9},{22,4,8},
-      {22,22,8},{18,8,8},{15,21,6},
+      {22,22,8},{18,8,8},{15,21,6},{19,8,7},
       {14,22,8},{10,15,5},{10,5,22},{18,5,5},
     }
     for _, lesson := range toCompare {
