@@ -822,7 +822,7 @@ func main() {
       if !important {
         important = true
       }
-      moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, "'19-7'", 213, languageShort, gender, personal))
+      moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, "'1'", 227, languageShort, gender, personal))
       moneyBlocks[len(moneyBlocks) - 1].Title = "important"
       moneyBlocks[len(moneyBlocks) - 1].Type = "expandable"
     }
