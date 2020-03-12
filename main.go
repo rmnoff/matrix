@@ -1,4 +1,4 @@
-https://ipfs.infura.io:5001package main
+package main
 
 import (
   "os"
