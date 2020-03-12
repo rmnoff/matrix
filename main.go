@@ -1,4 +1,4 @@
-package main
+https://ipfs.infura.io:5001package main
 
 import (
   "os"
@@ -816,6 +816,7 @@ func main() {
       {fc.X2, fc.C1},
       {fc.C1, fc.X2},
     }
+    fmt.Println(toCheck)
     important := false
     if checkAnswers(toCheck, []int{19,7}) {
       if !important {
