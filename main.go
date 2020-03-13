@@ -880,6 +880,7 @@ func main() {
       {fc.D, fc.C, fc.L6},
       {fc.D3, fc.C3, fc.E3},
     }
+    fmt.Println(toCheck)
     if checkAnswers(toCheck, []int{5,14,19}, true) {
       moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, "'5-14-19'", 10, languageShort, gender, personal))
       moneyBlocks[len(moneyBlocks) - 1].Title = "important"
@@ -893,30 +894,6 @@ func main() {
     // ------ MONEY END   --------
     // ------ PROGRAMS BEGIN ---------
     programsBlocks := []Block{}
-    toCheck = [][]int{
-      {fc.A, fc.A2, fc.A1},
-      {fc.B, fc.B2, fc.B1},
-      {fc.F, fc.Y, fc.O},
-      {fc.K, fc.G, fc.U},
-      {fc.E, fc.E1, fc.E2},
-      {fc.D1, fc.X1, fc.X},
-      {fc.X, fc.X2, fc.C1},
-      {fc.H, fc.J, fc.M},
-      {fc.N, fc.T, fc.Z},
-      {fc.A, fc.B, fc.L},
-      {fc.A2, fc.B2, fc.L1},
-      {fc.A1, fc.B1, fc.L2},
-      {fc.A3, fc.B3, fc.L3},
-      {fc.E, fc.E, fc.L4},
-      {fc.D1, fc.C1, fc.L5},
-      {fc.D, fc.C, fc.L6},
-      {fc.D3, fc.C3, fc.E3},
-    }
-    if checkAnswers(toCheck, []int{5,14,19}, true) {
-      programsBlocks = append(programsBlocks, getAnswerFromTable(db, "'5-14-19'", 10, languageShort, gender, personal))
-      programsBlocks[len(programsBlocks) - 1].Title = "important"
-      programsBlocks[len(programsBlocks) - 1].Type = "expandable"
-    }
     // toCheck = [][]int{{fc.A, fc.A1, fc.A2}}
     // if checkAnswers(toCheck, []int{5,14,19}, true) {
     //   programsBlocks = append(programsBlocks, getAnswerFromTable(db, "'5-14-19'", 101, languageShort, gender, personal))
