@@ -1005,11 +1005,11 @@ func main() {
     // ------ PAST LIFE END --------
     // ------ PARENTS  BEGIN --------
     parentsBlocks := []Block{}
-    if fc.D1 == 21 {
-      parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", 1), 217, languageShort, gender, personal))
-      parentsBlocks[len(parentsBlocks) - 1].Title = "Important"
-      parentsBlocks[len(parentsBlocks) - 1].Type = "expandable"
-    }
+    // if fc.D1 == 21 {
+    //   parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", 1), 217, languageShort, gender, personal))
+    //   parentsBlocks[len(parentsBlocks) - 1].Title = "Important"
+    //   parentsBlocks[len(parentsBlocks) - 1].Type = "expandable"
+    // }
     toCheck = [][]int{
       {fc.A, fc.A2, fc.A1},
     }
