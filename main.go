@@ -1014,7 +1014,7 @@ func main() {
       {fc.A, fc.A2, fc.A1},
     }
     if checkAnswers(toCheck, []int{17,5,6}, true) {
-      parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, "'5-6-17'", 217, languageShort, gender, personal))
+      parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, "'6-17-5'", 217, languageShort, gender, personal))
       parentsBlocks[len(parentsBlocks) - 1].Title = "Important"
       parentsBlocks[len(parentsBlocks) - 1].Type = "expandable"
     }
