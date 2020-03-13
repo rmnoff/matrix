@@ -760,7 +760,7 @@ func main() {
     destinyBlocks := []Block{}
     destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 8, languageShort, gender, personal))
     destinyBlocks[len(destinyBlocks) - 1].Title = "destiny"
-    destinyBlocks[len(destinyBlocks) - 1].Type = "info"
+    destinyBlocks[len(destinyBlocks) - 1].Type = "info 20-40"
     if fc.H != fc.J {
       // destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 8, languageShort, gender, personal))
       destinyBlocks[len(destinyBlocks) - 1].Content = fmt.Sprintf("%s %s", destinyBlocks[len(destinyBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 8, languageShort, gender, personal).Content)
@@ -770,7 +770,9 @@ func main() {
       destinyBlocks[len(destinyBlocks) - 1].Content = fmt.Sprintf("%s %s", destinyBlocks[len(destinyBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.M), 8, languageShort, gender, personal).Content)
     }
     // destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N), 8, languageShort, gender, personal))
-    destinyBlocks[len(destinyBlocks) - 1].Content = fmt.Sprintf("%s %s", destinyBlocks[len(destinyBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N), 8, languageShort, gender, personal).Content)
+    destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N), 8, languageShort, gender, personal))
+    destinyBlocks[len(destinyBlocks) - 1].Title = "destiny"
+    destinyBlocks[len(destinyBlocks) - 1].Type = "info 40-60"
     if fc.T != fc.N {
       // destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T), 8, languageShort, gender, personal))
       destinyBlocks[len(destinyBlocks) - 1].Content = fmt.Sprintf("%s %s", destinyBlocks[len(destinyBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T), 8, languageShort, gender, personal).Content)
@@ -1148,7 +1150,7 @@ func main() {
       {fc.X1, fc.X},
     }
     if checkAnswers(toCheck, []int{22,7}) {
-      relationshipsBlocks = append(relationshipsBlocks, getAnswerFromTable(db, "'22-7'", 231, languageShort, gender, personal))
+      relationshipsBlocks = append(relationshipsBlocks, getAnswerFromTable(db, "'1'", 231, languageShort, gender, personal))
       relationshipsBlocks[len(relationshipsBlocks) - 1].Title = "Important"
       relationshipsBlocks[len(relationshipsBlocks) - 1].Type = "expandable"
     }
