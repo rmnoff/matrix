@@ -1010,6 +1010,19 @@ func main() {
       parentsBlocks[len(parentsBlocks) - 1].Title = "Important"
       parentsBlocks[len(parentsBlocks) - 1].Type = "expandable"
     }
+    toCheck = [][]int{
+      {fc.A, fc.A2, fc.A1},
+    }
+    if checkAnswers(toCheck, []int{17,5,6}, true) {
+      parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, "'5-6-17'", 217, languageShort, gender, personal))
+      parentsBlocks[len(parentsBlocks) - 1].Title = "Important"
+      parentsBlocks[len(parentsBlocks) - 1].Type = "expandable"
+    }
+    if checkAnswers(toCheck, []int{13,8,21}, true) {
+      parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, "'8-13-21'", 217, languageShort, gender, personal))
+      parentsBlocks[len(parentsBlocks) - 1].Title = "Important"
+      parentsBlocks[len(parentsBlocks) - 1].Type = "expandable"
+    }
     parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
     parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (men)"
     parentsBlocks[len(parentsBlocks) - 1].Type = "info"
