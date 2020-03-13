@@ -882,7 +882,7 @@ func main() {
     }
     fmt.Println(toCheck)
     if checkAnswers(toCheck, []int{5,14,19}, true) {
-      moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, "'5-14-19'", 10, languageShort, gender, personal))
+      moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, "'5-14-19'", 213, languageShort, gender, personal))
       moneyBlocks[len(moneyBlocks) - 1].Title = "important"
       moneyBlocks[len(moneyBlocks) - 1].Type = "expandable"
     }
