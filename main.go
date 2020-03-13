@@ -886,6 +886,14 @@ func main() {
       moneyBlocks[len(moneyBlocks) - 1].Title = "important"
       moneyBlocks[len(moneyBlocks) - 1].Type = "expandable"
     }
+    toCheck = [][]int{
+      {fc.A, fc.A2, fc.A1},
+    }
+    if checkAnswers(toCheck, []int{5,14,19}, true) {
+      moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, "'5-14-19'", 217, languageShort, gender, personal))
+      moneyBlocks[len(moneyBlocks) - 1].Title = "important"
+      moneyBlocks[len(moneyBlocks) - 1].Type = "expandable"
+    }
     money := Prediction{}
     money.Title = "Money"
     money.ImageName = "money"
