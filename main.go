@@ -1005,16 +1005,13 @@ func main() {
     // ------ PAST LIFE END --------
     // ------ PARENTS  BEGIN --------
     parentsBlocks := []Block{}
-    parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
-    parentsBlocks[len(parentsBlocks) - 1].Title = "Parents"
-    parentsBlocks[len(parentsBlocks) - 1].Type = "info"
     if fc.D1 == 21 {
       parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", 1), 217, languageShort, gender, personal))
       parentsBlocks[len(parentsBlocks) - 1].Title = "Important"
       parentsBlocks[len(parentsBlocks) - 1].Type = "expandable"
     }
-    parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 234, languageShort, gender, personal))
-    parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents"
+    parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
+    parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (men)"
     parentsBlocks[len(parentsBlocks) - 1].Type = "info"
     // if fc.F != fc.Y {
       // parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 234, languageShort, gender, personal))
@@ -1024,6 +1021,9 @@ func main() {
       // parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O), 234, languageShort, gender, personal))
       parentsBlocks[len(parentsBlocks) - 1].Content = fmt.Sprintf("%s %s", parentsBlocks[len(parentsBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O), 234, languageShort, gender, personal).Content)
     // }
+    parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 234, languageShort, gender, personal))
+    parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (women)"
+    parentsBlocks[len(parentsBlocks) - 1].Type = "info"
     // if fc.G != fc.K {
       // parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 234, languageShort, gender, personal))
       parentsBlocks[len(parentsBlocks) - 1].Content = fmt.Sprintf("%s %s", parentsBlocks[len(parentsBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 234, languageShort, gender, personal).Content)
