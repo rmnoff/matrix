@@ -1591,7 +1591,7 @@ func main() {
     forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 13, languageShort, gender, personal).Content)
     forecast := Prediction{}
     forecast.Title = "Forecast"
-    forecast.ImageName = "year_forecast"
+    forecast.ImageName = "forecast"
     forecast.Blocks = forecastBlocks
     forecast.BlockType = "default"
     // ------ YEAR FORECAST END --------
