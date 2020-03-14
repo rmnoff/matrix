@@ -1593,7 +1593,7 @@ func main() {
     forecast.Title = "Forecast"
     forecast.ImageName = "forecast"
     forecast.Blocks = forecastBlocks
-    forecast.BlockType = "default"
+    forecast.BlockType = "forecast"
     // ------ YEAR FORECAST END --------
     predictions := []Prediction{personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide, forecast}
     for i, prediction := range predictions {
