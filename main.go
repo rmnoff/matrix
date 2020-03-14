@@ -252,6 +252,90 @@ type Combos struct {
   D3 int
   C3 int
   E3 int
+  F1 int
+  A4 int
+  A5 int
+  A6 int
+  F2 int
+  F3 int
+  F4 int
+  F5 int
+  F6 int
+  F7 int
+  F8 int
+  B4 int
+  B5 int 
+  B6 int 
+  K1 int 
+  B7 int 
+  B8 int 
+  K2 int 
+  K3 int 
+  K4 int 
+  K5 int 
+  C4 int 
+  K7 int 
+  K8 int 
+  K6 int 
+  C5 int 
+  C6 int 
+  C7 int 
+  Y1 int 
+  Y2 int 
+  Y3 int 
+  Y4 int 
+  Y5 int 
+  Y6 int 
+  Y7 int 
+  D4 int 
+  Y8 int 
+  D6 int 
+  D5 int 
+  D7 int 
+  D8 int 
+  D9 int 
+  G1 int 
+  G2 int 
+  G3 int 
+  G4 int 
+  G5 int 
+  G6 int 
+  G7 int 
+  T1 int 
+  T2 int 
+  T3 int 
+  T4 int 
+  T5 int 
+  T6 int 
+  T7 int 
+  O1 int 
+  O2 int 
+  O3 int 
+  X3 int 
+  X4 int 
+  X5 int 
+  X6 int 
+  X8 int 
+  E4 int 
+  E5 int 
+  E6 int 
+  E7 int 
+  E8 int 
+  Z1 int 
+  Z2 int 
+  Z4 int 
+  Z5 int 
+  Z6 int 
+  Z7 int 
+  Z8 int 
+  H1 int
+  H3 int 
+  H4 int 
+  H5 int 
+  H6 int 
+  H7 int 
+  H8 int 
+  N1 int
 }
 
 func main() {
@@ -1254,17 +1338,264 @@ func main() {
     lifeguide.BlockType = "default"
     // ------ LIFE GUIDE END --------
     // ------ YEAR FORECAST BEGIN --------
-    // layout := "01/02/2006"
-    // t := time.Now()
-    // dayNow := t.Year()
-    // monthNow := int(t.Month())
-    // yearNow := t.Day()
-    // age := time.Parse(layout, fmt.Sprintf("%d/%d/%d", dayNow, monthNow, yearNow))
-    // diff := age.Unix() - timestamp
-    // years := diff / (60 * 60 * 24 * 365)
-    // counter := 0
+    forecastBlocks := []Block{}
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 20"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 60"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B8), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 21-22"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G3), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O1), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G3), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 61-62"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B8), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O1), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B7), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 22.5-23"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G2), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O2), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G2), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 62.5-63"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B7), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O2), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K2), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 23.5-24"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G4), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O3), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G4), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 63.5-64"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K2), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.O3), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K1), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 25"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G1), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X3), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G1), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 65"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K1), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X3), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K4), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 26-27"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G6), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X4), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G6), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 66-67"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K4), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X4), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K3), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 27.5-28"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X5), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G5), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 67.5-68"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K3), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X5), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K5), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 28.5-29"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G7), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X6), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G7), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 68.5-69"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X6), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 30"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.U), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 70"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.U), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K8), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 31-32"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T3), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X8), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T3), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 71-72"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K8), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X8), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K7), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 32.5-33"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T2), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E4), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T2), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 72.5-73"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K7), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E4), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K6), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 33.5-34"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T4), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E5), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T4), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 73.5-74"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K6), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E5), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C4), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 35"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T1), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E6), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T1), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 75"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C4), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E6), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C6), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 36-37"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E7), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T5), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 76-77"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C6), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E7), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C5), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 37.5-38"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E8), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T5), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 77.5-78"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E8), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C7), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 38.5-39"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T7), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z1), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T7), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 78.5-79"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C7), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z1), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 40"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 80"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y3), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 41-42"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z2), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y2), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 42.5-43"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A4), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z4), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y4), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 43.5-44"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A6), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z5), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y1), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 45"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F1), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z6), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y6), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 46-47"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F3), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z7), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y5), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 47.5-48"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F2), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Z8), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y7), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 48.5-49"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F4), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H1), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 50"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D6), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 51-52"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F7), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H3), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y8), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 52.5-53"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F6), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H4), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D5), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 53.5-54"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F8), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H5), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D4), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 55"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H6), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D8), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 56-57"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B5), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H7), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D7), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 57.5-58"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B4), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H8), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D9), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 58.5-59"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B6), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N1), 13, languageShort, gender, personal).Content)
+    forecastBlocks = append(forecastBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.D), 13, languageShort, gender, personal))
+    forecastBlocks[len(forecastBlocks) - 1].Title = "Forecast 60"
+    forecastBlocks[len(forecastBlocks) - 1].Type = "info"
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 13, languageShort, gender, personal).Content)
+    forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s %s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 13, languageShort, gender, personal).Content)
+    forecast := Prediction{}
+    forecast.Title = "Forecast"
+    forecast.ImageName = "year_forecast"
+    forecast.Blocks = forecastBlocks
+    forecast.BlockType = "default"
     // ------ YEAR FORECAST END --------
-    predictions := []Prediction{personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide}
+    predictions := []Prediction{personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide, forecast}
     for i, prediction := range predictions {
       for _, block := range prediction.Blocks {
         nblock := BlockJSON{ block.Id, block.Content, block.Created, block.Edited, block.PredType, block.Lang, block.Personal, block.Type, block.Title, block.TintColor }
@@ -1453,50 +1784,91 @@ func setAllCombosNew(icombo []int) Combos {
   d3 := checkGreater(icombo[0]+a2+a1+a3+e+c1+icombo[2])
   c3 := checkGreater(icombo[1]+b2+b1+b3+e+d1+d)
   e3 := checkGreater(l+l1+l2+l3+l4+l5+l6)
-  fmt.Println(icombo[0])
-  fmt.Println(icombo[1])
-  fmt.Println(icombo[2])
-  fmt.Println(d)
-  fmt.Println(e)
-  fmt.Println(a1)
-  fmt.Println(a2)
-  fmt.Println(b1)
-  fmt.Println(b2)
-  fmt.Println(c1)
-  fmt.Println(c2)
-  fmt.Println(d1)
-  fmt.Println(d2)
-  fmt.Println(x)
-  fmt.Println(x1)
-  fmt.Println(x2)
-  fmt.Println(f)
-  fmt.Println(g)
-  fmt.Println(y)
-  fmt.Println(k)
-  fmt.Println(e1)
-  fmt.Println(e2)
-  fmt.Println(o)
-  fmt.Println(u)
-  fmt.Println(h)
-  fmt.Println(j)
-  fmt.Println(m)
-  fmt.Println(n)
-  fmt.Println(t)
-  fmt.Println(z)
-  fmt.Println(s)
-  fmt.Println(b3)
-  fmt.Println(a3)
-  fmt.Println(l)
-  fmt.Println(l1)
-  fmt.Println(l2)
-  fmt.Println(l3)
-  fmt.Println(l4)
-  fmt.Println(l5)
-  fmt.Println(l6)
-  fmt.Println(d3)
-  fmt.Println(c3)
-  fmt.Println(e3)
-  return Combos{icombo[0],icombo[1],icombo[2],d,e,a1,a2,b1,b2,c1,c2,d1,d2,x,x1,x2,f,g,y,k,e1,e2,o,u,h,j,m,n,t,z,s,b3,a3,l,l1,l2,l3,l4,l5,l6,d3,c3,e3}
+  f1 := checkGreater(icombo[0]+f)
+  a4 := checkGreater(icombo[0]+f1)
+  a5 := checkGreater(icombo[0]+a4)
+  a6 := checkGreater(a4+f1)
+  f2 := checkGreater(f1+f)
+  f3 := checkGreater(f1+f2)
+  f4 := checkGreater(f2+f)
+  f5 := checkGreater(f+icombo[1])
+  f6 := checkGreater(f+f5)
+  f7 := checkGreater(f+f6)
+  f8 := checkGreater(f6+f5)
+  b4 := checkGreater(f5+icombo[1])
+  b5 := checkGreater(f5+b4)
+  b6 := checkGreater(b4+icombo[1])
+  k1 := checkGreater(icombo[1]+g)
+  b7 := checkGreater(icombo[1]+k1)
+  b8 := checkGreater(icombo[1]+b7)
+  k2 := checkGreater(b7+k1)
+  k3 := checkGreater(k1+g)
+  k4 := checkGreater(k1+k3)
+  k5 := checkGreater(k3+g)
+  c4 := checkGreater(g+icombo[2])
+  k7 := checkGreater(g+c4)
+  k8 := checkGreater(g+k7)
+  k6 := checkGreater(k7+c4)
+  c5 := checkGreater(c4+icombo[2])
+  c6 := checkGreater(c4+c5)
+  c7 := checkGreater(c5+icombo[2])
+  y1 := checkGreater(icombo[2]+y)
+  y2 := checkGreater(icombo[2]+y1)
+  y3 := checkGreater(icombo[2]+y2)
+  y4 := checkGreater(y2+y1)
+  y5 := checkGreater(y1+y)
+  y6 := checkGreater(y1+y5)
+  y7 := checkGreater(y5+y)
+  d4 := checkGreater(d+y)
+  y8 := checkGreater(d4+y)
+  d6 := checkGreater(y8+y)
+  d5 := checkGreater(d4+y8)
+  d7 := checkGreater(d+d4)
+  d8 := checkGreater(d7+d4)
+  d9 := checkGreater(d+d7)
+  g1 := checkGreater(k+d)
+  g2 := checkGreater(d+g1)
+  g3 := checkGreater(g2+d)
+  g4 := checkGreater(g1+g2)
+  g5 := checkGreater(k+g1)
+  g6 := checkGreater(g5+k)
+  g7 := checkGreater(g5+g)
+  t1 := checkGreater(icombo[0]+k)
+  t2 := checkGreater(t1+k)
+  t3 := checkGreater(t2+k)
+  t4 := checkGreater(t1+t2)
+  t5 := checkGreater(icombo[0]+t1)
+  t6 := checkGreater(t1+t5)
+  t7 := checkGreater(icombo[0]+t5)
+  o1 := checkGreater(b8+g3)
+  o2 := checkGreater(b7+g2)
+  o3 := checkGreater(k2+g4)
+  x3 := checkGreater(k1+g1)
+  x4 := checkGreater(k4+g6)
+  x5 := checkGreater(k3+g5)
+  x6 := checkGreater(k5+g7)
+  x8 := checkGreater(k8+t3)
+  e4 := checkGreater(k7+t2)
+  e5 := checkGreater(k6+t4)
+  e6 := checkGreater(c4+t1)
+  e7 := checkGreater(c6+t5)
+  e8 := checkGreater(c5+t5)
+  z1 := checkGreater(c7+t7)
+  z2 := checkGreater(y3+a5)
+  z4 := checkGreater(y2+a4)
+  z5 := checkGreater(y4+a6)
+  z6 := checkGreater(y1+f1)
+  z7 := checkGreater(y6+f3)
+  z8 := checkGreater(y5+f2)
+  h1 := checkGreater(y7+f4)
+  h3 := checkGreater(d6+f7)
+  h4 := checkGreater(y8+f6)
+  h5 := checkGreater(d5+f8)
+  h6 := checkGreater(d4+f5)
+  h7 := checkGreater(d8+b5)
+  h8 := checkGreater(d7+b4)
+  n1 := checkGreater(d9+b6)
+  return Combos{icombo[0],icombo[1],icombo[2],d,e,a1,a2,b1,b2,c1,c2,d1,d2,x,x1,x2,f,g,y,k,e1,e2,o,u,h,j,m,n,t,z,s,b3,a3,l,l1,l2,l3,l4,l5,l6,d3,c3,e3,f1,a4,a5,a6,f2,f3,f4,f5,f6,f7,f8,b4,b5,b6,k1,b7,b8,k2,k3,k4,k5,c4,k7,k8,k6,c5,c6,c7,y1,y2,y3,y4,y5,y6,y7,d4,y8,d6,d5,d7,d8,d9,g1,g2,g3,g4,g5,g6,g7,t1,t2,t3,t4,t5,t6,t7,o1,o2,o3,x3,x4,x5,x6,x8,e4,e5,e6,e7,e8,z1,z2,z4,z5,z6,z7,z8,h1,h3,h4,h5,h6,h7,h8,n1}
 }
 
 func testEq(a, b []int) bool {
