@@ -843,8 +843,8 @@ func main() {
     // ------ DESTINY BEGIN           --------
     destinyBlocks := []Block{}
     destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 8, languageShort, gender, personal))
-    destinyBlocks[len(destinyBlocks) - 1].Title = "destiny"
-    destinyBlocks[len(destinyBlocks) - 1].Type = "info 20-40"
+    destinyBlocks[len(destinyBlocks) - 1].Title = "destiny 20-40"
+    destinyBlocks[len(destinyBlocks) - 1].Type = "info"
     if fc.H != fc.J {
       // destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 8, languageShort, gender, personal))
       destinyBlocks[len(destinyBlocks) - 1].Content = fmt.Sprintf("%s %s", destinyBlocks[len(destinyBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 8, languageShort, gender, personal).Content)
@@ -855,8 +855,8 @@ func main() {
     }
     // destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N), 8, languageShort, gender, personal))
     destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.N), 8, languageShort, gender, personal))
-    destinyBlocks[len(destinyBlocks) - 1].Title = "destiny"
-    destinyBlocks[len(destinyBlocks) - 1].Type = "info 40-60"
+    destinyBlocks[len(destinyBlocks) - 1].Title = "destiny 40-60"
+    destinyBlocks[len(destinyBlocks) - 1].Type = "info"
     if fc.T != fc.N {
       // destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T), 8, languageShort, gender, personal))
       destinyBlocks[len(destinyBlocks) - 1].Content = fmt.Sprintf("%s %s", destinyBlocks[len(destinyBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T), 8, languageShort, gender, personal).Content)
