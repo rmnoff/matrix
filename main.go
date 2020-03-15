@@ -389,6 +389,8 @@ func main() {
   router.Use(func(req *routing.Context) error {
 		// origin := string(req.Request.Header.Peek("Origin"))
 		req.Response.Header.Set("Content-Type", "application/json; charset=UTF-8")
+    req.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+    req.Response.Header.SetBytesV("Access-Control-Allow-Origin", req.Request.Header.Peek("Origin"))
 		if err := req.Next(); err != nil {
 			if httpError, ok := err.(routing.HTTPError); ok {
 				req.Response.SetStatusCode(httpError.StatusCode())
