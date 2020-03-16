@@ -514,6 +514,9 @@ func main() {
     gender := string(input[len(input) - 4])
     personal := string(input[len(input) - 3])
     languageShort := input[len(input) - 2:]
+    fmt.Println("--------------++++++-----------")
+    fmt.Println(languageShort)
+    fmt.Println("--------------++++++-----------")
     if timestamp == "" {
       marshalled, _ := json.Marshal(Response{false, "No timestamp provided", nil})
       return c.Write(marshalled)
