@@ -515,7 +515,11 @@ func main() {
     personal := string(input[len(input) - 3])
     languageShort := input[len(input) - 2:]
     fmt.Println("--------------++++++-----------")
-    fmt.Println(languageShort)
+    if languageShort == "ru" {
+      fmt.Println(languageShort)
+    } else {
+      fmt.Println("EBA")
+    }
     fmt.Println("--------------++++++-----------")
     if timestamp == "" {
       marshalled, _ := json.Marshal(Response{false, "No timestamp provided", nil})
