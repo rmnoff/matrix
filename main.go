@@ -370,6 +370,14 @@ type Locale struct {
   Resentment          LocaleBlock
   ToBecomeSuccessful  LocaleBlock
   Forecast            LocaleBlock
+  Health1             LocaleBlock
+  Health2             LocaleBlock
+  Health3             LocaleBlock
+  Health4             LocaleBlock
+  Health5             LocaleBlock
+  Health6             LocaleBlock
+  Health7             LocaleBlock
+  Health8             LocaleBlock
 }
 
 func newLocale() Locale {
@@ -398,6 +406,14 @@ func newLocale() Locale {
     LocaleBlock{"Обида на родителей", "Resentment against parents"},
     LocaleBlock{"Для достижения успеха", "To become successful"},
     LocaleBlock{"Пердсказание на год", "Year's Forecast"},
+    LocaleBlock{"Головной мозг, волосы, верхняя часть черепа", "The brain, hair, upper part of the skull."},
+    LocaleBlock{"Затылочные и височные доли мозга, глааз, уши, нос, лицо, верхняя челюсть, зубы верхней челюсти, зрительный нерв, кора головного мозга", "Occipital and temporal lobes of the brain, eyes, ears, nose, face, upper jaw, upper jaw teeth, optic nerve, cerebral cortex."},
+    LocaleBlock{"Щитовидная железа, трахея, бронхи, горло, голосовые связки, плечи, руки, седьмой шейный позвонок, все шейные позвонки, нижняя челюсть, зубы нижней челюсти", "Thyroid gland, trachea, bronchi, throat, vocal cords, shoulders, arms, seventh cervical vertebra, all cervical vertebrae, lower jaw, lower jaw teeth."},
+    LocaleBlock{"Сердце, кровеносная система, органы дыхания, легкие, бронхи, грудной отдел позвоночника, рёбра, лопаточная зона спины, грудь", "Heart, circulatory system, respiratory system, lungs, bronchi, thoracic spine, ribs, shoulder scapular area, chest."},
+    LocaleBlock{"ЖКТ, органы брюшной полости, поджелудочная железа, селезёнка, печень, желчный пузырь, тонкий кишечник, центральная часть позвоночника", "Gastrointestinal tract, abdominal organs, pancreas, spleen, liver, gallbladder, small intestine, central part of the spine."},
+    LocaleBlock{"Надпочечники, матчка и яичники, почки, кишечник, предстательная железа у мужчин, поясничный район позвоночного столба", "Drenal glands, uterus and ovaries, kidneys, intestines, prostate gland in men, lumbar spinal column."},
+    LocaleBlock{"Мочеполовая система, нижние конечности, толстый кишечник, копчик, крестец, ноги", "Urogenital system, lower limbs, large intestine, tailbone, sacrum, legs."},
+    LocaleBlock{"Кровеносная система, нервная система, лимфатическая система, имунная система, те органы, которые находятся по всему организму, общий сбой работы организма", "Circulatory system, nervous system, lymphatic system, immune system, those organs that are found throughout the body, general failure of the body."},
   }
 }
 
@@ -1001,7 +1017,8 @@ func main() {
     // ------ HEALTH BEGIN --------
     healthBlocks := []Block{}
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "1", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "The brain, hair, upper part of the skull."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health1.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health1.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "The brain, hair, upper part of the skull."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     // healthBlocks = append(healthBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 225, languageShort, gender, personal))
     // healthBlocks = append(healthBlocks, getAnswerFromTable(db, "1", 12, languageShort, gender, personal))
@@ -1011,7 +1028,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "2", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "Occipital and temporal lobes of the brain, eyes, ears, nose, face, upper jaw, upper jaw teeth, optic nerve, cerebral cortex."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health2.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health2.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "Occipital and temporal lobes of the brain, eyes, ears, nose, face, upper jaw, upper jaw teeth, optic nerve, cerebral cortex."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health2 := prepareArray([]int{fc.A2, fc.B2, fc.L1})
     for _, item := range health2 {
@@ -1019,7 +1037,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "3", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "Thyroid gland, trachea, bronchi, throat, vocal cords, shoulders, arms, seventh cervical vertebra, all cervical vertebrae, lower jaw, lower jaw teeth."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health3.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health3.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "Thyroid gland, trachea, bronchi, throat, vocal cords, shoulders, arms, seventh cervical vertebra, all cervical vertebrae, lower jaw, lower jaw teeth."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health3 := prepareArray([]int{fc.A1, fc.B1, fc.L2})
     for _, item := range health3 {
@@ -1027,7 +1046,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "4", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "Heart, circulatory system, respiratory system, lungs, bronchi, thoracic spine, ribs, shoulder scapular area, chest."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health4.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health4.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "Heart, circulatory system, respiratory system, lungs, bronchi, thoracic spine, ribs, shoulder scapular area, chest."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health4 := prepareArray([]int{fc.A3, fc.B3, fc.L3})
     for _, item := range health4 {
@@ -1035,7 +1055,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "5", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "Gastrointestinal tract, abdominal organs, pancreas, spleen, liver, gallbladder, small intestine, central part of the spine."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health5.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health5.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "Gastrointestinal tract, abdominal organs, pancreas, spleen, liver, gallbladder, small intestine, central part of the spine."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health5 := prepareArray([]int{fc.E, fc.L4})
     for _, item := range health5 {
@@ -1043,7 +1064,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "6", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "drenal glands, uterus and ovaries, kidneys, intestines, prostate gland in men, lumbar spinal column."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health6.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health6.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "Drenal glands, uterus and ovaries, kidneys, intestines, prostate gland in men, lumbar spinal column."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health6 := prepareArray([]int{fc.D1, fc.C1, fc.L5})
     for _, item := range health6 {
@@ -1051,7 +1073,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "7", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "Urogenital system, lower limbs, large intestine, tailbone, sacrum, legs."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health7.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health7.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "Urogenital system, lower limbs, large intestine, tailbone, sacrum, legs."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health7 := prepareArray([]int{fc.D, fc.C, fc.L6})
     for _, item := range health7 {
@@ -1059,7 +1082,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "8", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Title = "Circulatory system, nervous system, lymphatic system, immune system, those organs that are found throughout the body, general failure of the body."
+    if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health8.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health8.En }
+    // healthBlocks[len(healthBlocks) - 1].Title = "Circulatory system, nervous system, lymphatic system, immune system, those organs that are found throughout the body, general failure of the body."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
     health8 := prepareArray([]int{fc.D3, fc.C3, fc.E3})
     for _, item := range health8 {
