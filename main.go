@@ -1017,6 +1017,7 @@ func main() {
     // ------ HEALTH BEGIN --------
     healthBlocks := []Block{}
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "1", 12, languageShort, gender, personal))
+    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'1'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health1.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health1.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "The brain, hair, upper part of the skull."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
@@ -1028,6 +1029,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "2", 12, languageShort, gender, personal))
+    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'2'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health2.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health2.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Occipital and temporal lobes of the brain, eyes, ears, nose, face, upper jaw, upper jaw teeth, optic nerve, cerebral cortex."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
@@ -1037,6 +1039,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "3", 12, languageShort, gender, personal))
+    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'3'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health3.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health3.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Thyroid gland, trachea, bronchi, throat, vocal cords, shoulders, arms, seventh cervical vertebra, all cervical vertebrae, lower jaw, lower jaw teeth."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
@@ -1046,6 +1049,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "4", 12, languageShort, gender, personal))
+    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'4'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health4.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health4.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Heart, circulatory system, respiratory system, lungs, bronchi, thoracic spine, ribs, shoulder scapular area, chest."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
@@ -1055,6 +1059,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "5", 12, languageShort, gender, personal))
+    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'5'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health5.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health5.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Gastrointestinal tract, abdominal organs, pancreas, spleen, liver, gallbladder, small intestine, central part of the spine."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
@@ -1064,6 +1069,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "6", 12, languageShort, gender, personal))
+    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'6'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health6.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health6.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Drenal glands, uterus and ovaries, kidneys, intestines, prostate gland in men, lumbar spinal column."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
@@ -1073,6 +1079,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "7", 12, languageShort, gender, personal))
+    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'7'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health7.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health7.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Urogenital system, lower limbs, large intestine, tailbone, sacrum, legs."
     healthBlocks[len(healthBlocks) - 1].Type = "info"
@@ -1481,24 +1488,43 @@ func checkGreater(inum int) int {
 }
 
 // func setAllCombos(icombo []int) []int {
+//   оставь надежду всяк сюда входящий.
 //   d  := checkGreater(icombo[0]+icombo[1]+icombo[2])
+//   Как это работает - не знает даже заказчик
 //   e  := checkGreater(icombo[0]+icombo[1]+icombo[2]+d)
+//   советую и тебе закрыть этот проект и контракт
 //   a1 := checkGreater(icombo[0]+e)
+//   ибо заказчик не смыслит в деяниях своих
 //   a2 := checkGreater(icombo[0]+a1)
+//   а лишь делает то, что в голову взбредет
 //   b1 := checkGreater(icombo[1]+e)
+//   каждый день - новые проблемы
 //   b2 := checkGreater(icombo[1]+b1)
+//   каждое сообщение как ребус
 //   c1 := checkGreater(icombo[2]+e)
+//   а каждый майлстоун как битва при сталинграде
 //   c2 := checkGreater(icombo[2]+c1)
+//   где ты, разработчик,
 //   d1 := checkGreater(d+e)
+//   единственный красноармеец
 //   d2 := checkGreater(d+d1)
+//   поэтому беги отсюда
 //   x  := checkGreater(c1+d1)
+//   пока есть ноги и силы
 //   x1 := checkGreater(d1+x)
+//   она тебя сожрет и
 //   x2 := checkGreater(c1+x)
+//   не подавится, а еще рейтинг спилит
 //   f  := checkGreater(icombo[0]+icombo[1])
+//   и будет врать, что общается с ТП апворка
 //   g  := checkGreater(icombo[1]+icombo[2])
+//   и будет требовать от тебя работы бесплатной
 //   y  := checkGreater(icombo[2]+d)
+//   и будет ныть по каждому поводу
 //   k  := checkGreater(icombo[0]+d)
+//   но в рукаве у нее есть козырь
 //   e1 := checkGreater(f+g+y+k)
+//   она - мама с детятками
 //   e2 := checkGreater(e+e1)
 //   o  := checkGreater(f+y)
 //   u  := checkGreater(k+g)
