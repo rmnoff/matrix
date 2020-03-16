@@ -417,6 +417,9 @@ func newLocale() Locale {
   }
 }
 
+var pinkTint = "#FF00FF"
+var blueTint = "#00FFCC"
+
 func main() {
   flag.Parse()
 
@@ -653,6 +656,7 @@ func main() {
       moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, "'1'", 227, languageShort, gender, personal))
       if languageShort == "ru" { moneyBlocks[len(moneyBlocks) - 1].Title = locale.Important.Ru } else { moneyBlocks[len(moneyBlocks) - 1].Title = locale.Important.En }
       // moneyBlocks[len(moneyBlocks) - 1].Title = "important"
+      moneyBlocks[len(moneyBlocks) - 1].TintColor = &blueTint
       moneyBlocks[len(moneyBlocks) - 1].Type = "expandable"
     }
     toCheck = [][]int{
@@ -877,7 +881,8 @@ func main() {
     }
     parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.F), 234, languageShort, gender, personal))
     if languageShort == "ru" { parentsBlocks[len(parentsBlocks) - 1].Title = locale.InsultParentsMen.Ru } else { parentsBlocks[len(parentsBlocks) - 1].Title = locale.InsultParentsMen.En }
-      // parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (men)"
+    // parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (men)"
+    parentsBlocks[len(parentsBlocks) - 1].TintColor = &blueTint
     parentsBlocks[len(parentsBlocks) - 1].Type = "info"
     // if fc.F != fc.Y {
       // parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 234, languageShort, gender, personal))
@@ -889,6 +894,7 @@ func main() {
     // }
     parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.G), 234, languageShort, gender, personal))
     if languageShort == "ru" { parentsBlocks[len(parentsBlocks) - 1].Title = locale.InsultParentsWomen.Ru } else { parentsBlocks[len(parentsBlocks) - 1].Title = locale.InsultParentsWomen.En }
+    parentsBlocks[len(parentsBlocks) - 1].TintColor = &pinkTint
     // parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (women)"
     parentsBlocks[len(parentsBlocks) - 1].Type = "info"
     // if fc.G != fc.K {
