@@ -346,9 +346,11 @@ type LocaleBlock struct {
 }
 
 type Locale struct {
+  PersonalFeatures    LocaleBlock
   PersonalFeaturesPos LocaleBlock
   PersonalFeaturesNeg LocaleBlock
   PersonalFeaturesSoc LocaleBlock
+  Destiny             LocaleBlock
   Destiny20           LocaleBlock
   Destiny40           LocaleBlock
   DestinyCommon       LocaleBlock
@@ -367,14 +369,16 @@ type Locale struct {
   InsultParentsWomen  LocaleBlock
   Resentment          LocaleBlock
   ToBecomeSuccessful  LocaleBlock
-
+  Forecast            LocaleBlock
 }
 
 func newLocale() Locale {
   return Locale{
+    LocaleBlock{"Личные Качества", "Personal Features"},
     LocaleBlock{"Личные Качества позитив", "Personal Features Positive"},
     LocaleBlock{"Личные Качества негатив", "Personal Features Negative"},
     LocaleBlock{"Личные Качества общение", "Personal Features Social"},
+    LocaleBlock{"Предназначение", "Destiny"},
     LocaleBlock{"Предназначение 20-40", "Destiny 20-40"},
     LocaleBlock{"Предназначение 40-60", "Destiny 40-60"},
     LocaleBlock{"Предназначение общее", "Destiny Common"},
@@ -393,6 +397,7 @@ func newLocale() Locale {
     LocaleBlock{"Ссора с родителями (жен.)", "Possible insult against parents (women)"},
     LocaleBlock{"Обида на родителей", "Resentment against parents"},
     LocaleBlock{"Для достижения успеха", "To become successful"},
+    LocaleBlock{"Пердсказание на год", "Year's Forecast"},
   }
 }
 
@@ -549,7 +554,8 @@ func main() {
     if languageShort == "ru" { personalFeaturesBlocks[len(personalFeaturesBlocks) - 1].Title = locale.PersonalFeaturesSoc.Ru } else { personalFeaturesBlocks[len(personalFeaturesBlocks) - 1].Title = locale.PersonalFeaturesSoc.En }
     personalFeaturesBlocks[len(personalFeaturesBlocks) - 1].Type = "info"
     personalfeatures := Prediction{}
-    personalfeatures.Title = "Personal Features"
+    if languageShort == "ru" { personalfeatures.Title = locale.PersonalFeatures.Ru } else { personalfeatures.Title = locale.PersonalFeatures.En }
+    // personalfeatures.Title = "Personal Features"
     personalfeatures.ImageName = "personal_features"
     personalfeatures.Blocks = personalFeaturesBlocks
     personalfeatures.BlockType = "default"
@@ -586,7 +592,8 @@ func main() {
     // destinyBlocks[len(destinyBlocks) - 1].Title = "destiny common"
     destinyBlocks[len(destinyBlocks) - 1].Type = "info"
     destiny := Prediction{}
-    destiny.Title = "Destiny"
+    if languageShort == "ru" { destiny.Title = locale.Destiny.Ru } else { destiny.Title = locale.Destiny.En }
+    // destiny.Title = "Destiny"
     destiny.ImageName = "destiny"
     destiny.Blocks = destinyBlocks
     destiny.BlockType = "default"
@@ -706,7 +713,8 @@ func main() {
       moneyBlocks[len(moneyBlocks) - 1].Type = "expandable"
     }
     money := Prediction{}
-    money.Title = "Money"
+    if languageShort == "ru" { money.Title = locale.Money.Ru } else { money.Title = locale.Money.En }
+    // money.Title = "Money"
     money.ImageName = "money"
     money.Blocks = moneyBlocks
     money.BlockType = "default"
@@ -795,7 +803,8 @@ func main() {
       programsBlocks = append(programsBlocks, lblock)
     }
     programs := Prediction{}
-    programs.Title = "Programs"
+    if languageShort == "ru" { programs.Title = locale.Programs.Ru } else { programs.Title = locale.Programs.En }
+    // programs.Title = "Programs"
     programs.ImageName = "programs"
     programs.Blocks = programsBlocks
     programs.BlockType = "default"
@@ -808,7 +817,8 @@ func main() {
     // sexinessBlocks[len(sexinessBlocks) - 1].Title = "sexiness"
     sexinessBlocks[len(sexinessBlocks) - 1].Type = "info"
     sexiness := Prediction{}
-    sexiness.Title = "Sexiness"
+    if languageShort == "ru" { sexiness.Title = locale.Sexiness.Ru } else { sexiness.Title = locale.Sexiness.En }
+    // sexiness.Title = "Sexiness"
     sexiness.ImageName = "sexiness"
     sexiness.Blocks = sexinessBlocks
     sexiness.BlockType = "default"
@@ -821,7 +831,8 @@ func main() {
     // pastLifeBlocks[len(pastLifeBlocks) - 1].Title = "previous life"
     pastLifeBlocks[len(pastLifeBlocks) - 1].Type = "info"
     pastlife := Prediction{}
-    pastlife.Title = "Past Life"
+    if languageShort == "ru" { pastlife.Title = locale.PastLife.Ru } else { pastlife.Title = locale.PastLife.En }
+    // pastlife.Title = "Past Life"
     pastlife.ImageName = "previous_life"
     pastlife.Blocks = pastLifeBlocks
     pastlife.BlockType = "default"
@@ -879,7 +890,8 @@ func main() {
     parentsBlocks[len(parentsBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", parentsBlocks[len(parentsBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A2), 232, languageShort, gender, personal).Content)
     parentsBlocks[len(parentsBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", parentsBlocks[len(parentsBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A1), 232, languageShort, gender, personal).Content)
     parents := Prediction{}
-    parents.Title = "Parents"
+    if languageShort == "ru" { parents.Title = locale.Parents.Ru } else { parents.Title = locale.Parents.En }
+    // parents.Title = "Parents"
     parents.ImageName = "parents"
     parents.Blocks = parentsBlocks
     parents.BlockType = "default"
@@ -949,7 +961,8 @@ func main() {
       kidsBlocks[len(kidsBlocks) - 1].Type = "expandable"
     }
     kids := Prediction{}
-    kids.Title = "Children"
+    if languageShort == "ru" { kids.Title = locale.Kids.Ru } else { kids.Title = locale.Kids.En }
+    // kids.Title = "Children"
     kids.ImageName = "children"
     kids.Blocks = kidsBlocks
     kids.BlockType = "default"
@@ -979,7 +992,8 @@ func main() {
       relationshipsBlocks[len(relationshipsBlocks) - 1].Type = "expandable"
     }
     relationships := Prediction{}
-    relationships.Title = "Relationships"
+    if languageShort == "ru" { relationships.Title = locale.Relationship.Ru } else { relationships.Title = locale.Relationship.En }
+    // relationships.Title = "Relationships"
     relationships.ImageName = "relationships"
     relationships.Blocks = relationshipsBlocks
     relationships.BlockType = "default"
@@ -1053,7 +1067,8 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     health := Prediction{}
-    health.Title = "Health"
+    if languageShort == "ru" { health.Title = locale.Health.Ru } else { health.Title = locale.Health.En }
+    // health.Title = "Health"
     health.ImageName = "health"
     health.Blocks = healthBlocks
     health.BlockType = "health"
@@ -1073,7 +1088,8 @@ func main() {
       lifeGuideBlocks[len(lifeGuideBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", lifeGuideBlocks[len(lifeGuideBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.E), 11, languageShort, gender, personal).Content)
     }
     lifeguide := Prediction{}
-    lifeguide.Title = "Life Guidance"
+    if languageShort == "ru" { lifeguide.Title = locale.LifeGuide.Ru } else { lifeguide.Title = locale.LifeGuide.En }
+    // lifeguide.Title = "Life Guidance"
     lifeguide.ImageName = "life_guidance"
     lifeguide.Blocks = lifeGuideBlocks
     lifeguide.BlockType = "default"
@@ -1331,7 +1347,8 @@ func main() {
     forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 13, languageShort, gender, personal).Content)
     forecastBlocks[len(forecastBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", forecastBlocks[len(forecastBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.H), 13, languageShort, gender, personal).Content)
     forecast := Prediction{}
-    forecast.Title = "Forecast"
+    if languageShort == "ru" { forecast.Title = locale.Forecast.Ru } else { forecast.Title = locale.Forecast.En }
+    // forecast.Title = "Forecast"
     forecast.ImageName = "forecast"
     forecast.Blocks = forecastBlocks
     forecast.BlockType = "forecast"
