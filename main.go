@@ -341,8 +341,8 @@ type Combos struct {
 // personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide
 
 type LocaleBlock struct {
-  En string
   Ru string
+  En string
 }
 
 type Locale struct {
