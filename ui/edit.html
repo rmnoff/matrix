@@ -98,30 +98,37 @@
           else Notify(`Запись изменена. ID записи - ${response.id}`, null, null, 'success');
         });
       };
-      fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/types").then(response => response.json()).then(data => {
-        const tps = document.getElementById("pred_types");
-        const lgs = document.getElementById("pred_lang");
-        const prs = document.getElementById("pred_pers");
-        data.data[0].map((e) => {
-          const opt = document.createElement("option");
-          opt.setAttribute("value", e.Id);
-          const t = document.createTextNode(e.Name);
-          opt.appendChild(t);
-          tps.appendChild(opt);
-        });
-        data.data[1].map((e) => {
-          const opt = document.createElement("option");
-          opt.setAttribute("value", e.Id);
-          const t = document.createTextNode(e.Name);
-          opt.appendChild(t);
-          lgs.appendChild(opt);
-        });
-        [{"Name": "personal", "Id": true}, {"Name": "common", "Id": false}].map((e) => {
-          const opt = document.createElement("option");
-          opt.setAttribute("value", e.Id);
-          const t = document.createTextNode(e.Name);
-          opt.appendChild(t);
-          prs.appendChild(opt);
+      fetch(`https://upwork-matrix-test.herokuapp.com/api/v1/show/prediction/${ window.location.href.split('/')[len(window.location.href.split('/')) - 1] }`).then(response => response.json()).then(prediction => {
+        document.getElementById("pred").value = prediction.content;
+        document.getElementById("combination").value = prediction.combo;
+        fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/types").then(response => response.json()).then(data => {
+          const tps = document.getElementById("pred_types");
+          const lgs = document.getElementById("pred_lang");
+          const prs = document.getElementById("pred_pers");
+          data.data[0].map((e) => {
+            const opt = document.createElement("option");
+            if(prediction.type_id == e.Id) opt.selected = true;
+            opt.setAttribute("value", e.Id);
+            const t = document.createTextNode(e.Name);
+            opt.appendChild(t);
+            tps.appendChild(opt);
+          });
+          data.data[1].map((e) => {
+            const opt = document.createElement("option");
+            if(prediction.lang_id == e.Id) opt.selected = true;
+            opt.setAttribute("value", e.Id);
+            const t = document.createTextNode(e.Name);
+            opt.appendChild(t);
+            lgs.appendChild(opt);
+          });
+          [{"Name": "personal", "Id": true}, {"Name": "common", "Id": false}].map((e) => {
+            const opt = document.createElement("option");
+            if(prediction.personal == e.Id) opt.selected = true;
+            opt.setAttribute("value", e.Id);
+            const t = document.createTextNode(e.Name);
+            opt.appendChild(t);
+            prs.appendChild(opt);
+          });
         });
       });
     </script>
