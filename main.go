@@ -1518,7 +1518,7 @@ func main() {
 
   router.Get("/add", file.Content("ui/add.html"))
 
-  router.Get("/edit", file.Content("ui/edit.html"))
+  router.Get("/edit/<id>", file.Content("ui/edit.html"))
 
   fasthttp.ListenAndServe(*addr, router.HandleRequest)
 }
