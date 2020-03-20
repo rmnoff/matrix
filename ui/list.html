@@ -28,6 +28,13 @@
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/predictions").then(response => response.json()).then(resp => {
         const predictions = resp.data;
         const table = document.getElementById("list");
+        const headingTR = document.createElement('tr');
+        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('ID')));
+        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Content')));
+        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Type')));
+        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Language')));
+        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Personal')));
+        table.appendChild(headingTR);
         predictions.map(prediction => {
           const tr = document.createElement('tr');
           table.appendChild(tr);
