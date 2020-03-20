@@ -1464,6 +1464,7 @@ func main() {
     combo := ComboDB{}
     err = db.Get(&combo, "SELECT * FROM predictionrel WHERE prediction_id = $1", id)
     if err != nil {
+      fmt.Println(err)
       marshalled, _ := json.Marshal(Response{false, "Can't parse predictionrel", nil})
       return c.Write(marshalled)
     }
