@@ -19,9 +19,35 @@
         align-items: center;
         font-family: 'Open Sans', sans-serif;
       }
+      #menu {
+        width: 100vw;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: white;
+      }
+      #menu a {
+        padding-left: 40px;
+        text-decoration: none;
+        color: skyblue;
+      }
     </style>
   </head>
   <body>
+    <div id="menu">
+      <a href="/">Главная</a>
+      <a href="/add">Добавить запись</a>
+      <a href="/edit">Редактировать запись</a>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
     <h1>Административная панель Matrix</h1>
     <a href="/add">Добавить запись в Базу Данных</a>
     <br />

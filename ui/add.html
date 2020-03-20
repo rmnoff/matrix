@@ -12,12 +12,29 @@
         margin: 0;
         padding: 0;
         width: 100vw;
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         font-family: 'Open Sans', sans-serif;
+      }
+      #menu {
+        width: 100vw;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: white;
+      }
+      #menu a {
+        padding-left: 40px;
+        text-decoration: none;
+        color: skyblue;
       }
       #notifications {
         cursor: pointer;
@@ -33,6 +50,15 @@
   </head>
   <body>
     <div id="notifications"></div>
+    <div id="menu">
+      <a href="/">Главная</a>
+      <a href="/add">Добавить запись</a>
+      <a href="/edit">Редактировать запись</a>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
     <h1>Добавить запись в Базу Данных Matrix</h1>
     <form action="#">
       <p><b>Заполните все поля и нажмите кнопку внизу формы</b></p>
