@@ -19,6 +19,9 @@
         align-items: center;
         font-family: 'Open Sans', sans-serif;
       }
+      table {
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -42,7 +45,7 @@
           id.appendChild(document.createTextNode(prediction.id));
           tr.appendChild(id);
           const content = document.createElement('td');
-          content.appendChild(document.createTextNode(prediction.content));
+          content.appendChild(document.createTextNode(prediction.text));
           tr.appendChild(content);
           const type_id = document.createElement('td');
           type_id.appendChild(document.createTextNode(prediction.type_id));
