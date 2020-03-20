@@ -27,6 +27,7 @@
     <script>
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/predictions").then(response => response.json()).then(resp => {
         const predictions = resp.data;
+        console.log(resp);
         console.log(predictions);
       });
     </script>
