@@ -86,6 +86,7 @@
           const edit = document.createElement('td');
           const link = `/edit/${prediction.id}`;
           const url = document.createElement('a');
+          url.innerText = 'Edit';
           url.href = link;
           edit.appendChild(url);
           tr.appendChild(edit);
