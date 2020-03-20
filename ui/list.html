@@ -49,23 +49,23 @@
         headingTR.appendChild(IDTitle);
 
         const ContentTitle = document.createElement('td');
-        ContentTitle.appendChild(document.createTextNode('Content'))
+        ContentTitle.appendChild(document.createTextNode('Содержание'))
         headingTR.appendChild(ContentTitle);
 
         const TypeTitle = document.createElement('td');
-        TypeTitle.appendChild(document.createTextNode('Type'));
+        TypeTitle.appendChild(document.createTextNode('Тип'));
         headingTR.appendChild(TypeTitle);
 
         const LanguageTitle = document.createElement('td');
-        LanguageTitle.appendChild(document.createTextNode('Language'))
+        LanguageTitle.appendChild(document.createTextNode('Язык'))
         headingTR.appendChild(LanguageTitle);
 
         const PersonalTitle = document.createElement('td');
-        PersonalTitle.appendChild(document.createTextNode('Personal'))
+        PersonalTitle.appendChild(document.createTextNode('Обращение'))
         headingTR.appendChild(PersonalTitle);
 
         const ActionTitle = document.createElement('td');
-        ActionTitle.appendChild(document.createTextNode('Action'))
+        ActionTitle.appendChild(document.createTextNode('Действие'))
         headingTR.appendChild(ActionTitle);
 
         predictions.map(prediction => {
@@ -81,10 +81,10 @@
           type_id.appendChild(document.createTextNode(prediction.type_id));
           tr.appendChild(type_id);
           const lang_id = document.createElement('td');
-          lang_id.appendChild(document.createTextNode(prediction.lang_id));
+          lang_id.appendChild(document.createTextNode( prediction.lang_id == 1 ? 'Русский' : 'Английский' ));
           tr.appendChild(lang_id);
           const personal = document.createElement('td');
-          personal.appendChild(document.createTextNode(prediction.personal));
+          personal.appendChild(document.createTextNode( prediction.personal ? 'Личное' : 'Безличное' ));
           tr.appendChild(personal);
           const edit = document.createElement('td');
           const link = `/edit/${prediction.id}`;
