@@ -37,6 +37,9 @@
     <script>
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/predictions").then(response => response.json()).then(resp => {
         const predictions = resp.data;
+        predictions.sort(function(a, b) { 
+          return a.id - b.id;
+        });
         const table = document.getElementById("list");
         const headingTR = document.createElement('tr');
         table.appendChild(headingTR);
