@@ -32,21 +32,29 @@
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/predictions").then(response => response.json()).then(resp => {
         const predictions = resp.data;
         const table = document.getElementById("list");
-        const headingTR1 = document.createElement('tr');
-        const headingTR2 = document.createElement('tr');
-        const headingTR3 = document.createElement('tr');
-        const headingTR4 = document.createElement('tr');
-        const headingTR5 = document.createElement('tr');
-        headingTR1.appendChild(document.createElement('td').appendChild(document.createTextNode('ID')));
-        headingTR2.appendChild(document.createElement('td').appendChild(document.createTextNode('Content')));
-        headingTR3.appendChild(document.createElement('td').appendChild(document.createTextNode('Type')));
-        headingTR4.appendChild(document.createElement('td').appendChild(document.createTextNode('Language')));
-        headingTR5.appendChild(document.createElement('td').appendChild(document.createTextNode('Personal')));
-        table.appendChild(headingTR1);
-        table.appendChild(headingTR2);
-        table.appendChild(headingTR3);
-        table.appendChild(headingTR4);
-        table.appendChild(headingTR5);
+        const headingTR = document.createElement('tr');
+        table.appendChild(headingTR);
+
+        const IDTitle = document.createElement('td');
+        IDTitle.appendChild(document.createTextNode('ID'));
+        headingTR.appendChild(IDTitle);
+
+        const ContentTitle = document.createElement('td');
+        ContentTitle.appendChild(document.createTextNode('Content'))
+        headingTR.appendChild(ContentTitle);
+
+        const TypeTitle = document.createElement('td');
+        TypeTitle.appendChild(document.createTextNode('Type'));
+        headingTR.appendChild(TypeTitle);
+
+        const LanguageTitle = document.createElement('td');
+        LanguageTitle.appendChild(document.createTextNode('Language'))
+        headingTR.appendChild(LanguageTitle);
+
+        const PersonalTitle = document.createElement('td');
+        PersonalTitle.appendChild(document.createTextNode('Personal'))
+        headingTR.appendChild(PersonalTitle);
+
         predictions.map(prediction => {
           const tr = document.createElement('tr');
           table.appendChild(tr);
