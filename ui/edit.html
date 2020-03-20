@@ -110,7 +110,7 @@
             "cache-control": "no-cache"
           },
           "data": {
-            "pcid": document.getElementById("pred_id").value,
+            "pcid": window.location.href.split('/')[window.location.href.split('/').length - 1],
             "ptypeid": document.getElementById("pred_types").value,
             "combo": document.getElementById("combination").value,
             "prediction": document.getElementById("pred").value,
