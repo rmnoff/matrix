@@ -98,7 +98,8 @@
           else Notify(`Запись изменена. ID записи - ${response.id}`, null, null, 'success');
         });
       };
-      fetch(`https://upwork-matrix-test.herokuapp.com/api/v1/show/prediction/${ window.location.href.split('/')[window.location.href.split('/').length - 1] }`).then(response => response.json()).then(prediction => {
+      fetch(`https://upwork-matrix-test.herokuapp.com/api/v1/show/prediction/${ window.location.href.split('/')[window.location.href.split('/').length - 1] }`).then(response => response.json()).then(resp => {
+        const prediction = resp.prediction;
         console.log(prediction);
         document.getElementById("pred").value = prediction.content;
         document.getElementById("combination").value = prediction.combo;
