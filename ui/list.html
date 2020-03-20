@@ -61,6 +61,10 @@
         PersonalTitle.appendChild(document.createTextNode('Personal'))
         headingTR.appendChild(PersonalTitle);
 
+        const ActionTitle = document.createElement('td');
+        ActionTitle.appendChild(document.createTextNode('Action'))
+        headingTR.appendChild(ActionTitle);
+
         predictions.map(prediction => {
           const tr = document.createElement('tr');
           table.appendChild(tr);
@@ -79,6 +83,12 @@
           const personal = document.createElement('td');
           personal.appendChild(document.createTextNode(prediction.personal));
           tr.appendChild(personal);
+          const edit = document.createElement('td');
+          const link = `/edit/${prediction.id}`;
+          const url = document.createElement('a');
+          url.href = link;
+          edit.appendChild(url);
+          tr.appendChild(edit);
         });
       });
     </script>
