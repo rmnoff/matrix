@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
+    <title>Административная панель</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Open Sans', sans-serif;
+      }
+      #notifications {
+        cursor: pointer;
+        position: fixed;
+        right: 0px;
+        z-index: 9999;
+        bottom: 0px;
+        margin-bottom: 22px;
+        margin-right: 15px;
+        max-width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="notifications"></div>
+    <h1>Отредактировать запись из базы данных Matrix</h1>
+    <form action="#">
+      <p><b>Отредактируйте нужные поля и нажмите кнопку внизу формы</b></p>
+      <p><b>Тип ответа: </b><select name="ptypeid" id="pred_types"></select></p>
+      <p><b>Язык: </b><select name="language" id="pred_lang"></select></p>
+      <p><b>Обращение: </b><select name="personal" id="pred_pers"></select></p>
+      <p style="font-size: 12pt; color: red; font-weight: bold"><small>комбинация заполняется по типу: 11-01-20 (дефис разделяет числа)</small></p>
+      <p><b>Комбинация: </b><input name="combo" id="combination" type="text" size="20"></p>
+      <p>Ответ <br />
+      <textarea name="prediction" id="pred" cols="70" rows="9"></textarea></p>
+    </form>
+    <p style="width: 100%; text-align: center;"><input type="submit" id="enter" value="Отправить"></p>
+    <script>
+      const Notify = function(text, callback, close_callback, style) {
+      	var time = '10000';
+      	var $container = $('#notifications');
+      	var icon = '<i class="fa fa-info-circle "></i>';
+      	if (typeof style == 'undefined' ) style = 'warning'
+      	var html = $('<div class="alert alert-' + style + '  hide">' + icon +  " " + text + '</div>');
+      	$container.prepend(html)
+      	html.removeClass('hide').hide().fadeIn('slow')
+      	function remove_notice() {
+      		html.stop().fadeOut('slow').remove()
+      	}
+      	var timer = setInterval(remove_notice, time);
+      	$(html).hover(function(){
+      		clearInterval(timer);
+      	}, function(){
+      		timer = setInterval(remove_notice, time);
+      	});
+      	html.on('click', function () {
+      		clearInterval(timer)
+      		callback && callback()
+      		remove_notice()
+      	});
+      }
+      document.getElementById('enter').onclick = () => {
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "https://upwork-matrix-test.herokuapp.com/api/v1/edit",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "PostmanRuntime/7.20.1",
+            "Accept": "*/*",
+            "Cache-Control": "no-cache",
+            "Postman-Token": "805f6d8d-097c-4e6a-b648-65804fd41338,df58662f-d097-4756-b5c3-d3b29ebc95aa",
+            "cache-control": "no-cache"
+          },
+          "data": {
+            "pcid": document.getElementById("pred_id").value,
+            "ptypeid": document.getElementById("pred_types").value,
+            "combo": document.getElementById("combination").value,
+            "prediction": document.getElementById("pred").value,
+            "personal": document.getElementById("pred_pers").value,
+            "language": document.getElementById("pred_lang").value
+          }
+        }
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          if(response.id == 0) Notify('Запись не изменена, повторите попытку');
+          else Notify(`Запись изменена. ID записи - ${response.id}`, null, null, 'success');
+        });
+      };
+      fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/types").then(response => response.json()).then(data => {
+        const tps = document.getElementById("pred_types");
+        const lgs = document.getElementById("pred_lang");
+        const prs = document.getElementById("pred_pers");
+        data.data[0].map((e) => {
+          const opt = document.createElement("option");
+          opt.setAttribute("value", e.Id);
+          const t = document.createTextNode(e.Name);
+          opt.appendChild(t);
+          tps.appendChild(opt);
+        });
+        data.data[1].map((e) => {
+          const opt = document.createElement("option");
+          opt.setAttribute("value", e.Id);
+          const t = document.createTextNode(e.Name);
+          opt.appendChild(t);
+          lgs.appendChild(opt);
+        });
+        [{"Name": "personal", "Id": true}, {"Name": "common", "Id": false}].map((e) => {
+          const opt = document.createElement("option");
+          opt.setAttribute("value", e.Id);
+          const t = document.createTextNode(e.Name);
+          opt.appendChild(t);
+          prs.appendChild(opt);
+        });
+      });
+    </script>
+  </body>
+</html>

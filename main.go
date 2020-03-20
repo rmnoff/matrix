@@ -202,6 +202,12 @@ type ResponseAdd struct {
   Id int `json:"id"`
 }
 
+type ResponsePrediction struct {
+  Ok bool `json:"ok"`
+  Error string `json:"error"`
+  Data PredictionDB `json:"prediction"`
+}
+
 type Language struct {
   Id int `db:"id"`
   Name string `db:"name"`
@@ -338,7 +344,21 @@ type Combos struct {
   N1 int
 }
 
-// personalfeatures, destiny, money, programs, sexiness, pastlife, parents, kids, relationships, health, lifeguide
+type ComboDB struct {
+  Prediction_id int
+  Combo string
+}
+
+type PredictionDB struct {
+  Id int `json:"id"`
+  Content string `json:"content"`
+  PredType int `json:"type_id"`
+  Lang int `json:"lang_id"`
+  Personal bool `json:"personal"`
+  Type string `json:"type"`
+  Title string `json:"title"`
+  Combo string `json:"combo"`
+}
 
 type LocaleBlock struct {
   Ru string
@@ -1433,13 +1453,41 @@ func main() {
     return c.Write(marshalled)
   })
 
+  api.Get("/show/prediction/<id>", func(c *routing.Context) error {
+    id := c.Param("id")
+    prediction := Block{}
+    err = db.Get(&prediction, "SELECT * FROM prediction WHERE id = $1", id)
+    if err != nil {
+      marshalled, _ := json.Marshal(Response{false, "Can't parse predictions", nil})
+      return c.Write(marshalled)
+    }
+    combo := ComboDB{}
+    err = db.Get(&combo, "SELECT * FROM predictionrel WHERE prediction_id = $1", id)
+    if err != nil {
+      marshalled, _ := json.Marshal(Response{false, "Can't parse predictionrel", nil})
+      return c.Write(marshalled)
+    }
+    parsedId, _ := strconv.Atoi(id)
+    formatted := PredictionDB{
+      parsedId,
+      prediction.Content,
+      prediction.PredType,
+      prediction.Lang,
+      prediction.Personal,
+      prediction.Type,
+      prediction.Title,
+      combo.Combo,
+    }
+    marshalled, _ := json.Marshal(ResponsePrediction{true, "", formatted})
+    return c.Write(marshalled)
+  })
+
   api.Post("/add", func(c *routing.Context) error {
     ptypeid := c.PostForm("ptypeid")
     combo := c.PostForm("combo")
     prediction := c.PostForm("prediction")
     personal := c.PostForm("personal")
     language := c.PostForm("language")
-    fmt.Println(ptypeid, combo, prediction, personal, language)
     currPrediction := Block{}
     db.Get(&currPrediction, "SELECT * FROM prediction ORDER BY id DESC LIMIT 1")
     tx := db.MustBegin()
@@ -1450,7 +1498,27 @@ func main() {
     return c.Write(marshalled)
   })
 
+  api.Post("/edit", func(c *routing.Context) error {
+    ptypeid := c.PostForm("ptypeid")
+    combo := c.PostForm("combo")
+    prediction := c.PostForm("prediction")
+    personal := c.PostForm("personal")
+    language := c.PostForm("language")
+    pid := c.PostForm("pcid")
+    tx := db.MustBegin()
+    tx.MustExec(`UPDATE prediction SET content = $1, type_id = $2, personal = $3, lang_id = $4 WHERE id = $5`, prediction, ptypeid, personal, language, pid)
+    tx.MustExec(`UPDATE predictionRel SET combination = $1 WHERE prediction_id = $2`, combo, pid)
+    tx.Commit()
+    parsedId, _ := strconv.Atoi(pid)
+    marshalled, _ := json.Marshal(ResponseAdd{parsedId})
+    return c.Write(marshalled)
+  })
+
   router.Get("/", file.Content("ui/index.html"))
+
+  router.Get("/add", file.Content("ui/add.html"))
+
+  router.Get("/edit", file.Content("ui/edit.html"))
 
   fasthttp.ListenAndServe(*addr, router.HandleRequest)
 }
