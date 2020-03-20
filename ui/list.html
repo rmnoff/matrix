@@ -32,13 +32,21 @@
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/predictions").then(response => response.json()).then(resp => {
         const predictions = resp.data;
         const table = document.getElementById("list");
-        const headingTR = document.createElement('tr');
-        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('ID')));
-        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Content')));
-        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Type')));
-        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Language')));
-        headingTR.appendChild(document.createElement('td').appendChild(document.createTextNode('Personal')));
-        table.appendChild(headingTR);
+        const headingTR1 = document.createElement('tr');
+        const headingTR2 = document.createElement('tr');
+        const headingTR3 = document.createElement('tr');
+        const headingTR4 = document.createElement('tr');
+        const headingTR5 = document.createElement('tr');
+        headingTR1.appendChild(document.createElement('td').appendChild(document.createTextNode('ID')));
+        headingTR2.appendChild(document.createElement('td').appendChild(document.createTextNode('Content')));
+        headingTR3.appendChild(document.createElement('td').appendChild(document.createTextNode('Type')));
+        headingTR4.appendChild(document.createElement('td').appendChild(document.createTextNode('Language')));
+        headingTR5.appendChild(document.createElement('td').appendChild(document.createTextNode('Personal')));
+        table.appendChild(headingTR1);
+        table.appendChild(headingTR2);
+        table.appendChild(headingTR3);
+        table.appendChild(headingTR4);
+        table.appendChild(headingTR5);
         predictions.map(prediction => {
           const tr = document.createElement('tr');
           table.appendChild(tr);
