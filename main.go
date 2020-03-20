@@ -345,8 +345,9 @@ type Combos struct {
 }
 
 type ComboDB struct {
-  Prediction_id int
-  Combo string
+  Id int `db:"id"`
+  Prediction_id int `db:"prediction_id"`
+  Combo string `db:"combination"`
 }
 
 type PredictionDB struct {
