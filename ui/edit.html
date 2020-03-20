@@ -97,17 +97,11 @@
       }
       document.getElementById('enter').onclick = () => {
         var settings = {
-          "async": true,
-          "crossDomain": true,
           "url": "https://upwork-matrix-test.herokuapp.com/api/v1/edit",
           "method": "POST",
+          "timeout": 0,
           "headers": {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "PostmanRuntime/7.20.1",
-            "Accept": "*/*",
-            "Cache-Control": "no-cache",
-            "Postman-Token": "805f6d8d-097c-4e6a-b648-65804fd41338,df58662f-d097-4756-b5c3-d3b29ebc95aa",
-            "cache-control": "no-cache"
+            "Content-Type": "application/x-www-form-urlencoded"
           },
           "data": {
             "pcid": window.location.href.split('/')[window.location.href.split('/').length - 1],
