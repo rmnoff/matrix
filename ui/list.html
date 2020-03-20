@@ -27,25 +27,24 @@
     <script>
       fetch("https://upwork-matrix-test.herokuapp.com/api/v1/show/predictions").then(response => response.json()).then(resp => {
         const predictions = resp.data;
-        console.log(predictions);
         const table = document.getElementById("list");
         predictions.map(prediction => {
           const tr = document.createElement('tr');
           table.appendChild(tr);
           const id = document.createElement('td');
-          id.value = prediction.id;
+          id.appendChild(document.createTextNode(prediction.id));
           tr.appendChild(id);
           const content = document.createElement('td');
-          content.value = prediction.content;
+          content.appendChild(document.createTextNode(prediction.content));
           tr.appendChild(content);
           const type_id = document.createElement('td');
-          type_id.value = prediction.type_id;
+          type_id.appendChild(document.createTextNode(prediction.type_id));
           tr.appendChild(type_id);
           const lang_id = document.createElement('td');
-          lang_id.value = prediction.lang_id;
+          lang_id.appendChild(document.createTextNode(prediction.lang_id));
           tr.appendChild(lang_id);
           const personal = document.createElement('td');
-          personal.value = prediction.personal;
+          personal.appendChild(document.createTextNode(prediction.personal));
           tr.appendChild(personal);
         });
       });
