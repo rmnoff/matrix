@@ -180,6 +180,12 @@ type Response struct {
   Data []Prediction `json:"data"`
 }
 
+type ResponseFullList struct {
+  Ok bool `json:"ok"`
+  Error string `json:"error"`
+  Data []BlockJSON `json:"data"`
+}
+
 type ResponseNew struct {
   Ok bool `json:"ok"`
   Error string `json:"error"`
@@ -1444,13 +1450,18 @@ func main() {
   })
 
   api.Get("/show/predictions", func(c *routing.Context) error {
-    predictions := []Prediction{}
+    predictions := []Block{}
     err = db.Select(&predictions, "SELECT * FROM prediction")
     if err != nil {
       marshalled, _ := json.Marshal(Response{false, "Can't parse predictions", nil})
       return c.Write(marshalled)
     }
-    marshalled, _ := json.Marshal(Response{true, "", predictions})
+    predictionsParsed := []BlockJSON{}
+    for _, block := range predictions {
+      nblock := BlockJSON{ block.Id, block.Content, block.Created, block.Edited, block.PredType, block.Lang, block.Personal, block.Type, block.Title, block.TintColor }
+      predictionsParsed = append(predictionsParsed, nblock)
+    }
+    marshalled, _ := json.Marshal(ResponseFullList{true, "", predictionsParsed})
     return c.Write(marshalled)
   })
 
