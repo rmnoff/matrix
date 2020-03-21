@@ -1054,7 +1054,7 @@ func main() {
     // ------ HEALTH BEGIN --------
     healthBlocks := []Block{}
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "1", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'1'", 12, languageShort, gender, personal).Content)
+    // healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'1'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health1.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health1.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "The brain, hair, upper part of the skull."
     healthBlocks[len(healthBlocks) - 1].Type = "expandable"
@@ -1066,7 +1066,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "2", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'2'", 12, languageShort, gender, personal).Content)
+    // healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'2'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health2.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health2.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Occipital and temporal lobes of the brain, eyes, ears, nose, face, upper jaw, upper jaw teeth, optic nerve, cerebral cortex."
     healthBlocks[len(healthBlocks) - 1].Type = "expandable"
@@ -1076,7 +1076,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "3", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'3'", 12, languageShort, gender, personal).Content)
+    // healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'3'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health3.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health3.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Thyroid gland, trachea, bronchi, throat, vocal cords, shoulders, arms, seventh cervical vertebra, all cervical vertebrae, lower jaw, lower jaw teeth."
     healthBlocks[len(healthBlocks) - 1].Type = "expandable"
@@ -1086,7 +1086,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "4", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'4'", 12, languageShort, gender, personal).Content)
+    // healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'4'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health4.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health4.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Heart, circulatory system, respiratory system, lungs, bronchi, thoracic spine, ribs, shoulder scapular area, chest."
     healthBlocks[len(healthBlocks) - 1].Type = "expandable"
@@ -1096,7 +1096,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "5", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'5'", 12, languageShort, gender, personal).Content)
+    // healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'5'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health5.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health5.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Gastrointestinal tract, abdominal organs, pancreas, spleen, liver, gallbladder, small intestine, central part of the spine."
     healthBlocks[len(healthBlocks) - 1].Type = "expandable"
@@ -1106,7 +1106,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "6", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'6'", 12, languageShort, gender, personal).Content)
+    // healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'6'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health6.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health6.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Drenal glands, uterus and ovaries, kidneys, intestines, prostate gland in men, lumbar spinal column."
     healthBlocks[len(healthBlocks) - 1].Type = "expandable"
@@ -1116,7 +1116,7 @@ func main() {
       healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", item), 225, languageShort, gender, personal).Content)
     }
     healthBlocks = append(healthBlocks, getAnswerFromTable(db, "7", 12, languageShort, gender, personal))
-    healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'7'", 12, languageShort, gender, personal).Content)
+    // healthBlocks[len(healthBlocks) - 1].Content = fmt.Sprintf("%s\n\n%s", healthBlocks[len(healthBlocks) - 1].Content, getAnswerFromTable(db, "'7'", 12, languageShort, gender, personal).Content)
     if languageShort == "ru" { healthBlocks[len(healthBlocks) - 1].Title = locale.Health7.Ru } else { healthBlocks[len(healthBlocks) - 1].Title = locale.Health7.En }
     // healthBlocks[len(healthBlocks) - 1].Title = "Urogenital system, lower limbs, large intestine, tailbone, sacrum, legs."
     healthBlocks[len(healthBlocks) - 1].Type = "expandable"
