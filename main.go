@@ -382,11 +382,13 @@ type Locale struct {
   Destiny40           LocaleBlock
   DestinyCommon       LocaleBlock
   Money               LocaleBlock
+  MoneyB              LocaleBlock
   Programs            LocaleBlock
   Program             LocaleBlock
   Sexiness            LocaleBlock
   PastLife            LocaleBlock
   Parents             LocaleBlock
+  ParentsB            LocaleBlock
   Kids                LocaleBlock
   Relationship        LocaleBlock
   Health              LocaleBlock
@@ -410,29 +412,31 @@ type Locale struct {
 func newLocale() Locale {
   return Locale{
     LocaleBlock{"Личные Качества", "Personal Features"},
-    LocaleBlock{"Личные Качества позитив", "Personal Features Positive"},
-    LocaleBlock{"Личные Качества негатив", "Personal Features Negative"},
-    LocaleBlock{"Личные Качества общение", "Personal Features Social"},
+    LocaleBlock{"В позитиве", "In a Positive State"},
+    LocaleBlock{"В негативе", "In a Negative State"},
+    LocaleBlock{"В общении", "Social"},
     LocaleBlock{"Предназначение", "Destiny"},
     LocaleBlock{"Предназначение 20-40", "Destiny 20-40"},
     LocaleBlock{"Предназначение 40-60", "Destiny 40-60"},
     LocaleBlock{"Предназначение общее", "Destiny Common"},
     LocaleBlock{"Деньги", "Money"},
+    LocaleBlock{"Направление деятельности", "Money"},
     LocaleBlock{"Программы", "Programs"},
     LocaleBlock{"Программа ", "Program "},
     LocaleBlock{"Сексуальность", "Sexiness"},
     LocaleBlock{"Прошлая жизнь", "Previous life"},
     LocaleBlock{"Родители", "Parents"},
+    LocaleBlock{"Родовые программы", "Parents"},
     LocaleBlock{"Дети", "Kids"},
     LocaleBlock{"Отношения", "Relationship"},
     LocaleBlock{"Здоровье", "Health"},
     LocaleBlock{"Руководство по жизни", "Life Guidance"},
     LocaleBlock{"Важно", "Important"},
-    LocaleBlock{"Ссора с родителями (муж.)", "Possible insult against parents (men)"},
-    LocaleBlock{"Ссора с родителями (жен.)", "Possible insult against parents (women)"},
-    LocaleBlock{"Обида на родителей", "Resentment against parents"},
-    LocaleBlock{"Для достижения успеха", "To become successful"},
-    LocaleBlock{"Пердсказание на год", "Year's Forecast"},
+    LocaleBlock{"Родовые программы по мужской линии", "Possible insult against parents (men)"},
+    LocaleBlock{"Родовые программы по женской линии", "Possible insult against parents (women)"},
+    LocaleBlock{"Обиды на родителей", "Resentment against parents"},
+    LocaleBlock{"Для достижения успеха важно", "To become successful"},
+    LocaleBlock{"Прогноз на год", "Year's Forecast"},
     LocaleBlock{"Головной мозг, волосы, верхняя часть черепа", "The brain, hair, upper part of the skull."},
     LocaleBlock{"Затылочные и височные доли мозга, глааз, уши, нос, лицо, верхняя челюсть, зубы верхней челюсти, зрительный нерв, кора головного мозга", "Occipital and temporal lobes of the brain, eyes, ears, nose, face, upper jaw, upper jaw teeth, optic nerve, cerebral cortex."},
     LocaleBlock{"Щитовидная железа, трахея, бронхи, горло, голосовые связки, плечи, руки, седьмой шейный позвонок, все шейные позвонки, нижняя челюсть, зубы нижней челюсти", "Thyroid gland, trachea, bronchi, throat, vocal cords, shoulders, arms, seventh cervical vertebra, all cervical vertebrae, lower jaw, lower jaw teeth."},
@@ -647,7 +651,7 @@ func main() {
     // ------ MONEY BEGIN            --------
     moneyBlocks := []Block{}
     moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X2), 4, languageShort, gender, personal))
-    if languageShort == "ru" { moneyBlocks[len(moneyBlocks) - 1].Title = locale.Money.Ru } else { moneyBlocks[len(moneyBlocks) - 1].Title = locale.Money.En }
+    if languageShort == "ru" { moneyBlocks[len(moneyBlocks) - 1].Title = locale.MoneyB.Ru } else { moneyBlocks[len(moneyBlocks) - 1].Title = locale.MoneyB.En }
     // moneyBlocks[len(moneyBlocks) - 1].Title = "money"
     moneyBlocks[len(moneyBlocks) - 1].Type = "info"
     moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X), 214, languageShort, gender, personal))
@@ -777,7 +781,7 @@ func main() {
     toCheck = [][]int{{fc.C, fc.C2, fc.C1}}
     if checkAnswers(toCheck, []int{17,5,6}, true) {
       lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, "'5-6-17'", 10, languageShort, gender, personal))
-      if languageShort == "ru" { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.Ru, lessonsCount) } else { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.En, lessonsCount) }
+      if languageShort == "ru" { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.Ru, lessonsCount + 1) } else { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.En, lessonsCount + 1) }
       // lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("program %d", lessonsCount)
       lessonsBlocks[len(lessonsBlocks) - 1].Type = "expandable"
       lessonsCount = lessonsCount + 1
