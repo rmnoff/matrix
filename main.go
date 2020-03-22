@@ -844,7 +844,7 @@ func main() {
           fmt.Println(toCheck[17])
         }
         lessonsBlocks = append(lessonsBlocks, getAnswerFromTable(db, answer, 10, languageShort, gender, personal))
-        if languageShort == "ru" { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.Ru, lessonsCount) } else { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.En, lessonsCount) }
+        if languageShort == "ru" { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.Ru, lessonsCount + 1) } else { lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("%s %d", locale.Program.En, lessonsCount + 1) }
         // lessonsBlocks[len(lessonsBlocks) - 1].Title = fmt.Sprintf("program %d", lessonsCount)
         lessonsBlocks[len(lessonsBlocks) - 1].Type = "expandable"
         lessonsCount = lessonsCount + 1
