@@ -589,23 +589,25 @@ func main() {
 		// ------ PERSONAL FEATURES BEGIN --------
 		personalFeaturesBlocks := []Block{}
 		personalFeaturesBlocks = append(personalFeaturesBlocks, getAnswerFromTableIndistinctRu(db, fmt.Sprintf("%d", 1), 236, gender))
+		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Type = "info"
+		personalFeaturesBlocks = append(personalFeaturesBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 1, languageShort, gender, personal))
+		// personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 1, languageShort, gender, personal).Content)
 		if languageShort == "ru" {
 			personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Title = locale.PersonalFeaturesPos.Ru
 		} else {
 			personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Title = locale.PersonalFeaturesPos.En
 		}
-		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Type = "info"
-		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 1, languageShort, gender, personal).Content)
 		if fc.A != fc.B {
 			personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 1, languageShort, gender, personal).Content)
 		}
+		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Type = "expandable"
 		personalFeaturesBlocks = append(personalFeaturesBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A), 2, languageShort, gender, personal))
 		if languageShort == "ru" {
 			personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Title = locale.PersonalFeaturesNeg.Ru
 		} else {
 			personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Title = locale.PersonalFeaturesNeg.En
 		}
-		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Type = "info"
+		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Type = "expandable"
 		if fc.A != fc.B {
 			personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.B), 2, languageShort, gender, personal).Content)
 		}
@@ -615,7 +617,7 @@ func main() {
 		} else {
 			personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Title = locale.PersonalFeaturesSoc.En
 		}
-		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Type = "info"
+		personalFeaturesBlocks[len(personalFeaturesBlocks)-1].Type = "expandable"
 		personalfeatures := Prediction{}
 		if languageShort == "ru" {
 			personalfeatures.Title = locale.PersonalFeatures.Ru
