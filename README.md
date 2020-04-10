@@ -57,6 +57,9 @@
 
 ######GET /check/new/:input
 - Запрос для получения списков предсказаний для пользователя по дате
+Формат input: UNIXTimestamp gender personal language
+Пример input: 637286400fcru
+Разбор input: 637286400 - дата, f - женский пол (female), c - безличное (common), ru - русский язык
 Ответ:
 ```JSON
 {
