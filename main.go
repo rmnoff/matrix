@@ -112,7 +112,27 @@ CREATE TABLE IF NOT EXISTS userProfile (
   password TEXT,
   birthdate TEXT,
   gender BOOLEAN
+);
+
+CREATE TABLE IF NOT EXISTS history (
+	id SERIAL PRIMARY KEY,
+	hash VARSHAR(255),
+	name VARCHAR(255),
+	date VARCHAR(255)
 );`
+
+type HistoryBlock struct {
+	Id   int            `db:"id"`
+	Hash sql.NullString `db:"hash"`
+	Name sql.NullString `db:"name"`
+	Date sql.NullString `db:"date"`
+}
+
+type ResponseHistory struct {
+	Ok    bool           `json:"ok"`
+	Error string         `json:"error"`
+	Data  []HistoryBlock `json:"data"`
+}
 
 type User struct {
 	Id        int            `db:"id"`
@@ -541,7 +561,7 @@ func main() {
 		if user.Password.String != password {
 			return c.Write(`{"ok": false, "error": "E-mail or password incorrect", "data": null}`)
 		}
-		return c.Write(fmt.Sprintf(`{"ok": true, "error": null, "data": {"email": "%s", "firstname": "%s", "lastname": "%s", "birthdate": "%s"}}`, user.Email.String, user.Firstname.String, user.Lastname.String, user.Birthdate.String))
+		return c.Write(fmt.Sprintf(`{"ok": true, "error": null, "data": {"id": %d, "email": "%s", "firstname": "%s", "lastname": "%s", "birthdate": "%s"}}`, user.Id, user.Email.String, user.Firstname.String, user.Lastname.String, user.Birthdate.String))
 	})
 	api.Post("/register", func(c *routing.Context) error {
 		email := c.PostForm("email")
@@ -561,10 +581,12 @@ func main() {
 		return c.Write(`{"ok": true, "error": null, "data": "User registered"}`)
 	})
 
-	api.Get("/check/new/<input>", func(c *routing.Context) error {
+	api.Post("/check/new/", func(c *routing.Context) error {
 		locale := newLocale()
 		// blocks := []Block{}
-		input := c.Param("input")
+		id := c.PostForm("id")
+		name := c.PostForm("name")
+		input := c.PostForm("input")
 		timestamp := input[:len(input)-4]
 		gender := string(input[len(input)-4])
 		personal := string(input[len(input)-3])
@@ -584,6 +606,11 @@ func main() {
 		if combo == nil {
 			marshalled, _ := json.Marshal(Response{false, "Timestamp corrupted", nil})
 			return c.Write(marshalled)
+		}
+		if id != "" && name != "" {
+			tx := db.MustBegin()
+			tx.MustExec(`INSERT INTO history(hash, name, date) VALUES($1,$2,$3)`, id, name, timestamp)
+			tx.Commit()
 		}
 		fc := setAllCombosNew(combo)
 		// ------ PERSONAL FEATURES BEGIN --------
@@ -639,7 +666,7 @@ func main() {
 			destinyBlocks[len(destinyBlocks)-1].Title = locale.Destiny20.En
 		}
 		// destinyBlocks[len(destinyBlocks) - 1].Title = "destiny 20-40"
-		destinyBlocks[len(destinyBlocks)-1].Type = "info"
+		destinyBlocks[len(destinyBlocks)-1].Type = "expandable"
 		if fc.H != fc.J {
 			// destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 8, languageShort, gender, personal))
 			destinyBlocks[len(destinyBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", destinyBlocks[len(destinyBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.J), 8, languageShort, gender, personal).Content)
@@ -656,7 +683,7 @@ func main() {
 			destinyBlocks[len(destinyBlocks)-1].Title = locale.Destiny40.En
 		}
 		// destinyBlocks[len(destinyBlocks) - 1].Title = "destiny 40-60"
-		destinyBlocks[len(destinyBlocks)-1].Type = "info"
+		destinyBlocks[len(destinyBlocks)-1].Type = "expandable"
 		if fc.T != fc.N {
 			// destinyBlocks = append(destinyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T), 8, languageShort, gender, personal))
 			destinyBlocks[len(destinyBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", destinyBlocks[len(destinyBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.T), 8, languageShort, gender, personal).Content)
@@ -672,7 +699,7 @@ func main() {
 			destinyBlocks[len(destinyBlocks)-1].Title = locale.DestinyCommon.En
 		}
 		// destinyBlocks[len(destinyBlocks) - 1].Title = "destiny common"
-		destinyBlocks[len(destinyBlocks)-1].Type = "info"
+		destinyBlocks[len(destinyBlocks)-1].Type = "expandable"
 		destiny := Prediction{}
 		if languageShort == "ru" {
 			destiny.Title = locale.Destiny.Ru
@@ -693,7 +720,7 @@ func main() {
 			moneyBlocks[len(moneyBlocks)-1].Title = locale.MoneyB.En
 		}
 		// moneyBlocks[len(moneyBlocks) - 1].Title = "money"
-		moneyBlocks[len(moneyBlocks)-1].Type = "info"
+		moneyBlocks[len(moneyBlocks)-1].Type = "expandable"
 		moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.X), 214, languageShort, gender, personal))
 		if languageShort == "ru" {
 			moneyBlocks[len(moneyBlocks)-1].Title = locale.ToBecomeSuccessful.Ru
@@ -701,7 +728,7 @@ func main() {
 			moneyBlocks[len(moneyBlocks)-1].Title = locale.ToBecomeSuccessful.En
 		}
 		// moneyBlocks[len(moneyBlocks) - 1].Title = "to become successful"
-		moneyBlocks[len(moneyBlocks)-1].Type = "info"
+		moneyBlocks[len(moneyBlocks)-1].Type = "expandable"
 		if fc.X != fc.C {
 			// moneyBlocks = append(moneyBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C), 214, languageShort, gender, personal))
 			moneyBlocks[len(moneyBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", moneyBlocks[len(moneyBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.C), 214, languageShort, gender, personal).Content)
@@ -753,6 +780,7 @@ func main() {
 				moneyBlocks[len(moneyBlocks)-1].Title = locale.Important.En
 			}
 			// moneyBlocks[len(moneyBlocks) - 1].Title = "important"
+			moneyBlocks[len(moneyBlocks)-1].TintColor = &blueTint
 			moneyBlocks[len(moneyBlocks)-1].Type = "expandable"
 		}
 		toCheck = [][]int{
@@ -769,6 +797,7 @@ func main() {
 				moneyBlocks[len(moneyBlocks)-1].Title = locale.Important.En
 			}
 			// moneyBlocks[len(moneyBlocks) - 1].Title = "important"
+			moneyBlocks[len(moneyBlocks)-1].TintColor = &blueTint
 			moneyBlocks[len(moneyBlocks)-1].Type = "expandable"
 		}
 		toCheck = [][]int{
@@ -786,6 +815,7 @@ func main() {
 				moneyBlocks[len(moneyBlocks)-1].Title = locale.Important.En
 			}
 			// moneyBlocks[len(moneyBlocks) - 1].Title = "important"
+			moneyBlocks[len(moneyBlocks)-1].TintColor = &blueTint
 			moneyBlocks[len(moneyBlocks)-1].Type = "expandable"
 		}
 		toCheck = [][]int{
@@ -816,6 +846,7 @@ func main() {
 				moneyBlocks[len(moneyBlocks)-1].Title = locale.Important.En
 			}
 			// moneyBlocks[len(moneyBlocks) - 1].Title = "important"
+			moneyBlocks[len(moneyBlocks)-1].TintColor = &blueTint
 			moneyBlocks[len(moneyBlocks)-1].Type = "expandable"
 		}
 		toCheck = [][]int{
@@ -829,6 +860,7 @@ func main() {
 				moneyBlocks[len(moneyBlocks)-1].Title = locale.Important.En
 			}
 			// moneyBlocks[len(moneyBlocks) - 1].Title = "important"
+			moneyBlocks[len(moneyBlocks)-1].TintColor = &blueTint
 			moneyBlocks[len(moneyBlocks)-1].Type = "expandable"
 		}
 		money := Prediction{}
@@ -1026,7 +1058,7 @@ func main() {
 		}
 		// parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (men)"
 		parentsBlocks[len(parentsBlocks)-1].TintColor = &blueTint
-		parentsBlocks[len(parentsBlocks)-1].Type = "info"
+		parentsBlocks[len(parentsBlocks)-1].Type = "expandable"
 		// if fc.F != fc.Y {
 		// parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 234, languageShort, gender, personal))
 		parentsBlocks[len(parentsBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", parentsBlocks[len(parentsBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.Y), 234, languageShort, gender, personal).Content)
@@ -1043,7 +1075,7 @@ func main() {
 		}
 		parentsBlocks[len(parentsBlocks)-1].TintColor = &pinkTint
 		// parentsBlocks[len(parentsBlocks) - 1].Title = "Possible insult on parents (women)"
-		parentsBlocks[len(parentsBlocks)-1].Type = "info"
+		parentsBlocks[len(parentsBlocks)-1].Type = "expandable"
 		// if fc.G != fc.K {
 		// parentsBlocks = append(parentsBlocks, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 234, languageShort, gender, personal))
 		parentsBlocks[len(parentsBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", parentsBlocks[len(parentsBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.K), 234, languageShort, gender, personal).Content)
@@ -1059,7 +1091,7 @@ func main() {
 			parentsBlocks[len(parentsBlocks)-1].Title = locale.Resentment.En
 		}
 		// parentsBlocks[len(parentsBlocks) - 1].Title = "Resentment against parents"
-		parentsBlocks[len(parentsBlocks)-1].Type = "info"
+		parentsBlocks[len(parentsBlocks)-1].Type = "expandable"
 		parentsBlocks[len(parentsBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", parentsBlocks[len(parentsBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A2), 232, languageShort, gender, personal).Content)
 		parentsBlocks[len(parentsBlocks)-1].Content = fmt.Sprintf("%s\n\n%s", parentsBlocks[len(parentsBlocks)-1].Content, getAnswerFromTable(db, fmt.Sprintf("%d", fc.A1), 232, languageShort, gender, personal).Content)
 		parents := Prediction{}
@@ -1732,6 +1764,18 @@ func main() {
 		tx.Commit()
 		parsedId, _ := strconv.Atoi(pid)
 		marshalled, _ := json.Marshal(ResponseAdd{parsedId})
+		return c.Write(marshalled)
+	})
+
+	api.Get("/history/<id>", func(c *routing.Context) error {
+		id := c.Param("id")
+		history := []HistoryBlock{}
+		err = db.Select(&history, "SELECT * FROM history WHERE hash = $1", id)
+		if err != nil {
+			marshalled, _ := json.Marshal(Response{false, "Can't parse history", nil})
+			return c.Write(marshalled)
+		}
+		marshalled, _ := json.Marshal(ResponseHistory{true, "", history})
 		return c.Write(marshalled)
 	})
 
