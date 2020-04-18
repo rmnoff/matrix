@@ -1001,6 +1001,7 @@ func main() {
 		// ------ PAST LIFE BEGIN --------
 		pastLifeBlocks := []Block{}
 		mainLesson := fmt.Sprintf("'%d-%d-%d'", fc.D1, fc.D2, fc.D)
+		fmt.Println(mainLesson)
 		pastLifeBlocks = append(pastLifeBlocks, getAnswerFromTable(db, mainLesson, 9, languageShort, gender, personal))
 		if languageShort == "ru" {
 			pastLifeBlocks[len(pastLifeBlocks)-1].Title = locale.PastLife.Ru
